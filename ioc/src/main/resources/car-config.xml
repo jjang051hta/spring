@@ -11,9 +11,7 @@
     <bean id="hyundai" class="xml.Hyundai"></bean>
     <bean id="kia" class="xml.Kia"></bean>
     <bean id="ssangyong" class="xml.Ssangyong"></bean>
-
     <bean id="carAgent" class="xml.CarAgent">
         <property name="maker" ref="hyundai"></property>
     </bean>
-
 </beans>
