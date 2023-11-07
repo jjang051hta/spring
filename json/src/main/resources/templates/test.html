@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      fetch("/body04") //json파일 읽어오기
+        .then((response) => response.json()) //읽어온 데이터를 json으로 변환
+        .then((json) => {
+          console.log(json);
+        });
+    </script>
+  </body>
+</html>
