@@ -2,6 +2,8 @@ package com.jjang051.board.dao;
 
 import com.jjang051.board.dto.BoardDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -10,4 +12,8 @@ import java.util.List;
 @Mapper
 public interface BoardDao {
     public List<BoardDto> getAllBoard();
+
+    @Select("Select * from board where name = #{name}")
+    BoardDto getOneBoard(@Param("name") String name);
+
 }
