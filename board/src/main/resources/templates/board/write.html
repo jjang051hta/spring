@@ -14,13 +14,13 @@
             <div class="mb-3">
                 <label for="name" class="form-label">name</label>
                 <input type="text" class="form-control" placeholder="writer"  th:field="*{name}">
-                <p th:if="${#fields.hasErrors('name')}" class="error">뭐지</p>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error">뭐지</p>
             </div>
 
             <div class="mb-3">
                 <label for="content" class="form-label">content</label>
                 <textarea class="form-control" rows="5" th:field="*{content}"></textarea>
-                <p th:if="${#fields.hasErrors('content')}" class="error">짜증나.</p>
+                <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error">짜증나.</p>
             </div>
 
             <div class="mt-5">
