@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1 th:text="${title}"> 쌩 list</h1>
-    <ul>
-        <li th:each="boardItem, status : ${boardList}">
-            <dl>
-                <dt>순서</dt>
-                <dd th:text="${status.index}"></dd>
-                <dt>이름</dt>
-                <dd th:text="${boardItem.name}">장성호</dd>
-                <dt>제목</dt>
-                <dd th:text="${boardItem.title}">제목01</dd>
-                <dt>내용</dt>
-                <dd th:text="${boardItem.content}">내용01</dd>
-            </dl>
-        </li>
-    </ul>
-</body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content">
+    <div class="container">
+        <h2>여기에 내용 들어옴</h2>
+        <ul>
+            <li th:each="boardItem, status : ${boardList}">
+                <dl>
+                    <dt>순서</dt>
+                    <dd th:text="${status.index}"></dd>
+                    <dt>이름</dt>
+                    <dd th:text="${boardItem.name}">장성호</dd>
+                    <dt>제목</dt>
+                    <dd th:text="${boardItem.title}">제목01</dd>
+                    <dt>내용</dt>
+                    <dd th:text="${boardItem.content}">내용01</dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
 </html>
