@@ -11,6 +11,9 @@ spring:
     restart:
       enabled: true
 
+  thymeleaf:
+    cache: false
+
   #### database ??
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver

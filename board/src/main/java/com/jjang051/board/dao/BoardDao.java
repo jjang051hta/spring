@@ -11,9 +11,11 @@ import java.util.List;
 
 @Mapper
 public interface BoardDao {
-    public List<BoardDto> getAllBoard();
+    List<BoardDto> getAllBoard();
 
-    @Select("Select * from board where name = #{name}")
-    BoardDto getOneBoard(@Param("name") String name);
+    //@Select("Select * from board where name = #{name}")
+    //BoardDto getOneBoard(@Param("name") String name);
+    int insertBoard(BoardDto boardDto);
+
 
 }

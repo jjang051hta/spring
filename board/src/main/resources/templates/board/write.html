@@ -7,19 +7,20 @@
         <h2>WRITE</h2>
         <form method="post" action="" th:action="@{/board/write}" th:object="${boardDto}">
             <div class="mb-3">
-                <label class="form-label">title</label>
-                <input type="text" class="form-control" placeholder="title" name="title" th:field="${boardDto.title}">
-                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">여기에 오류메세지 띄워주세요.</p>
+                <label for="title" class="form-label">title</label>
+                <input type="text" class="form-control" placeholder="title" th:field="*{title}" >
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error">여기에 오류메세지 띄워주세요.</p>
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="writer">
-                <p th:if="${#fields.hasErrors('name')}">이름은 필수 입력사항입니다.</p>
+                <input type="text" class="form-control" placeholder="writer"  th:field="*{name}">
+                <p th:if="${#fields.hasErrors('name')}" class="error">뭐지</p>
             </div>
 
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">content</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="5"></textarea>
+                <label for="content" class="form-label">content</label>
+                <textarea class="form-control" rows="5" th:field="*{content}"></textarea>
+                <p th:if="${#fields.hasErrors('content')}" class="error">짜증나.</p>
             </div>
 
             <div class="mt-5">

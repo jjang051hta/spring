@@ -17,7 +17,12 @@
             <tbody>
                 <tr th:each="boardItem,status:${boardList}">
                     <th scope="row" th:text="${status.count}">1</th>
-                    <td th:text="${boardItem.title}">Mark</td>
+                    <td>
+                        <a href=""  th:text="${boardItem.title}"
+                           th:href="@{/board/view/{id}(id=${boardItem.id})}">Mark</a>
+                        <!--<a href=""  th:text="${boardItem.title}"
+                           th:href="@{/board/view(id=${boardItem.id})}">Mark</a>-->
+                    </td>
                     <td th:text="${boardItem.name}">Otto</td>
                     <!--<td th:text="${boardItem.date}?: _">@mdo</td>-->
                 </tr>
