@@ -2,11 +2,13 @@ package com.jjang051.board.controller;
 
 import com.jjang051.board.dto.BoardDto;
 import com.jjang051.board.service.BoardService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,13 +56,17 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String writeProcess(@ModelAttribute BoardDto boardDto) {
-        log.info("boardDto.getName()==={}",boardDto.getName());
-        log.info("boardDto.getTitle()==={}",boardDto.getTitle());
-        log.info("boardDto.getContent()==={}",boardDto.getContent());
-
-
-        return null;
+    public String writeProcess(@Valid @ModelAttribute BoardDto boardDto,
+                               BindingResult bindingResult,
+                               Model model
+                               ) {
+        if(bindingResult.hasErrors()){
+            log.info("에러있음");
+            //model.addAttribute("boardDto", boardDto);
+            return "/board/write";
+        }
+        log.info("에러 없음");
+        return "/index";
     }
 
 

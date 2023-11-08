@@ -7,13 +7,14 @@
         <h2>WRITE</h2>
         <form method="post" action="" th:action="@{/board/write}" th:object="${boardDto}">
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">title</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1"
-                       name="title" placeholder="title">
+                <label class="form-label">title</label>
+                <input type="text" class="form-control" placeholder="title" name="title">
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">여기에 오류메세지 띄워주세요.</p>
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">name</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="writer">
+                <p th:if="${#fields.hasErrors('name')}">이름은 필수 입력사항입니다.</p>
             </div>
 
             <div class="mb-3">
