@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -50,6 +52,17 @@ public class BoardController {
         model.addAttribute("title","write");
         return  "/board/write";
     }
+
+    @PostMapping("/write")
+    public String writeProcess(@ModelAttribute BoardDto boardDto) {
+        log.info("boardDto.getName()==={}",boardDto.getName());
+        log.info("boardDto.getTitle()==={}",boardDto.getTitle());
+        log.info("boardDto.getContent()==={}",boardDto.getContent());
+
+
+        return null;
+    }
+
 
     @GetMapping("/read")
     public String getOneBoard(String name) {

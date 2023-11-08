@@ -2,9 +2,29 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{/layout/layout}">
-<div layout:fragment="content">
+<div layout:fragment="content" class="main">
     <div class="container">
-        <h2>여기에 내용 들어옴</h2>
+        <h2>WRITE</h2>
+        <form method="post" action="" th:action="@{/board/write}" th:object="${boardDto}">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">title</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1"
+                       name="title" placeholder="title">
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="writer">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">content</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="5"></textarea>
+            </div>
+
+            <div class="mt-5">
+                <button class="btn btn-primary">submit</button>
+            </div>
+        </form>
     </div>
 </div>
 </html>

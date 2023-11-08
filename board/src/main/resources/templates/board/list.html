@@ -4,8 +4,26 @@
       layout:decorate="~{/layout/layout}">
 <div layout:fragment="content">
     <div class="container">
-        <h2>여기에 내용 들어옴</h2>
-        <ul>
+        <h2 class="mb-5">LIST</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">no</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">글쓴이</th>
+                    <!--<th scope="col">날짜</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="boardItem,status:${boardList}">
+                    <th scope="row" th:text="${status.count}">1</th>
+                    <td th:text="${boardItem.title}">Mark</td>
+                    <td th:text="${boardItem.name}">Otto</td>
+                    <!--<td th:text="${boardItem.date}?: _">@mdo</td>-->
+                </tr>
+            </tbody>
+        </table>
+        <!--<ul>
             <li th:each="boardItem, status : ${boardList}">
                 <dl>
                     <dt>순서</dt>
@@ -18,7 +36,7 @@
                     <dd th:text="${boardItem.content}">내용01</dd>
                 </dl>
             </li>
-        </ul>
+        </ul>-->
     </div>
 </div>
 </html>
