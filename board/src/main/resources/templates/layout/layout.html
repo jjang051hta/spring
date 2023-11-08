@@ -10,8 +10,8 @@
     <script src="/js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
-<div th:replace="fragment/header :: headerFragment"></div>
+<div th:replace="~{fragment/header :: headerFragment}"></div>
 <div layout:fragment="content"></div>
-<div th:replace="fragment/footer :: footerFragment"></div>
+<div th:replace="~{fragment/footer :: footerFragment}"></div>
 </body>
 </html>

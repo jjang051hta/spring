@@ -51,7 +51,9 @@ public class BoardController {
 
     @GetMapping("/write")
     public String write(Model model) {
-        model.addAttribute("title","write");
+        //model.addAttribute("title","write");
+        model.addAttribute("boardDto", new BoardDto());
+
         return  "/board/write";
     }
 
@@ -62,7 +64,7 @@ public class BoardController {
                                ) {
         if(bindingResult.hasErrors()){
             log.info("에러있음");
-            //model.addAttribute("boardDto", boardDto);
+            model.addAttribute("boardDto", boardDto);
             return "/board/write";
         }
         log.info("에러 없음");
