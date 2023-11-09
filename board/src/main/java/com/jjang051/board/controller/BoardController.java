@@ -1,6 +1,7 @@
 package com.jjang051.board.controller;
 
 import com.jjang051.board.dto.BoardDto;
+import com.jjang051.board.dto.ModalDto;
 import com.jjang051.board.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +23,8 @@ import java.util.List;
 public class BoardController {
 
 
-    /*@Autowired
-    BoardService boardService;*/
+//    @Autowired
+//    BoardService boardService;
 
     private final BoardService boardService;
 
@@ -36,21 +38,34 @@ public class BoardController {
     @GetMapping("/write")
     public String write(Model model) {
         //model.addAttribute("title","write");
-        model.addAttribute("boardDto", new BoardDto());
+        BoardDto boardDto = BoardDto.builder().build();
+        model.addAttribute("boardDto", boardDto);
         return  "/board/write";
     }
 
     @PostMapping("/write")
     public String writeProcess(@Valid @ModelAttribute BoardDto boardDto,
                                BindingResult bindingResult,
-                               Model model
+                               Model model,
+                               RedirectAttributes redirectAttributes
                                ) {
         if(bindingResult.hasErrors()){
             model.addAttribute("boardDto", boardDto);
             log.info("boardDto=={}",boardDto.toString());
             return "/board/write";
         }
-        boardService.insertBoard(boardDto);
+        int result = boardService.insertBoard(boardDto);
+        if(result>0){
+            ModalDto modalDto = ModalDto.builder()
+                    .isState("success")
+                    .title("글쓰기")
+                    .msg("글이 입력되었습니다.")
+                    .build();
+            redirectAttributes.addFlashAttribute("modalDto",modalDto);
+        }
+        //redirectAttributes.addFlashAttribute("name",boardDto.getName());
+        //redirectAttributes.addAttribute("age",20);
+
         return "redirect:/";
     }
 

@@ -5,6 +5,7 @@
 <div layout:fragment="content">
     <div class="container">
         <h2 class="mb-5">LIST</h2>
+
         <table class="table">
             <thead>
                 <tr>
@@ -28,20 +29,7 @@
                 </tr>
             </tbody>
         </table>
-        <!--<ul>
-            <li th:each="boardItem, status : ${boardList}">
-                <dl>
-                    <dt>순서</dt>
-                    <dd th:text="${status.index}"></dd>
-                    <dt>이름</dt>
-                    <dd th:text="${boardItem.name}">장성호</dd>
-                    <dt>제목</dt>
-                    <dd th:text="${boardItem.title}">제목01</dd>
-                    <dt>내용</dt>
-                    <dd th:text="${boardItem.content}">내용01</dd>
-                </dl>
-            </li>
-        </ul>-->
+        <div class="mt-5"><a href="" class="btn btn-primary" th:href="@{/board/write}">write</a></div>
     </div>
 </div>
 </html>
