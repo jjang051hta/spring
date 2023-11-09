@@ -69,6 +69,7 @@
             $.ajax({
                 url:`/board/view/${idx}`,
                 success:function(data){
+                    console.log(data);
                     if(data.isState==="ok") {
                         viewModal.show();
                         $("#viewModal .modal-title").text(data.viewData.title);
