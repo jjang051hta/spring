@@ -28,6 +28,12 @@ public class BoardService {
         return result;
     }
 
+    public int deleteBoard(int id) {
+        int result = boardDao.deleteBoard(id);
+        return result;
+    }
+
+
 //    public BoardDto getOneBoard(String name) {
 //        BoardDto boardDto = boardDao.getOneBoard(name);
 //        return boardDto;

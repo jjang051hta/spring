@@ -9,5 +9,9 @@
     <insert id="insertBoard" parameterType="BoardDto">
         insert into board values(board_seq.nextval,#{name},#{title},#{content},sysdate)
     </insert>
+    <delete id="deleteBoard" parameterType="int">
+        delete from board where id = #{id}
+    </delete>
+
 
 </mapper>

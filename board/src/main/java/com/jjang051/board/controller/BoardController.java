@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/board")
@@ -77,5 +79,17 @@ public class BoardController {
         log.info("getOneBoard==={}",id);
         return  "/board/view";
     }
-
+    @GetMapping("/delete/{id}")
+    @ResponseBody
+    public Map<String,String> deleteBoard(@PathVariable int id) {
+        log.info("ajax로 넘어언 id==={}",id);
+        int result = boardService.deleteBoard(id);
+        Map<String, String> resultMap = new HashMap<>();
+        if(result>0){
+            resultMap.put("isDelete","ok");
+        } else {
+            resultMap.put("isDelete", "fail");
+        }
+        return resultMap;
+    }
 }

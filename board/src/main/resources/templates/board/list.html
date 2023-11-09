@@ -12,6 +12,8 @@
                     <th scope="col">no</th>
                     <th scope="col">제목</th>
                     <th scope="col">글쓴이</th>
+                    <th scope="col"></th>
+
                     <!--<th scope="col">날짜</th>-->
                 </tr>
             </thead>
@@ -25,11 +27,30 @@
                            th:href="@{/board/view(id=${boardItem.id})}">Mark</a>-->
                     </td>
                     <td th:text="${boardItem.name}">Otto</td>
+                    <td><button class="btn btn-danger" th:attrappend="data-idx=${boardItem.id}">삭제</button></td>
                     <!--<td th:text="${boardItem.date}?: _">@mdo</td>-->
                 </tr>
             </tbody>
         </table>
         <div class="mt-5"><a href="" class="btn btn-primary" th:href="@{/board/write}">write</a></div>
     </div>
+    <script>
+        $(".btn").on("click",function(){
+            console.log($(this).data("idx"));
+            const tr = $(this).parent().parent();
+            //const tr = $(this).closest("tr");
+            const idx = $(this).data("idx");
+            $.ajax({
+                url:`/board/delete/${idx}`,
+                success:function(data) {
+                    console.log(data);
+                    if(data.isDelete==="ok") {
+                        tr.fadeOut();
+                    }
+                }
+            });
+        })
+    </script>
 </div>
+
 </html>

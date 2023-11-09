@@ -16,6 +16,6 @@ public interface BoardDao {
     //@Select("Select * from board where name = #{name}")
     //BoardDto getOneBoard(@Param("name") String name);
     int insertBoard(BoardDto boardDto);
-
+    int deleteBoard(int id);
 
 }
