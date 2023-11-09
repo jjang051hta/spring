@@ -12,6 +12,7 @@
                     <th scope="col">no</th>
                     <th scope="col">제목</th>
                     <th scope="col">글쓴이</th>
+                    <th scope="col">날짜</th>
                     <th scope="col"></th>
 
                     <!--<th scope="col">날짜</th>-->
@@ -22,11 +23,15 @@
                     <th scope="row" th:text="${status.count}">1</th>
                     <td>
                         <a href=""  th:text="${boardItem.title}"
-                           th:href="@{/board/view/{id}(id=${boardItem.id})}">Mark</a>
+                           th:href="@{/board/view/{id}(id=${boardItem.id})}"
+                           th:attrappend="data-idx=${boardItem.id}" class="btnView">Mark</a>
                         <!--<a href=""  th:text="${boardItem.title}"
                            th:href="@{/board/view(id=${boardItem.id})}">Mark</a>-->
                     </td>
                     <td th:text="${boardItem.name}">Otto</td>
+                    <!--<td th:text="${#temporals.format(boardItem.regdate, 'yyyy-MM-dd')}">Otto</td>-->
+
+                    <td th:text="${boardItem.regdate}">Otto</td>
                     <td><button class="btn btn-danger" th:attrappend="data-idx=${boardItem.id}">삭제</button></td>
                     <!--<td th:text="${boardItem.date}?: _">@mdo</td>-->
                 </tr>
@@ -34,7 +39,50 @@
         </table>
         <div class="mt-5"><a href="" class="btn btn-primary" th:href="@{/board/write}">write</a></div>
     </div>
+    <div class="modal fade" tabindex="-1" id="viewModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="name">외계인</p>
+                    <p class="regdate">2023-11-09 11:10:10</p>
+                    <div class="content">Modal body text goes here.</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
+        const viewModal = new bootstrap.Modal("#viewModal");
+
+        $(".btnView").on("click",function(e){
+            e.preventDefault();
+            const idx = $(this).data("idx");
+            $.ajax({
+                url:`/board/view/${idx}`,
+                success:function(data){
+                    if(data.isState==="ok") {
+                        viewModal.show();
+                        $("#viewModal .modal-title").text(data.viewData.title);
+                        $("#viewModal .modal-body .name").text(data.viewData.name);
+                        $("#viewModal .modal-body .regdate").text(data.viewData.regdate);
+                        $("#viewModal .modal-body .content").text(data.viewData.content);
+                    }
+                }
+            })
+            console.log(idx);
+            return false;
+
+        })
+
         $(".btn").on("click",function(){
             console.log($(this).data("idx"));
             const tr = $(this).parent().parent();
@@ -42,6 +90,7 @@
             const idx = $(this).data("idx");
             $.ajax({
                 url:`/board/delete/${idx}`,
+                method:"delete",
                 success:function(data) {
                     console.log(data);
                     if(data.isDelete==="ok") {

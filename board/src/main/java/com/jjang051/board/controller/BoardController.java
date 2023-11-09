@@ -13,10 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/board")
@@ -73,13 +70,21 @@ public class BoardController {
 
 
     @GetMapping("/view/{id}")
-    public String getOneBoard(@PathVariable int id) {
-        //query작성하고
-        // 내용 출력하기...
+    @ResponseBody
+    public Map<String, Object> getOneBoard(@PathVariable int id) {
         log.info("getOneBoard==={}",id);
-        return  "/board/view";
+        BoardDto boardDto = boardService.getOneBoard(id);
+        Map<String, Object> resultMap = new HashMap<>();
+        if(boardDto!=null){
+            resultMap.put("isState","ok");
+            resultMap.put("viewData",boardDto);
+        } else {
+            resultMap.put("isState", "fail");
+            resultMap.put("viewData",null);
+        }
+        return  resultMap;
     }
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseBody
     public Map<String,String> deleteBoard(@PathVariable int id) {
         log.info("ajax로 넘어언 id==={}",id);

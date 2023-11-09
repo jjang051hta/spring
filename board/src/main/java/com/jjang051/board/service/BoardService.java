@@ -33,6 +33,11 @@ public class BoardService {
         return result;
     }
 
+    public BoardDto getOneBoard(int id) {
+        BoardDto result = boardDao.getOneBoard(id);
+        return result;
+    }
+
 
 //    public BoardDto getOneBoard(String name) {
 //        BoardDto boardDto = boardDao.getOneBoard(name);

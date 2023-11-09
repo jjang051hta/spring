@@ -18,4 +18,5 @@ public interface BoardDao {
     int insertBoard(BoardDto boardDto);
     int deleteBoard(int id);
 
+    BoardDto getOneBoard(int id);
 }
