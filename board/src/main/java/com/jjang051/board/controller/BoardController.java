@@ -41,8 +41,9 @@ public class BoardController {
         return  "/board/list";
     }*/
     @GetMapping("/list")
-    public String list(Model model, Criteria criteria) {
+    public String list(Model model, @ModelAttribute Criteria criteria) {
         List<BoardDto> boardList = boardService.getAllBoard(criteria);
+        pageMaker.setPageBlock(7);
         pageMaker.setCriteria(criteria);
         pageMaker.setTotal(boardService.getTotalCount());
         model.addAttribute("boardList",boardList);

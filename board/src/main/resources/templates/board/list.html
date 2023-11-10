@@ -39,6 +39,29 @@
         </table>
         <div class="mt-5"><a href="" class="btn btn-primary" th:href="@{/board/write}">write</a></div>
     </div>
+
+    <nav aria-label="Page navigation example" class="mt-5 d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <li class="page-item"
+                th:each="pageNum:${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}"
+                th:classappend="${pageMaker.criteria.currentPage==pageNum?'active':''}"
+            >
+                <a class="page-link" href="#" th:text="${pageNum}" th:href="@{/board/list(currentPage=${pageNum})}">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
     <div class="modal fade" tabindex="-1" id="viewModal">
         <div class="modal-dialog">
             <div class="modal-content">
