@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -19,8 +21,11 @@ public class BoardService {
 //        this.boardDao = boardDao;
 //    }
 
-    public List<BoardDto> getAllBoard() {
-        List<BoardDto> boardList = boardDao.getAllBoard();
+    public List<BoardDto> getAllBoard(String category, String searchTxt) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("category",category);
+        hashMap.put("searchTxt",searchTxt);
+        List<BoardDto> boardList = boardDao.getAllBoard(hashMap);
         return boardList;
     }
     public int insertBoard(BoardDto boardDto) {

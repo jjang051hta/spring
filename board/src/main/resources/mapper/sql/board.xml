@@ -3,8 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jjang051.board.dao.BoardDao">
-    <select id="getAllBoard" resultType="BoardDto">
+    <sql id="search">
+        <if test="category != null and searchTxt != '' ">
+            <choose>
+                <when test="category=='title'">
+                    where title like '%' || #{searchTxt} || '%'
+                </when>
+                <when test="category=='name'">
+                    where name like '%' || #{searchTxt} || '%'
+                </when>
+                <when test="category=='content'">
+                    where content like '%' || #{searchTxt} || '%'
+                </when>
+                <when test="category=='all'">
+                    where
+                        (name like '%' || #{searchTxt} || '%') or
+                        (title like '%' || #{searchTxt} || '%') or
+                        (content like '%' || #{searchTxt} || '%')
+                </when>
+            </choose>
+
+        </if>
+    </sql>
+    <select id="getAllBoard" resultType="BoardDto"  parameterType="HashMap">
         select * from board
+       <include refid="search" />
     </select>
 
     <select id="getOneBoard" resultType="BoardDto" parameterType="int">
