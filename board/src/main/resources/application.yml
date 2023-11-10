@@ -25,7 +25,7 @@ spring:
 mybatis:
   config-location: classpath:mapper/config/config.xml
   mapper-locations: classpath:mapper/sql/**/*.xml
-  type-aliases-package: com.jjang051.board.dto  # comma
+  #type-aliases-package: com.jjang051.board.dto  # comma
 
 #### log 설정  fatal > error > warn > info > debug
 logging:

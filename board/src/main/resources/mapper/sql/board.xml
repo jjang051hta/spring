@@ -25,9 +25,16 @@
 
         </if>
     </sql>
-    <select id="getAllBoard" resultType="BoardDto"  parameterType="HashMap">
-        select * from board
-       <include refid="search" />
+    <select id="getAllBoard" resultType="BoardDto"  parameterType="Criteria">
+       <!--select * from board
+       <include refid="search" />-->
+        <![CDATA[
+            select * from (
+                select rownum as num , b.* from
+                    (select * from board order by regdate desc) b
+            )
+            where num >= #{startPage} and num <= #{endPage}
+        ]]>
     </select>
 
     <select id="getOneBoard" resultType="BoardDto" parameterType="int">
@@ -43,4 +50,10 @@
     <delete id="modifyBoard" parameterType="BoardDto">
         update board set name=#{name}, title=#{title}, content=#{content} where id= #{id}
     </delete>
+
+
+    <select id="getTotalCount" resultType="int">
+        select count(*) as count from board
+    </select>
+
 </mapper>

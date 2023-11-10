@@ -1,8 +1,10 @@
 package com.jjang051.board.controller;
 
 import com.jjang051.board.dto.BoardDto;
+import com.jjang051.board.dto.Criteria;
 import com.jjang051.board.dto.ModalDto;
 import com.jjang051.board.service.BoardService;
+import com.jjang051.board.utils.PageMaker;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,13 +29,25 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping("/list")
+    private final PageMaker pageMaker;
+
+    /*@GetMapping("/list")
     public String list(Model model,
                        @RequestParam(required = false) String category,
                        @RequestParam(required = false) String searchTxt) {
         log.info("category==={}, searchTxt==={}",category, searchTxt);
         List<BoardDto> boardList = boardService.getAllBoard(category,searchTxt);
         model.addAttribute("boardList",boardList);
+        return  "/board/list";
+    }*/
+    @GetMapping("/list")
+    public String list(Model model, Criteria criteria) {
+        List<BoardDto> boardList = boardService.getAllBoard(criteria);
+        pageMaker.setCriteria(criteria);
+        pageMaker.setTotal(boardService.getTotalCount());
+        model.addAttribute("boardList",boardList);
+        model.addAttribute("pageMaker",pageMaker);
+        log.info("pageMaker==={}",pageMaker.toString());
         return  "/board/list";
     }
 
