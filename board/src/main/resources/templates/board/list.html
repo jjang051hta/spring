@@ -20,7 +20,7 @@
             </thead>
             <tbody>
                 <tr th:each="boardItem,status:${boardList}">
-                    <th scope="row" th:text="${status.count}">1</th>
+                    <th scope="row" th:text="${pageMaker.count - status.count}">1</th>
                     <td>
                         <a href=""  th:text="${boardItem.title}"
                            th:href="@{/board/view/{id}(id=${boardItem.id})}"
@@ -47,7 +47,6 @@
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-
             <li class="page-item"
                 th:each="pageNum:${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}"
                 th:classappend="${pageMaker.criteria.currentPage==pageNum?'active':''}"

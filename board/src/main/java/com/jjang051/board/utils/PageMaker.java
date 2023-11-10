@@ -20,6 +20,7 @@ public class PageMaker {
     private int pageBlock = 10;      //    1/2/3/4/5
     private boolean isPrev;     // 이전 페이지
     private boolean isNext;     //다음 페이지
+    private int count;
 
     //   1/2/3/4/5
     //   6/7/8/9/10
@@ -33,6 +34,6 @@ public class PageMaker {
         //  1~10
         endPage = (int) Math.ceil( (criteria.getCurrentPage() / (double) pageBlock)  ) * pageBlock;
         startPage = (endPage - pageBlock) + 1;
-
+        count = total-(criteria.getCurrentPage() - 1)*criteria.getPageSize();
     }
 }
