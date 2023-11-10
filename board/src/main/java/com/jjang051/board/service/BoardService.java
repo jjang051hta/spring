@@ -38,6 +38,11 @@ public class BoardService {
         return result;
     }
 
+    public int modifyBoard(BoardDto boardDto) {
+        int result = boardDao.modifyBoard(boardDto);
+        return result;
+    }
+
 
 //    public BoardDto getOneBoard(String name) {
 //        BoardDto boardDto = boardDao.getOneBoard(name);

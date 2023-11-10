@@ -69,7 +69,7 @@ public class BoardController {
     }
 
 
-    @GetMapping("/view/{id}")
+    /*@GetMapping("/view/{id}")
     @ResponseBody
     public Map<String, Object> getOneBoard(@PathVariable int id) {
         log.info("getOneBoard==={}",id);
@@ -83,7 +83,45 @@ public class BoardController {
             resultMap.put("viewData",null);
         }
         return  resultMap;
+    }*/
+
+    @GetMapping("/view/{id}")
+    public String getOneBoard(@PathVariable int id,Model model) {
+        log.info("getOneBoard==={}",id);
+        BoardDto boardDto = boardService.getOneBoard(id);
+        model.addAttribute("boardDto",boardDto);
+        return  "/board/view";
     }
+
+    @GetMapping("/modify/{id}")
+    public String modifyBoard(@PathVariable int id,Model model) {
+        log.info("getOneBoard==={}",id);
+        BoardDto boardDto = boardService.getOneBoard(id);
+        model.addAttribute("boardDto",boardDto);
+        return  "/board/modify";
+    }
+
+    @PostMapping("/modify")
+    public String modifyProcessBoard(@Valid @ModelAttribute BoardDto boardDto,
+                                     BindingResult bindingResult,
+                                     Model model,
+                                     RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("boardDto", boardDto);
+            return "/board/modify";
+        }
+        int result = boardService.modifyBoard(boardDto);
+        if(result>0){
+            ModalDto modalDto = ModalDto.builder()
+                    .isState("success")
+                    .title("글수정")
+                    .msg("글이 수정되었습니다.")
+                    .build();
+            redirectAttributes.addFlashAttribute("modalDto",modalDto);
+        }
+        return "redirect:/";
+    }
+
     @DeleteMapping("/delete/{id}")
     @ResponseBody
     public Map<String,String> deleteBoard(@PathVariable int id) {

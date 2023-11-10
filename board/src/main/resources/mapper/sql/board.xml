@@ -17,6 +17,7 @@
     <delete id="deleteBoard" parameterType="int">
         delete from board where id = #{id}
     </delete>
-
-
+    <delete id="modifyBoard" parameterType="BoardDto">
+        update board set name=#{name}, title=#{title}, content=#{content} where id= #{id}
+    </delete>
 </mapper>

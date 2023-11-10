@@ -5,7 +5,33 @@
 <div layout:fragment="content" class="main">
     <div class="container">
         <h2>VIEW</h2>
-
+        <!--<p th:text="${boardDto.title}">여기에 제목 들어감</p>
+        <p th:text="${boardDto.name}">여기에 글쓴 사람 들어감</p>
+        <div th:text="${boardDto.content}">여기에 내용들어감</div>-->
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row">제목</th>
+                    <td colspan="3" th:text="${boardDto.title}">Mark</td>
+                </tr>
+                <tr>
+                    <th scope="row">글쓴이</th>
+                    <td th:text="${boardDto.name}">Jacob</td>
+                    <th>날짜</th>
+                    <td th:text="${boardDto.regdate}">@fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">내용</th>
+                    <td colspan="3" >
+                        <div th:text="${boardDto.content}" style="min-height: 300px">내용들어감</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mt-5">
+            <a href="" class="btn btn-primary" th:href="@{/board/modify/{id}(id=${boardDto.id})}">수정</a>
+            <a href="" class="btn btn-danger" th:href="@{/board/delete/{id}(id=${boardDto.id})}">삭제</a>
+        </div>
     </div>
 </div>
 </html>
