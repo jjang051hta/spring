@@ -3,6 +3,7 @@ package com.jjang051.board.controller;
 import com.jjang051.board.dto.BoardDto;
 import com.jjang051.board.dto.Criteria;
 import com.jjang051.board.dto.ModalDto;
+import com.jjang051.board.dto.ToastDto;
 import com.jjang051.board.service.BoardService;
 import com.jjang051.board.utils.PageMaker;
 import jakarta.validation.Valid;
@@ -73,12 +74,11 @@ public class BoardController {
         }
         int result = boardService.insertBoard(boardDto);
         if(result>0){
-            ModalDto modalDto = ModalDto.builder()
+            ToastDto toastDto = ToastDto.builder()
                     .isState("success")
-                    .title("글쓰기")
                     .msg("글이 입력되었습니다.")
                     .build();
-            redirectAttributes.addFlashAttribute("modalDto",modalDto);
+            redirectAttributes.addFlashAttribute("toastDto",toastDto);
         }
         //redirectAttributes.addFlashAttribute("name",boardDto.getName());
         //redirectAttributes.addAttribute("age",20);
