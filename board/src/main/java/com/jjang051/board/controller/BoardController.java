@@ -110,6 +110,7 @@ public class BoardController {
         log.info("getOneBoard==={}",id);
         BoardDto boardDto = boardService.getOneBoard(id);
         model.addAttribute("boardDto",boardDto);
+
         return  "/board/view";
     }
 
@@ -125,6 +126,7 @@ public class BoardController {
     public String modifyProcessBoard(@Valid @ModelAttribute BoardDto boardDto,
                                      BindingResult bindingResult,
                                      Model model,
+                                     @RequestParam int currentPage,
                                      RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("boardDto", boardDto);
@@ -139,7 +141,7 @@ public class BoardController {
                     .build();
             redirectAttributes.addFlashAttribute("modalDto",modalDto);
         }
-        return "redirect:/";
+        return "redirect:/board/list?currentPage="+currentPage;
     }
 
     @DeleteMapping("/delete/{id}")
@@ -155,4 +157,48 @@ public class BoardController {
         }
         return resultMap;
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteBoard(@PathVariable int id,
+                              @RequestParam(required = false) int currentPage,
+                              RedirectAttributes redirectAttributes
+                              ) {
+        log.info("currentPage==={}",currentPage);
+        int result = boardService.deleteBoard(id);
+
+        if(result>0) {
+            log.info("0보다 크다");
+            ModalDto modalDto = ModalDto.builder()
+                    .isState("success")
+                    .title("글삭제")
+                    .msg(id+"번째 글이 삭제되었습니다.")
+                    .build();
+            redirectAttributes.addFlashAttribute("modalDto",modalDto);
+            return "redirect:/board/list?currentPage="+currentPage;
+        }
+        log.info("0보다 작다");
+        return "redirect:/board/list?currentPage="+currentPage;
+    }
+
+    @PostMapping("/test")
+    public String test(@RequestParam int id,
+                       @RequestParam(required = false) int currentPage,
+                       RedirectAttributes redirectAttributes) {
+        log.info("currentPage==={}",currentPage);
+        int result = boardService.deleteBoard(id);
+
+        if(result>0) {
+            log.info("0보다 크다");
+            ModalDto modalDto = ModalDto.builder()
+                    .isState("success")
+                    .title("글삭제")
+                    .msg(id+"번째 글이 삭제되었습니다.")
+                    .build();
+            redirectAttributes.addFlashAttribute("modalDto",modalDto);
+            return "redirect:/board/list?currentPage="+currentPage;
+        }
+        log.info("0보다 작다");
+        return "redirect:/board/list?currentPage="+currentPage;
+    }
+
 }

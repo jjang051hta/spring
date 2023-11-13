@@ -5,7 +5,9 @@
 <div layout:fragment="content" class="main">
     <div class="container">
         <h2>WRITE</h2>
-        <form method="post" action="/board/modify" th:action="@{/board/modify}" th:object="${boardDto}">
+        <form method="post" action="/board/modify"
+              th:action="@{/board/modify(currentPage=${param.currentPage})}"
+              th:object="${boardDto}">
             <div class="mb-3">
                 <label for="title" class="form-label">title</label>
                 <input type="text" class="form-control" placeholder="title" th:field="*{title}" >

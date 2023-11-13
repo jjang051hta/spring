@@ -25,7 +25,9 @@
                         <th scope="row" th:text="${paginationMaker.count - status.index}">1</th>
                         <td>
                             <a href=""  th:text="${boardItem.title}"
-                               th:href="@{/board/view/{id}(id=${boardItem.id})}"
+                               th:href="@{/board/view/{id}(id=${boardItem.id},
+                                          currentPage=${paginationMaker.criteria.currentPage})}"
+
                                th:attrappend="data-idx=${boardItem.id}" class="btnView">Mark</a>
                             <!--<a href=""  th:text="${boardItem.title}"
                                th:href="@{/board/view(id=${boardItem.id})}">Mark</a>-->

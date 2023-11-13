@@ -29,9 +29,60 @@
             </tbody>
         </table>
         <div class="mt-5">
-            <a href="" class="btn btn-primary" th:href="@{/board/modify/{id}(id=${boardDto.id})}">수정</a>
-            <a href="" class="btn btn-danger" th:href="@{/board/delete/{id}(id=${boardDto.id})}">삭제</a>
+            <a href="" class="btn btn-primary" th:href="@{/board/modify/{id}(id=${boardDto.id},currentPage=${param.currentPage})}">수정</a>
+            <a href="" class="btn btn-danger" th:href="@{/board/delete/{id}(id=${boardDto.id} ,currentPage=${param.currentPage})}" id="btnDelete">삭제</a>
+            <a href="" class="btn btn-danger" th:href="@{/board/list(currentPage=${param.currentPage})}">목록</a>
+            <!--   ajax 처리 page 바꾸기           -->
+            <!--   getMappgin -->
         </div>
+        <form action="/board/test" method="post" id="testForm">
+            <input type="hidden" name="id" value="13" th:value="${boardDto.id}">
+            <input type="hidden" name="currentPage" value="3" th:value="${param.currentPage}">
+            <!--<button class="btn btn-primary mt-5 mb-5">전송</button>-->
+        </form>
+        <!--
+            서버로 데이터 보내는 방법
+            form으로 보내기 (form button 태그를 클릭하면 데이터 날아감 장점 post, get 쓸 수 있음)
+
+            a 태그로 링크 태워서 보내기  (get 만 가능)
+
+            ajax로 보내기 (get/post/delete/put 가능 가장 기능이 막강 있다)
+
+            form 태그의 input hidden으로 해서 값을 보내는데 안쪽에 button이  없을때 js를 이영해서
+            form.submit() 을 이용
+        -->
     </div>
+    <script th:inline="javascript">
+        const idx = [[${boardDto.id}]];
+        const currentPage = [[${param.currentPage}]];
+        $("#btnDelete").on("click",function (e){
+            $("#testForm").submit();
+            return false;
+
+        })
+    </script>
+   <!-- <script th:inline="javascript">
+        const idx = [[${boardDto.id}]];
+        const currentPage = [[${param.currentPage}]]
+        $("#btnDelete").on("click",function (e){
+
+            e.preventDefault();
+            $.ajax({
+                url:`/board/delete/${idx}`,
+                method:"delete",
+                success:function(data) {
+                    //console.log(data);
+                    if(data.isDelete==="ok") {
+                        alert(`${idx}번째 글이 삭제되었습니다.`);
+                        location.href=`/board/list?currentPage=${currentPage}`
+                    } else {
+                        alert("오류입니다. 잠시후 다시 시도해 주세요.");
+                    }
+                }
+            })
+            return false;
+        })
+    </script>-->
+
 </div>
 </html>
