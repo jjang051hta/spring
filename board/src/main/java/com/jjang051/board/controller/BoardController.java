@@ -5,7 +5,7 @@ import com.jjang051.board.dto.Criteria;
 import com.jjang051.board.dto.ModalDto;
 import com.jjang051.board.dto.ToastDto;
 import com.jjang051.board.service.BoardService;
-import com.jjang051.board.utils.PageMaker;
+import com.jjang051.board.utils.PaginationMaker;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    private final PageMaker pageMaker;
+    private final PaginationMaker paginationMaker;
 
     /*@GetMapping("/list")
     public String list(Model model,
@@ -44,12 +44,12 @@ public class BoardController {
     @GetMapping("/list")
     public String list(Model model, @ModelAttribute Criteria criteria) {
         List<BoardDto> boardList = boardService.getAllBoard(criteria);
-        pageMaker.setPageBlock(7);
-        pageMaker.setCriteria(criteria);
-        pageMaker.setTotal(boardService.getTotalCount());
+        //paginationMaker.setPageBlock(7);
+        paginationMaker.setCriteria(criteria);
+        paginationMaker.setTotal(boardService.getTotalCount());
         model.addAttribute("boardList",boardList);
-        model.addAttribute("pageMaker",pageMaker);
-        log.info("pageMaker==={}",pageMaker.toString());
+        model.addAttribute("paginationMaker",paginationMaker);
+        log.info("paginationMaker==={}",paginationMaker.toString());
         return  "/board/list";
     }
 
@@ -74,11 +74,11 @@ public class BoardController {
         }
         int result = boardService.insertBoard(boardDto);
         if(result>0){
-            ToastDto toastDto = ToastDto.builder()
+            ModalDto modalDto = ModalDto.builder()
                     .isState("success")
                     .msg("글이 입력되었습니다.")
                     .build();
-            redirectAttributes.addFlashAttribute("toastDto",toastDto);
+            redirectAttributes.addFlashAttribute("modalDto",modalDto);
         }
         //redirectAttributes.addFlashAttribute("name",boardDto.getName());
         //redirectAttributes.addAttribute("age",20);

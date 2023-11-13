@@ -13,3 +13,7 @@
 #viewModal .modal-content {
   white-space: pre-wrap;
 }
+
+.even td,.even th {
+  background-color: #ccc !important;
+}

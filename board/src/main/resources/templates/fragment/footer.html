@@ -56,28 +56,6 @@
             }
         </script>
     </th:block>
-    <th:block th:if="${toastDto!=null}">
-        <div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" id="myToast">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <p th:text="${modalDto.msg}">Modal body text goes here.</p>
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-        <!-- 타임리프에서 자바스크립트에 서버에서 내려준 변수사용하고싶으면....    -->
-        <script th:inline="javascript">
-
-            const isState02 = [[${toastDto.isState}]];
-            const myToast = $("#myToast").get(0);
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(myToast);
-            console.log(myToast);
-            if (isState02 === "success") {
-                toastBootstrap.show();
-            }
-        </script>
-    </th:block>
-
 </div>
 
 </html>

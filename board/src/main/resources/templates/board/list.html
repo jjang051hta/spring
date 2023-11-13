@@ -19,22 +19,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="boardItem,status:${boardList}">
-                    <th scope="row" th:text="${pageMaker.count - status.count}">1</th>
-                    <td>
-                        <a href=""  th:text="${boardItem.title}"
-                           th:href="@{/board/view/{id}(id=${boardItem.id})}"
-                           th:attrappend="data-idx=${boardItem.id}" class="btnView">Mark</a>
-                        <!--<a href=""  th:text="${boardItem.title}"
-                           th:href="@{/board/view(id=${boardItem.id})}">Mark</a>-->
-                    </td>
-                    <td th:text="${boardItem.name}">Otto</td>
-                    <!--<td th:text="${#temporals.format(boardItem.regdate, 'yyyy-MM-dd')}">Otto</td>-->
+                <th:block  th:each="boardItem, status:${boardList}">
+                    <tr class="aaa">
+                        <!--<th scope="row" th:text="${paginationMaker.count - status.count}">1</th>-->
+                        <th scope="row" th:text="${paginationMaker.count - status.index}">1</th>
+                        <td>
+                            <a href=""  th:text="${boardItem.title}"
+                               th:href="@{/board/view/{id}(id=${boardItem.id})}"
+                               th:attrappend="data-idx=${boardItem.id}" class="btnView">Mark</a>
+                            <!--<a href=""  th:text="${boardItem.title}"
+                               th:href="@{/board/view(id=${boardItem.id})}">Mark</a>-->
+                        </td>
+                        <td th:text="${boardItem.name}">Otto</td>
+                        <!--<td th:text="${#temporals.format(boardItem.regdate, 'yyyy-MM-dd')}">Otto</td>-->
 
-                    <td th:text="${boardItem.regdate}">Otto</td>
-                    <td><button class="btn btn-danger" th:attrappend="data-idx=${boardItem.id}">삭제</button></td>
-                    <!--<td th:text="${boardItem.date}?: _">@mdo</td>-->
-                </tr>
+                        <td th:text="${boardItem.regdate}">Otto</td>
+                        <td><button class="btn btn-danger" th:attrappend="data-idx=${boardItem.id}">삭제</button></td>
+                        <!--<td th:text="${boardItem.date}?: _">@mdo</td>-->
+                    </tr>
+                </th:block>
             </tbody>
         </table>
         <div class="mt-5"><a href="" class="btn btn-primary" th:href="@{/board/write}">write</a></div>
@@ -42,19 +45,22 @@
 
     <nav aria-label="Page navigation example" class="mt-5 d-flex justify-content-center">
         <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
+            <li class="page-item" th:if="${paginationMaker.isPrev}">
+                <a class="page-link" href="#" aria-label="Previous"
+                   th:href="@{/board/list(curentPage=${paginationMaker.startPage - 1})}">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item"
-                th:each="pageNum:${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}"
-                th:classappend="${pageMaker.criteria.currentPage==pageNum?'active':''}"
+                th:each="pageNum:${#numbers.sequence(paginationMaker.startPage,paginationMaker.endPage,1)}"
+                th:classappend="${paginationMaker.criteria.currentPage==pageNum?'active':''}"
             >
                 <a class="page-link" href="#" th:text="${pageNum}" th:href="@{/board/list(currentPage=${pageNum})}">1</a>
             </li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
+            <!--다음 페이지가 있는지 없는지 따져서 보이느냐 마느냐.....-->
+            <li class="page-item" th:if="${paginationMaker.isNext}">
+                <a class="page-link" href="#" aria-label="Next"
+                   th:href="@{/board/list(currentPage=${paginationMaker.endPage+1})}">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

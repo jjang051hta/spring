@@ -35,6 +35,7 @@
             )
             where num >= #{startPage} and num <= #{endPage}
         ]]>
+        <!-- #{속성값} 은 getter의 값을 가져온다. -->
     </select>
 
     <select id="getOneBoard" resultType="BoardDto" parameterType="int">
