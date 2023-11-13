@@ -45,11 +45,13 @@ public class BoardController {
     public String list(Model model, @ModelAttribute Criteria criteria) {
         List<BoardDto> boardList = boardService.getAllBoard(criteria);
         //paginationMaker.setPageBlock(7);
+
         paginationMaker.setCriteria(criteria);
         paginationMaker.setTotal(boardService.getTotalCount());
         model.addAttribute("boardList",boardList);
         model.addAttribute("paginationMaker",paginationMaker);
-        log.info("paginationMaker==={}",paginationMaker.toString());
+        log.info("getCurrentPage==={}",paginationMaker.getCriteria().getCurrentPage());
+
         return  "/board/list";
     }
 

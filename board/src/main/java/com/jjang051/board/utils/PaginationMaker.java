@@ -19,7 +19,7 @@ public class PaginationMaker {
     private int total;          // 전체 갯수
     private int startPage;      // 시작 페이지
     private int endPage;        // 마지막 페이지
-    private int pageBlock = 10; //    1/2/3/4/5
+    private int pageBlock = 5; //    1/2/3/4/5
     private boolean isPrev;     // 이전 페이지
     private boolean isNext;     //다음 페이지
     private int count;
@@ -31,6 +31,10 @@ public class PaginationMaker {
         log.info("total===={}",total);
         makePagination();
     }
+    public int getLastPage() {
+        return (int) Math.ceil( total / (double) criteria.getPageSize());
+    }
+
     private void makePagination() {
 
         //  123 / 10
@@ -39,7 +43,7 @@ public class PaginationMaker {
         endPage = (int) Math.ceil( (criteria.getCurrentPage() / (double) pageBlock)  ) * pageBlock;
         startPage = (endPage - pageBlock) + 1;
         count = total-(criteria.getCurrentPage() - 1)*criteria.getPageSize();
-        int lastPage = (int) Math.ceil( total / (double) criteria.getPageSize());
+        int lastPage = getLastPage();
         log.info("lastPage==={}",lastPage);
         if(endPage > lastPage) endPage = lastPage;
         isPrev = startPage==1 ? false:true;

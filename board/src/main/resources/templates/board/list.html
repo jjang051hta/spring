@@ -47,7 +47,13 @@
         <ul class="pagination">
             <li class="page-item" th:if="${paginationMaker.isPrev}">
                 <a class="page-link" href="#" aria-label="Previous"
-                   th:href="@{/board/list(curentPage=${paginationMaker.startPage - 1})}">
+                   th:href="@{/board/list(currentPage=1)}">
+                    <span aria-hidden="true">first</span>
+                </a>
+            </li>
+            <li class="page-item" th:if="${paginationMaker.isPrev}">
+                <a class="page-link" href="#" aria-label="Previous"
+                   th:href="@{/board/list(currentPage=${paginationMaker.startPage - 1})}">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -62,6 +68,13 @@
                 <a class="page-link" href="#" aria-label="Next"
                    th:href="@{/board/list(currentPage=${paginationMaker.endPage+1})}">
                     <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <!--// 제일 마지막 페이지로 보내기...-->
+            <li class="page-item" th:if="${paginationMaker.isNext}">
+                <a class="page-link" href="#" aria-label="Next"
+                   th:href="@{/board/list(currentPage=${paginationMaker.lastPage})}">
+                    <span aria-hidden="true">last</span>
                 </a>
             </li>
         </ul>
