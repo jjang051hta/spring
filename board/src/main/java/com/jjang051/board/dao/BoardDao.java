@@ -24,5 +24,5 @@ public interface BoardDao {
 
     int modifyBoard(BoardDto boardDto);
 
-    int getTotalCount();
+    int getTotalCount(Criteria criteria);
 }

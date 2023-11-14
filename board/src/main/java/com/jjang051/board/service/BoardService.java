@@ -56,8 +56,8 @@ public class BoardService {
         return result;
     }
 
-    public int getTotalCount() {
-        int result = boardDao.getTotalCount();
+    public int getTotalCount(Criteria criteria) {
+        int result = boardDao.getTotalCount(criteria);
         return result;
     }
 

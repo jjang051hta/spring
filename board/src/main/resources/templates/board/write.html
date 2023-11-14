@@ -19,7 +19,7 @@
 
             <div class="mb-3">
                 <label for="content" class="form-label">content</label>
-                <textarea class="form-control" rows="5" th:field="*{content}"></textarea>
+                <textarea class="form-control" rows="5" th:field="*{content}" id="content"></textarea>
                 <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error">짜증나.</p>
             </div>
 
@@ -28,8 +28,13 @@
             </div>
         </form>
     </div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
     <script>
-
+        ClassicEditor
+            .create( document.querySelector( "#content" ) )
+            .catch( error => {
+                console.error( error );
+            } );
     </script>
 </div>
 </html>

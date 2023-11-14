@@ -24,11 +24,21 @@
                         <!--<th scope="row" th:text="${paginationMaker.count - status.count}">1</th>-->
                         <th scope="row" th:text="${paginationMaker.count - status.index}">1</th>
                         <td>
+                            <th:block th:if="${param.category==null}">
                             <a href=""  th:text="${boardItem.title}"
                                th:href="@{/board/view/{id}(id=${boardItem.id},
                                           currentPage=${paginationMaker.criteria.currentPage})}"
 
                                th:attrappend="data-idx=${boardItem.id}" class="btnView">Mark</a>
+                            </th:block>
+                            <th:block th:unless="${param.category==null}">
+                                <a href=""  th:text="${boardItem.title}"
+                                   th:href="@{/board/view/{id}(id=${boardItem.id},
+                                          currentPage=${paginationMaker.criteria.currentPage},category=${param.category},searchTxt=${param.searchTxt})}"
+
+                                   th:attrappend="data-idx=${boardItem.id}" class="btnView">Mark</a>
+                            </th:block>
+
                             <!--<a href=""  th:text="${boardItem.title}"
                                th:href="@{/board/view(id=${boardItem.id})}">Mark</a>-->
                         </td>
@@ -44,6 +54,8 @@
         </table>
         <div class="mt-5"><a href="" class="btn btn-primary" th:href="@{/board/write}">write</a></div>
     </div>
+    <h1 th:if="${param.category==null}">null</h1>
+    <h1 th:unless="${param.category!=null}">not null</h1>
 
     <nav aria-label="Page navigation example" class="mt-5 d-flex justify-content-center">
         <ul class="pagination">
@@ -63,7 +75,17 @@
                 th:each="pageNum:${#numbers.sequence(paginationMaker.startPage,paginationMaker.endPage,1)}"
                 th:classappend="${paginationMaker.criteria.currentPage==pageNum?'active':''}"
             >
-                <a class="page-link" href="#" th:text="${pageNum}" th:href="@{/board/list(currentPage=${pageNum})}">1</a>
+                <th:block th:if="${param.category!=null}">
+                    <a class="page-link" href="#" th:text="${pageNum}"
+                       th:href="@{/board/list(currentPage=${pageNum},
+                                              category=${param.category},
+                                              searchTxt=${param.searchTxt})}">1</a>
+                </th:block>
+                <th:block th:unless="${param.category!=null}">
+                    <a class="page-link" href="#" th:text="${pageNum}"
+                       th:href="@{/board/list(currentPage=${pageNum})}">1</a>
+                </th:block>
+
             </li>
             <!--다음 페이지가 있는지 없는지 따져서 보이느냐 마느냐.....-->
             <li class="page-item" th:if="${paginationMaker.isNext}">

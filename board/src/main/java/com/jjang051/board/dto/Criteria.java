@@ -8,7 +8,8 @@ import lombok.Setter;
 public class Criteria {
     private int currentPage;
     private int pageSize; // 세로....
-
+    private String category;
+    private String searchTxt;
 
     public Criteria() {
         this.currentPage = 1;  //  pagination 에 클릭한 번호

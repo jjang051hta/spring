@@ -47,7 +47,7 @@ public class BoardController {
         //paginationMaker.setPageBlock(7);
 
         paginationMaker.setCriteria(criteria);
-        paginationMaker.setTotal(boardService.getTotalCount());
+        paginationMaker.setTotal(boardService.getTotalCount(criteria));
         model.addAttribute("boardList",boardList);
         model.addAttribute("paginationMaker",paginationMaker);
         log.info("getCurrentPage==={}",paginationMaker.getCriteria().getCurrentPage());
@@ -127,6 +127,8 @@ public class BoardController {
                                      BindingResult bindingResult,
                                      Model model,
                                      @RequestParam int currentPage,
+                                     @RequestParam String category,
+                                     @RequestParam String searchTxt,
                                      RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("boardDto", boardDto);
@@ -141,7 +143,10 @@ public class BoardController {
                     .build();
             redirectAttributes.addFlashAttribute("modalDto",modalDto);
         }
-        return "redirect:/board/list?currentPage="+currentPage;
+        return
+                "redirect:/board/list?currentPage="+currentPage+
+                        "&category="+category+
+                        "&searchTxt="+searchTxt;
     }
 
     @DeleteMapping("/delete/{id}")
