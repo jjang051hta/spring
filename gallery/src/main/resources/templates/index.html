@@ -24,7 +24,8 @@
       <ul id="lnb"></ul>
       <ul id="itemList">
         <th:block th:each="item, status : ${galleryList}">
-          <li th:style="'background-color:'+${item.bg}+'; transform:translateZ('+${status.index*-5000}+'px); z-index:'+${100 - status.index}">
+          <li th:style="|background-color:${item.bg};transform:translateZ(${status.index*-5000}px); z-index:${100 - status.index}|">
+
             <div class="img">
               <img th:src="@{|/upload/${item.renamed}|}">
             </div>
