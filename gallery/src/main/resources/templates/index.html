@@ -23,15 +23,14 @@
     <main id="main">
       <ul id="lnb"></ul>
       <ul id="itemList">
-        <th:block th:each="item, status
-         : ${galleryList}">
-          <li>
+        <th:block th:each="item, status : ${galleryList}">
+          <li th:style="'background-color:'+${item.bg}+'; transform:translateZ('+${status.index*-5000}+'px); z-index:'+${100 - status.index}">
             <div class="img">
-              <img th:src="@{/upload/${item.renamed}}">
+              <img th:src="@{|/upload/${item.renamed}|}">
             </div>
             <div class="info">
-              <h2 class="title">${item.title}</h2>
-              <p class="desc">${item.desc}</p>
+              <h2 class="title" th:text="${item.title}"></h2>
+              <p class="desc" th:text="${item.description}"></p>
               <a th:href="@{item.link}" target="_blank">MORE</a>
             </div>
           </li>
