@@ -36,9 +36,8 @@
     <script>
         const swiper = new Swiper(".main-visual", {
             loop: true,
-            speed:500,
-            effect:"coverflow",
-            slidesPerView:"auto",
+            speed:1000,
+            //slidesPerView:"auto",
             centeredSlides:true,
             navigation: {
                 nextEl: '#next',
@@ -47,14 +46,16 @@
             pagination: {
                 el: ".pagination",
                 type: 'bullets',
+                clickable:true,
             },
             mousewheel: {
                 invert: true,
             },
+            /*effect:"coverflow",
             coverflowEffect: {
                 rotate:0,
                 stretch:50
-            },
+            },*/
             autoplay: {
                 delay: 3000,
             },
