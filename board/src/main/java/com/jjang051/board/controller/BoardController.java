@@ -10,12 +10,20 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -24,9 +32,9 @@ import java.util.*;
 @Slf4j
 public class BoardController {
 
+    @Value("${file.path}")
+    private String uploadFolder;
 
-//    @Autowired
-//    BoardService boardService;
 
     private final BoardService boardService;
 
@@ -206,4 +214,38 @@ public class BoardController {
         return "redirect:/board/list?currentPage="+currentPage;
     }
 
+    @PostMapping("/upload")
+    @ResponseBody
+    public Map<String,Object> upload(@RequestParam MultipartFile upload) {
+        log.info("upload===={}",upload);
+        log.info("originalFileName==={}",upload.getOriginalFilename());
+
+        String originalFile = upload.getOriginalFilename(); // 이게 진짜 파일 이름...
+        String renamedFile = null;
+        String folder =  null;
+        Date now = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        folder = simpleDateFormat.format(now);
+        File dir = new File(uploadFolder+File.separator+folder);
+        if(!dir.exists()) dir.mkdirs();
+
+        // file이름 분리하고 확장자 분리
+        String fileName = originalFile.substring(0,originalFile.lastIndexOf("."));
+        String ext = originalFile.substring(originalFile.lastIndexOf("."));
+        simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String strNow = simpleDateFormat.format(now);
+        log.info("strNow==={}",strNow);
+        renamedFile = fileName+"_"+strNow+ext;
+        Path imgFilePath = Paths.get(dir+File.separator+renamedFile);
+
+        try {
+            Files.write(imgFilePath,upload.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Map<String, Object> resultMap =  new HashMap<>();
+        resultMap.put("uploaded",true);
+        resultMap.put("url","/upload/"+folder+"/"+renamedFile);
+        return resultMap;
+    }
 }

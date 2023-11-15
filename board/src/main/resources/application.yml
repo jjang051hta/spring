@@ -33,3 +33,5 @@ logging:
     root: info
     '[com.jjang051.board]': info
 
+file:
+  path: C:/upload/
