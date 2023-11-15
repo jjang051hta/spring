@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/visual.css">
 </head>
 <body>
-    <h1> 여기에 swiper 구현</h1>
-
+    <ul class="visual">
+        <!--bg로 이미지 처리..-->
+        <th:block th:each="item : ${visualList}">
+            <li th:style="|background-image:url(/upload/${item.renamed})|">
+                <div class="slogan">
+                    <h2 th:text="${item.title}">여기에 제목</h2>
+                    <p th:text="${item.description}">여기에 desc</p>
+                    <a href="" th:href="@{item.link}">MORE</a>
+                </div>
+            </li>
+        </th:block>
+    </ul>
 </body>
 </html>

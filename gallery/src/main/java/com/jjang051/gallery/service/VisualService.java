@@ -26,7 +26,7 @@ public class VisualService {
 
     private final VisualDao visualDao;
 
-    public List<VisualDto> gelAllVisualList() {
+    public List<VisualDto> getAllVisualList() {
         List<VisualDto> visualList = visualDao.getAllVisualList();
         return visualList;
     }
@@ -50,7 +50,7 @@ public class VisualService {
         renamedFile = fileName+"_"+strNow+ext;
         Path imgFilePath = Paths.get(dir+File.separator+renamedFile);
         visualDto.setOriginal(originalFile);
-        visualDto.setRenamed(renamedFile);
+        visualDto.setRenamed(folder+"/"+renamedFile);
         try {
             Files.write(imgFilePath,visualDto.getFile().getBytes());
         } catch (IOException e) {
