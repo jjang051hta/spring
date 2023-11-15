@@ -2,9 +2,43 @@
     margin: 0;
     padding: 0;
 }
+.main-visual {
+    overflow: hidden;
+
+}
 .visual {
 
 }
 .visual li {
-    height: 100vh;
+    width:400px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    background-size: cover;
 }
+.visual li .slogan {
+    padding: 0 100px;
+}
+.visual li  h2 {
+    font-size: 5vw;
+    margin-bottom: 30px;
+}
+.visual li  p {
+    font-size: 1.25vw;
+}
+.visual li  a {
+    display: inline-block;
+    padding:15px 30px;
+    background-color: #fff;
+    color:#111;
+    border-radius: 100px ;
+    text-decoration: none;
+    margin-top: 30px;
+}
+
+
+
+
+
