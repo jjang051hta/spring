@@ -9,12 +9,11 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class GalleryDto {
+public class VisualDto {
     private int id;
     private String title;
     private String description;
     private String link;
-    private String bg;
     private MultipartFile file;
     private String original;
     private String renamed;

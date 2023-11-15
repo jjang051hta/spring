@@ -37,23 +37,21 @@ public class GalleryService {
         return galleryList;
     }
     public int insertGallery(GalleryDto galleryDto) {
-        log.info("uploadFoler==={}",uploadFoler);
-        //log.info("memberName==={}",memberName);
-        //log.info("memberAge==={}",memberAge);
+
 
 
         UUID uuid = UUID.randomUUID();
-        log.info("originalFileName==={}",galleryDto.getFile().getOriginalFilename());
+
         String originalFile = galleryDto.getFile().getOriginalFilename();
         String renamedFile= uuid+"_"+originalFile;
-        log.info("originalFileName==={}===renamedFile==={}",originalFile,renamedFile);
+
 
         Path imgFilePath = Paths.get(uploadFoler+renamedFile);
 
         galleryDto.setOriginal(originalFile);
         galleryDto.setRenamed(renamedFile);
 
-        log.info("galleryDto==={}",galleryDto);
+
         try {
             Files.write(imgFilePath,galleryDto.getFile().getBytes());
         } catch (IOException e) {
