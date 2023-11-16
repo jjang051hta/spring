@@ -11,4 +11,10 @@ public class IsotopeController {
     public String index() {
         return "/index";
     }
+
+    @GetMapping("/insert")
+    public String insert() {
+        return "/insert";
+    }
+
 }
