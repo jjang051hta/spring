@@ -5,25 +5,30 @@
     <title>Title</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/jquery-3.7.1.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/imagesloaded.pkgd.min.js"></script>
+    <script src="/js/isotope.pkgd.min.js"></script>
+
 </head>
 <body>
-    <header>
-        <h1>GALLERY</h1>
+    <header id="header">
+        <h1 id="logo">GALLERY</h1>
     </header>
-    <main>
-        <nav>
+    <main id="main">
+        <nav id="filter">
             <ul>
-                <li>ALL</li>
-                <li>SKETCH</li>
-                <li>PAINT</li>
-                <li>PHOTO</li>
+                <li data-filter="item" class="on">ALL</li>
+                <li data-filter="sketch">SKETCH</li>
+                <li data-filter="paint">PAINT</li>
+                <li data-filter="photo">PHOTO</li>
             </ul>
         </nav>
         <div>
-            <ul>
+            <ul class="itemList">
                 <th:block th:each="item : ${boardList}">
-                    <li>
+                    <li class="item" th:classappend="${item.category}">
                         <div class="img">
                             <img src="" th:src="@{|/upload/${item.renamed}|}">
                         </div>
@@ -37,5 +42,26 @@
             </ul>
         </div>
     </main>
+    <script>
+
+        $("body").imagesLoaded( function() {
+             let grid = $(".itemList").isotope({
+                // options
+                itemSelector: ".item",
+                layoutMode: "masonry"
+            });
+
+            $("#filter ul li").on("click",function(){
+                console.log("click");
+                $(this).siblings().removeClass("on");
+                $(this).addClass("on");
+                const _filter = "."+$(this).data("filter");
+                grid.isotope({ filter: _filter });
+            })
+        })
+
+
+
+    </script>
 </body>
 </html>

@@ -39,6 +39,8 @@
                     <div class="mb-3">
                         <label for="point" class="form-label">point</label>
                         <input type="text" class="form-control" id="point" placeholder="point"  name="point"  th:field="*{point}">
+                        <div class="error" th:if="${#fields.hasErrors('point')}" th:errors="*{point}">
+                            오류 메세지...</div>
                     </div>
                     <div class="mb-3">
                         <label for="file" class="form-label">file</label>

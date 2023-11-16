@@ -27,7 +27,9 @@ public class IsotopeService {
     private final IsotopeDao isotopeDao;
 
     public int insertIsotope(IsotopeDto isotopeDto) {
+        log.info("service isotopeDto.getFile()==={}",isotopeDto.getFile());
         String originalFile = isotopeDto.getFile().getOriginalFilename(); // 이게 진짜 파일 이름...
+
         String renamedFile = null;
         String folder =  null;
         Date now = new Date();

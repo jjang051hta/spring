@@ -43,15 +43,22 @@ public class IsotopeController {
                                 BindingResult bindingResult,
                                 Model model
                                 ) {
+        log.info("isotopeDto.getFile()==={}",isotopeDto.getFile());
+        if(isotopeDto.getFile().isEmpty()) {
+            model.addAttribute("isotopeDto",isotopeDto);
+            bindingResult.reject("이미지를 선택해주세요.");
+            return "/insert";
+        }
         if(bindingResult.hasErrors()){
             model.addAttribute("isotopeDto",isotopeDto);
             return "/insert";
         }
+
+
+
         int result = isotopeService.insertIsotope(isotopeDto);
         log.info("resule==={}",result);
-
             return "redirect:/";
-
     }
 
 
