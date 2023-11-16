@@ -21,6 +21,17 @@ spring:
     username: jjang052
     password: 1234
 
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: jjang051@naver.com
+    password: SDNV6BNTSH3W
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+      mail.smtp.ssl.trust: smtp.naver.com
+
+
 #### mybatis 설정
 mybatis:
   config-location: classpath:mapper/config/config.xml
