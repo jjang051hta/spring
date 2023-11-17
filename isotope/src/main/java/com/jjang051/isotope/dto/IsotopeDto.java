@@ -22,10 +22,7 @@ public class IsotopeDto {
     private String description;
 
     private MultipartFile file;
-    //regexp="[a-zA-Z1-9]{6,12}", message = "비밀번호는 영어와 숫자로 포함해서 6~12자리 이내로 입력해주세요."
-    /*@DecimalMax(value = "5.0", message = "5점보다 클 수 없습니다.")
-    @DecimalMin(value = "0.0", message = "0점보다 작을 수 없습니다.")*/
-    @Range(min = 0, max = 10, message = "0~5점 사이 가능합니다.")
+
     private Double point;
 
     private String category;
@@ -33,9 +30,6 @@ public class IsotopeDto {
     private String regdate;
 
     private String original;
-
-
-
 
     private String renamed;
 

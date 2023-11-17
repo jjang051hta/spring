@@ -7,12 +7,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.NumberUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -22,18 +26,26 @@ import java.util.List;
 public class IsotopeController {
 
     private final IsotopeService isotopeService;
+    private String category[] = {"sketch","photo","paint"};
+    private List<String> categoryList = Arrays.asList(category);
 
     @GetMapping({"/","/index","/main",""})
     public String index(Model model) {
         List<IsotopeDto> boardList = isotopeService.getAllList();
         model.addAttribute("boardList",boardList);
+        model.addAttribute("categoryList",categoryList);
+
+
+
         return "/index";
     }
 
     @GetMapping("/insert")
     public String insert(Model model) {
         IsotopeDto isotopeDto = new IsotopeDto();
+
         model.addAttribute("isotopeDto",isotopeDto);
+        model.addAttribute("categoryList",categoryList);
         return "/insert";
     }
 
@@ -43,21 +55,12 @@ public class IsotopeController {
                                 BindingResult bindingResult,
                                 Model model
                                 ) {
-        log.info("isotopeDto.getFile()==={}",isotopeDto.getFile());
-        if(isotopeDto.getFile().isEmpty()) {
-            model.addAttribute("isotopeDto",isotopeDto);
-            bindingResult.reject("이미지를 선택해주세요.");
-            return "/insert";
-        }
         if(bindingResult.hasErrors()){
             model.addAttribute("isotopeDto",isotopeDto);
             return "/insert";
         }
-
-
-
         int result = isotopeService.insertIsotope(isotopeDto);
-        log.info("resule==={}",result);
+        log.info("result==={}",result);
             return "redirect:/";
     }
 
