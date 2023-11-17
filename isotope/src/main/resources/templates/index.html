@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/jquery-3.7.1.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/imagesloaded.pkgd.min.js"></script>
     <script src="/js/isotope.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
 </head>
 <body>
@@ -33,14 +35,18 @@
             <ul class="itemList">
                 <th:block th:each="item : ${boardList}">
                     <li class="item" th:classappend="${item.category}">
-                        <div class="img">
-                            <img src="" th:src="@{|/upload/${item.renamed}|}">
-                        </div>
-                        <div class="info">
-                            <h2 th:text="${item.title}">title</h2>
-                            <p class="desc" th:text="${item.description}">description</p>
-                            <p class="pont" th:text="${item.point}">4.5</p>
-                        </div>
+                        <a href="" th:href="@{|/upload/${item.renamed}|}"
+                            data-fancybox="paint" data-caption="Single image"
+                            th:attr="data-caption=${item.title}, data-fancybox=${item.category}">
+                            <div class="img">
+                                <img src="" th:src="@{|/upload/${item.renamed}|}">
+                            </div>
+                            <div class="info">
+                                <h2 th:text="${item.title}" class="title">title</h2>
+                                <p class="desc" th:text="${item.description}">description</p>
+                                <p class="point" th:text="${item.point}">4.5</p>
+                            </div>
+                        </a>
                     </li>
                 </th:block>
             </ul>
@@ -52,7 +58,13 @@
              let grid = $(".itemList").isotope({
                 // options
                 itemSelector: ".item",
-                layoutMode: "masonry"
+                layoutMode: "masonry",
+                 getSortData:{
+                    point:".point",
+                    title: ".title"
+                 },
+                 sortBy:["point","title"],
+                 sortAscending: false
             });
 
             $("#filter ul li").on("click",function(){
@@ -64,7 +76,14 @@
             })
         })
 
-
+        Fancybox.bind("[data-fancybox]", {
+            Carousel: {
+                transition: "fade",
+            },
+            Thumbs: {
+                type: "classic",
+            },
+        });
 
     </script>
 </body>

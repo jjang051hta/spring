@@ -5,6 +5,8 @@
     <title>Title</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+
     <style>
         .error {
             font-size: 12px;
@@ -62,8 +64,7 @@
                         <label for="file" class="form-label">file</label>
                         <input class="form-control" type="file" id="file" name="file" th:field="*{file}" >
                         <div class="error" th:if="${#fields.hasErrors('file')}" th:errors="*{file}">
-                             이미지 선택 하라니까...
-                        </div>
+                            오류 메세지...</div>
                     </div>
                     <div class="d-flex justify-content-center mt-5">
                         <button class="btn btn-primary">confirm</button>
@@ -72,6 +73,16 @@
             </div>
         </div>
     </div>
+    <script>
+        $("#point").on("keyup",function(e){
+            console.log($(this).val());
+            const pointValue =  $(this).val();
+            const regEx = /[^0-9].[^0-9]/g; //not
+            const replacePointValue = pointValue.replace(regEx,"");
+            $(this).val(replacePointValue);
+
+        })
+    </script>
 
 </body>
 </html>

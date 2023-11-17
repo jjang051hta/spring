@@ -61,7 +61,16 @@ public class IsotopeController {
                                 BindingResult bindingResult,
                                 Model model
                                 ) {
+
+
+        if(isotopeDto.getFile().isEmpty()) {
+            model.addAttribute("categoryList",categoryList);
+            model.addAttribute("isotopeDto",isotopeDto);
+            bindingResult.addError(new FieldError("fileError","file","이미지를 선택해 주세요."));
+            return "/insert";
+        }
         if(bindingResult.hasErrors()){
+            model.addAttribute("categoryList",categoryList);
             model.addAttribute("isotopeDto",isotopeDto);
             return "/insert";
         }

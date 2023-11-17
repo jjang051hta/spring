@@ -18,11 +18,12 @@ public class IsotopeDto {
     private String title;
 
     @NotBlank(message="내용은 필수 입력사항입니다.")
-    @Size(min=10, max=3000, message = "최소 5글자 이상 쓰셔야 합니다")
+    @Size(min=10, max=3000, message = "최소 10글자 이상 쓰셔야 합니다")
     private String description;
 
     private MultipartFile file;
 
+    @Range(min = 0,max = 5, message = "0~5점")
     private Double point;
 
     private String category;
