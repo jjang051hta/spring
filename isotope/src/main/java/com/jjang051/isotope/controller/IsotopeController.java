@@ -1,6 +1,7 @@
 package com.jjang051.isotope.controller;
 
 import com.jjang051.isotope.dto.IsotopeDto;
+import com.jjang051.isotope.enums.Category;
 import com.jjang051.isotope.service.IsotopeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,16 +27,17 @@ import java.util.List;
 public class IsotopeController {
 
     private final IsotopeService isotopeService;
-    private String category[] = {"sketch","photo","paint"};
-    private List<String> categoryList = Arrays.asList(category);
-
+    private Category categoryArr[] = {Category.SKETCH,Category.PAINT,Category.PHOTO};
+    List<Category> categoryList = Arrays.asList(categoryArr);
     @GetMapping({"/","/index","/main",""})
     public String index(Model model) {
         List<IsotopeDto> boardList = isotopeService.getAllList();
         model.addAttribute("boardList",boardList);
+        /*List<Category> categoryList = new ArrayList<>();
+        categoryList.add(Category.SKETCH);
+        categoryList.add(Category.PAINT);
+        categoryList.add(Category.PHOTO);*/
         model.addAttribute("categoryList",categoryList);
-
-
 
         return "/index";
     }
@@ -43,9 +45,13 @@ public class IsotopeController {
     @GetMapping("/insert")
     public String insert(Model model) {
         IsotopeDto isotopeDto = new IsotopeDto();
-
-        model.addAttribute("isotopeDto",isotopeDto);
+        /*List<Category> categoryList = new ArrayList<>();
+        categoryList.add(Category.SKETCH);
+        categoryList.add(Category.PAINT);
+        categoryList.add(Category.PHOTO);*/
         model.addAttribute("categoryList",categoryList);
+        model.addAttribute("isotopeDto",isotopeDto);
+
         return "/insert";
     }
 

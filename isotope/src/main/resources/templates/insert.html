@@ -46,8 +46,9 @@
                             <option value="sketch">sketch</option>
                             <option value="photo">photo</option>-->
                             <th:block th:each="item:${categoryList}">
-                                <option th:text="${item}" th:value="${item}"></option>
+                                <option value="photo" th:text="${item.label}" th:value="${item.label}">photo</option>
                             </th:block>
+
                         </select>
                     </div>
 

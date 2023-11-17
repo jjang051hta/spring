@@ -21,10 +21,12 @@
 <!--            //1. 여기를 서버에서 처리해서 내려받기-->
             <ul>
                 <li data-filter="item" class="on">ALL</li>
+                <!--<li data-filter="sketch" >SKETCH</li>
+                <li data-filter="paint" >PAINT</li>
+                <li data-filter="PHOTO" >photo</li>-->
                 <th:block th:each="item:${categoryList}">
-                    <li th:text="${item}" th:value="${item}" th:attr="data-filter=${item}"></li>
+                    <li th:text="${item.kor}" th:attr="data-filter=${item.label}">photo</li>
                 </th:block>
-
             </ul>
         </nav>
         <div>
