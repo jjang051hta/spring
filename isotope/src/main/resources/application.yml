@@ -6,8 +6,9 @@ spring:
   #    view:
   #      prefix: /WEB-INF/views
   #      suffix: .jsp
-  #  messages:
-  #    basename: errors,messages
+  messages:
+      basename: errors
+
   devtools:
     livereload:
       enabled: true

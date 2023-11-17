@@ -14,16 +14,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class IsotopeDto {
     private int id;
 
-    @NotBlank(message="제목은 필수 입력사항입니다.")
+    @NotBlank
     private String title;
 
-    @NotBlank(message="내용은 필수 입력사항입니다.")
-    @Size(min=10, max=3000, message = "최소 10글자 이상 쓰셔야 합니다")
+    @NotBlank
+    @Size(min=10, max=3000)
     private String description;
 
     private MultipartFile file;
 
-    @Range(min = 0,max = 5, message = "0~5점")
+    @Range(min = 0,max = 5)
     private Double point;
 
     private String category;
