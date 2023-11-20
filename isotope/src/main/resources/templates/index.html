@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+                 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -17,6 +18,30 @@
 <body>
     <header id="header">
         <h1 id="logo">GALLERY</h1>
+        <th:block sec:authorize="isAuthenticated()">
+            <h1 th:text="${#authentication.principal.loggedMember.name}">GALLERY</h1>
+            <h1 th:text="${#authentication.principal.loggedMember.email}">GALLERY</h1>
+        </th:block>
+        <th:block sec:authorize="isAuthenticated()">
+            <nav>
+                <ul>
+                    <li><a href="" th:text="${#authentication.principal.loggedMember.name}+님">장성호님 </a></li>
+                    <li><a href="">로그아웃</a></li>
+                    <li><a href="/isotope/main" th:href="@{/isotope/main}">전시회</a></li>
+                </ul>
+            </nav>
+        </th:block>
+        <th:block sec:authorize="!isAuthenticated()">
+            <nav>
+                <ul>
+                    <li><a href=""  th:href="@{/member/join}">회원가입 </a></li>
+                    <li><a href="" th:href="@{/member/login}">로그인</a></li>
+                </ul>
+            </nav>
+        </th:block>
+
+
+
     </header>
     <main id="main">
         <nav id="filter">

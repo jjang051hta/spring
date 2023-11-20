@@ -14,4 +14,7 @@
         sysdate
         )
     </insert>
+    <select id="loginMember" parameterType="String" resultType="memberDto">
+        select * from member where userId = #{username}
+    </select>
 </mapper>
