@@ -1,11 +1,12 @@
 package com.jjang051.isotope.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -33,5 +34,9 @@ public class JoinDto {
     private MultipartFile profile;
 
     private int age;
+
+    @Past(message = "생일이 오늘보다 빠를 수 없습니다.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birth;
 
 }
