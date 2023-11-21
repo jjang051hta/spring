@@ -18,6 +18,14 @@
                        th:field="*{password}">
                 <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error">뭐지</p>
             </div>
+            <!--<div th:if="${error}">
+                <p class="alert alert-danger">아이디 패스워드 확인해 주세요.</p>
+
+            </div>-->
+            <div th:if="${error}">
+                <p class="alert alert-danger" th:text="${exception}">아이디 패스워드 확인해 주세요.</p>
+
+            </div>
             <div class="mt-5">
                 <button class="btn btn-primary" id="btnSubmit">submit</button>
             </div>

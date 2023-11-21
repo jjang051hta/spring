@@ -14,7 +14,7 @@
         sysdate
         )
     </insert>
-    <select id="loginMember" parameterType="String" resultType="LoginDto">
-        select * from member where userId = #{username}
+    <select id="loginMember" parameterType="String" resultType="JoinDto">
+        select * from member where userId = #{userId}
     </select>
 </mapper>
