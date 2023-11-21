@@ -22,12 +22,12 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         //db에 있는지 없는지 따진다음 비밀번호는 시큐리티가 알아서 해준다.
          JoinDto loggedMember = memberDao.loginMember(userId);
-         if(loggedMember==null) {
+         if(loggedMember!=null) {
              // dto  userna
-             throw new UsernameNotFoundException("fdsfd");
 
+             return new CustomUserDetails(loggedMember);
              //return null;
          }
-        return new CustomUserDetails(loggedMember);
+        throw new UsernameNotFoundException("아이디 패스워드 확인해주세요.");
     }
 }

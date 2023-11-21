@@ -21,7 +21,7 @@ public class JoinDto {
 
     @NotBlank
     @Size(min=2,max=20)
-    private String userName;
+    private String name;
 
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}",
             message = "영문자 숫자 특수문자 조합해서 8자 16자 이하로 입력해주세요.")

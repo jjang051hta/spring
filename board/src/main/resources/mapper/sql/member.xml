@@ -7,7 +7,7 @@
         insert into member values(
         member_seq.nextval,
         #{userId},
-        #{userName},
+        #{name},
         #{password},
         #{email},
         'ROLE_MEMBER',

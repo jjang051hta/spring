@@ -14,7 +14,8 @@
                 <li class="nav-item"><a href="/member/join" th:href="@{/member/join}" class="nav-link">join</a></li>
             </th:block>
             <th:block  sec:authorize="isAuthenticated()">
-                <li class="nav-item"><a href="/member/mypage" th:href="@{/member/mypage}" class="nav-link">장성호</a></li>
+                <li class="nav-item"><a href="/member/mypage" th:href="@{/member/mypage}" class="nav-link"
+                                        th:text="${#authentication.principal.loggedMember.name}">장성호</a></li>
                 <li class="nav-item"><a href="/member/logout" th:href="@{/member/logout}" class="nav-link">logout</a></li>
             </th:block>
         </ul>

@@ -21,7 +21,7 @@ public class MemberService {
                 .userId(joinDto.getUserId())
                 .password(bCryptPasswordEncoder.encode(joinDto.getPassword()))
                 .email(joinDto.getEmail())
-                .userName(joinDto.getUserName())
+                .name(joinDto.getName())
                 .build();
         int result = memberDao.insertMember(insertJoinDto);
         return result;

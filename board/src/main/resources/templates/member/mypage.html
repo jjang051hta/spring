@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container">
+        <h2>MY PAGE</h2>
+        <table class="table">
+
+            <tbody>
+                <tr>
+                    <th scope="row">USER ID</th>
+                    <td th:text="${#authentication.principal.loggedMember.userId}">Mark</td>
+                </tr>
+                <tr>
+                    <th scope="row">NAME</th>
+                    <td th:text="${#authentication.principal.loggedMember.name}">Mark</td>
+                </tr>
+                <tr>
+                    <th scope="row">NAME</th>
+                    <td th:text="${#authentication.principal.loggedMember.email}">Mark</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</html>

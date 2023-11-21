@@ -25,17 +25,22 @@ public class MemberController {
         model.addAttribute("loginDto",new LoginDto());
         return "/member/login";
     }
-    @PostMapping("/login")
+ /*   @PostMapping("/login")
     public String loginProcess(@Valid @ModelAttribute LoginDto loginDto,
                                BindingResult bindingResult,
                                Model model) {
         model.addAttribute("loginDto",loginDto);
         return "/member/login";
-    }
+    }*/
     @GetMapping("/join")
     public String join(Model model) {
         model.addAttribute("joinDto",new JoinDto());
         return "/member/join";
+    }
+    @GetMapping("/mypage")
+    public String mypage(Model model) {
+        //model.addAttribute("joinDto",new JoinDto());
+        return "/member/mypage";
     }
     @PostMapping("/join")
     public String joinProcess(@Valid @ModelAttribute JoinDto joinDto,
