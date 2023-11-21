@@ -32,7 +32,9 @@ public class SecurityConfig {
         //람다식으로 작성....
         httpSecurity.authorizeHttpRequests((auth)-> auth
                 .requestMatchers("/","/member/**","/css/**","/js/**")
-                .permitAll()
+                        .permitAll()
+                .requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers("/mypage/**").hasAnyAuthority("ROLE_ADMIN","ROLE_MEMBER")
                 .anyRequest()
                 .authenticated())
                 .formLogin((auth)-> auth

@@ -22,11 +22,12 @@
             <h1 th:text="${#authentication.principal.loggedMember.name}">GALLERY</h1>
             <h1 th:text="${#authentication.principal.loggedMember.email}">GALLERY</h1>
         </th:block>
+
         <th:block sec:authorize="isAuthenticated()">
             <nav>
                 <ul>
                     <li><a href="" th:text="${#authentication.principal.loggedMember.name}+님">장성호님 </a></li>
-                    <li><a href="">로그아웃</a></li>
+                    <li><a href="/member/logout">로그아웃</a></li>
                     <li><a href="/isotope/main" th:href="@{/isotope/main}">전시회</a></li>
                 </ul>
             </nav>
@@ -40,10 +41,10 @@
             </nav>
         </th:block>
 
-
-
     </header>
     <main id="main">
+            <h1 th:text="${loggedMember?.name}">GALLERY</h1>
+            <h1 th:text="${loggedMember?.email}">GALLERY</h1>
         <nav id="filter">
 <!--            //1. 여기를 서버에서 처리해서 내려받기-->
             <ul>

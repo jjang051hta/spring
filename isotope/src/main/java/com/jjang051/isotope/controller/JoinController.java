@@ -66,4 +66,12 @@ public class JoinController {
     public String login() {
         return  "/login";
     }
+
+
+    @GetMapping("/mypage")
+    public String mypage() {
+        return  "/mypage";
+    }
+
+
 }
