@@ -1,5 +1,6 @@
 package com.jjang051.board.config;
 
+import com.jjang051.board.handler.UserLoginFailHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final AuthenticationFailureHandler userLoginFailHandler;
+    private final UserLoginFailHandler userLoginFailHandler;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {

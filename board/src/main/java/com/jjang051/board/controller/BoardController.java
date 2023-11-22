@@ -11,10 +11,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -58,6 +61,7 @@ public class BoardController {
         paginationMaker.setTotal(boardService.getTotalCount(criteria));
         model.addAttribute("boardList",boardList);
         model.addAttribute("paginationMaker",paginationMaker);
+        model.addAttribute("picked","board");
         log.info("getCurrentPage==={}",paginationMaker.getCriteria().getCurrentPage());
 
         return  "/board/list";
@@ -247,5 +251,11 @@ public class BoardController {
         resultMap.put("uploaded",true);
         resultMap.put("url","/upload/"+folder+"/"+renamedFile);
         return resultMap;
+    }
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public String handle(MethodArgumentTypeMismatchException exception){
+        log.info("여기로 들어온다");
+        return "/error";
+        //return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
 }

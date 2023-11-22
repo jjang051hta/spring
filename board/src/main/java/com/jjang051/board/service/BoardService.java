@@ -1,5 +1,6 @@
 package com.jjang051.board.service;
 
+
 import com.jjang051.board.dao.BoardDao;
 import com.jjang051.board.dto.BoardDto;
 import com.jjang051.board.dto.Criteria;
@@ -32,6 +33,10 @@ public class BoardService {
 //        HashMap<String, Object> hashMap = new HashMap<>();
 //        hashMap.put("category",category);
 //        hashMap.put("searchTxt",searchTxt);
+        /*String test= null;
+        if(test==null) {
+            throw new CustomException(ErrorCode.INVALID_PARAMETER);
+        }*/
         List<BoardDto> boardList = boardDao.getAllBoard(criteria);
         return boardList;
     }

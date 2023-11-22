@@ -5,6 +5,8 @@ import com.jjang051.board.dto.LoginDto;
 import com.jjang051.board.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/member")
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -42,6 +45,25 @@ public class MemberController {
         //model.addAttribute("joinDto",new JoinDto());
         return "/member/mypage";
     }
+
+    @GetMapping("/delete")
+    public String delete() {
+        return "/member/delete";
+    }
+
+    @PostMapping("/delete")
+    //@ResponseBody
+    public String deleteProcess(@ModelAttribute LoginDto loginDto, Model model) {
+        log.info("=={},==={}",loginDto.getUserId(),loginDto.getPassword());
+        int result = memberService.deleteMember(loginDto);
+        if(result>0) {
+            return "redirect:/";
+        }
+        model.addAttribute("error",true);
+        model.addAttribute("exception","아이디 패스워드 확인해 주세요");
+        return "/member/delete";
+    }
+
     @PostMapping("/join")
     public String joinProcess(@Valid @ModelAttribute JoinDto joinDto,
                                BindingResult bindingResult, Model model) {
@@ -52,5 +74,8 @@ public class MemberController {
         memberService.insertMember(joinDto);
         return "redirect:/member/login";
     }
+
+
+
 
 }

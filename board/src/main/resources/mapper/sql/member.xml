@@ -17,4 +17,7 @@
     <select id="loginMember" parameterType="String" resultType="JoinDto">
         select * from member where userId = #{userId}
     </select>
+    <delete id="deleteMember" parameterType="LoginDto">
+        DELETE FROM MEMBER WHERE userId = #{userId}
+    </delete>
 </mapper>
