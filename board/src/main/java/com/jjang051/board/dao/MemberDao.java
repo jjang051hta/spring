@@ -10,4 +10,6 @@ public interface MemberDao {
     JoinDto loginMember(String username);
 
     int deleteMember(LoginDto loginDto);
+
+    int updateMember(JoinDto joinDto);
 }

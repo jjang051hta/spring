@@ -38,4 +38,14 @@ public class MemberService {
         }
         return result;
     }
+
+    public int updateMember(@ModelAttribute JoinDto joinDto) {
+        int result = 0;
+        JoinDto dbLoginDto = memberDao.loginMember(joinDto.getUserId());
+        // 정보를 다 얻어 올 수 있다.
+        if(bCryptPasswordEncoder.matches(joinDto.getPassword(),dbLoginDto.getPassword())){
+            result = memberDao.updateMember(joinDto);
+        }
+        return result;
+    }
 }

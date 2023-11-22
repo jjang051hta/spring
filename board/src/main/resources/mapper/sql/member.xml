@@ -20,4 +20,8 @@
     <delete id="deleteMember" parameterType="LoginDto">
         DELETE FROM MEMBER WHERE userId = #{userId}
     </delete>
+    <update id="updateMember" parameterType="JoinDto">
+        update member set name=#{name}, email=#{email} WHERE userId = #{userId}
+    </update>
+
 </mapper>
