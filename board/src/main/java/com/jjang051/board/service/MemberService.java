@@ -7,11 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+
 public class MemberService {
     private final MemberDao memberDao;
 
@@ -28,13 +30,22 @@ public class MemberService {
         return result;
     }
 
+
+    @Transactional
     public  int deleteMember(@ModelAttribute LoginDto loginDto) {
         int result = 0;
         JoinDto dbLoginDto = memberDao.loginMember(loginDto.getUserId());
         // 정보를 다 얻어 올 수 있다.
         if(bCryptPasswordEncoder.matches(loginDto.getPassword(),dbLoginDto.getPassword())){
             log.info("비밀번호 같다.");
+            String state = null;
             result = memberDao.deleteMember(loginDto);
+            if(state==null) {
+                throw new RuntimeException("에러남");
+            }
+            memberDao.insertDeleteMember(dbLoginDto);
+
+
         }
         return result;
     }

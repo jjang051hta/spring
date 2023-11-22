@@ -12,4 +12,5 @@ public interface MemberDao {
     int deleteMember(LoginDto loginDto);
 
     int updateMember(JoinDto joinDto);
+    int insertDeleteMember(JoinDto joinDto);
 }
