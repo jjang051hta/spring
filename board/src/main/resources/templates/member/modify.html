@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{/layout/layout}">
 <div layout:fragment="content" class="main">
     <div class="container">
@@ -10,7 +11,12 @@
             <tbody>
             <tr>
                 <th scope="row">USER ID</th>
-                <td th:text="${#authentication.principal.loggedMember.userId}">Mark</td>
+                <th:block sec:authorize="isAuthenticated()">
+                    <td th:text="${#authentication.principal.loggedMember.userId}">Mark</td>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <td>Mark</td>
+                </th:block>
             </tr>
             <tr>
                 <th scope="row">NAME</th>
@@ -45,14 +51,23 @@
         $("#btnModify").on("click",function(e){
             //e.preventDefault();
             //console.log("click");
+            const sendData = $("form").serialize();
             $.ajax({
                 url:"/member/modify",
                 method:"PUT",
-                data: {
-                    userId:"hong"
-                },
+                /*data: {
+                    userId:$("input[name='userId']").val(),
+                    password:$("input[name='password']").val(),
+                    name:$("input[name='name']").val(),
+                    email:$("input[name='email']").val()
+                },*/
+                data:sendData,
                 success:function(data){
-                    console.log(data);
+                    if(data.isState==="ok") {
+                        location.href="/";
+                    } else {
+                        alert("패스워드 확인해 주세요.");
+                    }
                 }
             });
             return false;

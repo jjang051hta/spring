@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequestMapping("/member")
 @Controller
@@ -98,6 +100,20 @@ public class MemberController {
         return "/member/delete";
     }
 
+    @DeleteMapping("/delete")
+    @ResponseBody
+    public Map<String,String> deleteAjaxProcess(@ModelAttribute LoginDto loginDto, Model model) {
+        int result = memberService.deleteMember(loginDto);
+        Map<String,String> resultMap = new HashMap<>();
+        if(result>0) {
+            SecurityContextHolder.getContext().setAuthentication(null);
+            resultMap.put("isState","ok");
+            return resultMap;
+        }
+        resultMap.put("isState","fail");
+        return resultMap;
+    }
+
     @PostMapping("/join")
     public String joinProcess(@Valid @ModelAttribute JoinDto joinDto,
                                BindingResult bindingResult, Model model) {
@@ -110,8 +126,16 @@ public class MemberController {
     }
     @PutMapping("/modify")
     @ResponseBody
-    public String modifyAjaxProcess(@ModelAttribute JoinDto joinDto) {
+    public Map<String, String> modifyAjaxProcess(@ModelAttribute JoinDto joinDto,Model model) {
         log.info("joinDto==={}",joinDto.toString());
-        return "성공했음";
+        int result = memberService.updateMember(joinDto);
+        Map<String,String> resultMap = new HashMap<>();
+        if(result>0) {
+            SecurityContextHolder.getContext().setAuthentication(null);
+            resultMap.put("isState","ok");
+            return resultMap;
+        }
+        resultMap.put("isState","fail");
+        return resultMap;
     }
 }

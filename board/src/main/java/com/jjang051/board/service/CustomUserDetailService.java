@@ -22,6 +22,7 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         //db에 있는지 없는지 따진다음 비밀번호는 시큐리티가 알아서 해준다.
          JoinDto loggedMember = memberDao.loginMember(userId);
+         //id,email,name
          if(loggedMember!=null) {
              // dto  userna
 
