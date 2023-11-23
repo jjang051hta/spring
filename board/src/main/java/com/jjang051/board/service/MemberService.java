@@ -60,4 +60,15 @@ public class MemberService {
         }
         return result;
     }
+
+
+    /*@Transactional
+    public int updatePassword(UpdatePasswordDto updatePasswordDto) {
+        UpdatePasswordDto dbUpdatePasswordDto = UpdatePasswordDto.builder()
+                .userId(updatePasswordDto.getUserId())
+                .password(bCryptPasswordEncoder.encode(updatePasswordDto.getPassword()))
+                .build();
+        int result = memberDao.updatePassword(dbUpdatePasswordDto);
+        return result;
+    }*/
 }

@@ -27,6 +27,10 @@
         update member set name=#{name}, email=#{email} WHERE userId = #{userId}
     </update>
 
+    <update id="updatePassword" parameterType="UpdateDto">
+        update member set password=#{password} WHERE email = #{email}
+    </update>
+
     <insert id="insertDeleteMember" parameterType="JoinDto">
         insert into delete_member values(
         deletemember_seq.nextval,

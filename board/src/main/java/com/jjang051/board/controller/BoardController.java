@@ -252,10 +252,5 @@ public class BoardController {
         resultMap.put("url","/upload/"+folder+"/"+renamedFile);
         return resultMap;
     }
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public String handle(MethodArgumentTypeMismatchException exception){
-        log.info("여기로 들어온다");
-        return "/error";
-        //return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
-    }
+
 }

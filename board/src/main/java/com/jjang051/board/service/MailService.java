@@ -1,14 +1,18 @@
 package com.jjang051.board.service;
 
+import com.jjang051.board.dao.MemberDao;
+import com.jjang051.board.dto.LoginDto;
 import com.jjang051.board.dto.MailDto;
+import com.jjang051.board.dto.UpdateDto;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -16,7 +20,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class MailService {
 
+
     private final JavaMailSender javaMailSender;
+    private final MemberDao memberDao;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public void sendMail(MailDto mailDto) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(mailDto.getReceiver());
@@ -27,9 +35,9 @@ public class MailService {
 
     }
 
-    private int randomNumber;
+    private String randomNumber;
     public void createRandomNumber() {
-        randomNumber = (int)(Math.random()*90000)+10000;
+        randomNumber = ""+((int)(Math.random()*90000)+10000);
         log.info("randomNumber==={}",randomNumber);
     }
 
@@ -49,9 +57,20 @@ public class MailService {
         }
         return message;
     }
-    public int sendMailAuthEmail(String mail) {
+    public String sendAuthEmail(String mail) {
         MimeMessage message = createMail(mail);
+        //db 비밀번호를 생성된 비밀번호르르안호화 해서 넣어둔다.
         javaMailSender.send(message);
         return randomNumber;
+    }
+
+    @Transactional
+    public void sendMailAndChangePassword(UpdateDto updateDto) {
+        String randomNum = sendAuthEmail(updateDto.getEmail());  // 비밀번호 보내기....
+        UpdateDto dbUpdateDto = UpdateDto.builder()
+                .email(updateDto.getEmail())
+                .password(bCryptPasswordEncoder.encode(randomNum))
+                .build();
+        memberDao.updatePassword(dbUpdateDto);
     }
 }

@@ -139,4 +139,6 @@ public class MemberController {
         resultMap.put("isState","fail");
         return resultMap;
     }
+
+
 }
