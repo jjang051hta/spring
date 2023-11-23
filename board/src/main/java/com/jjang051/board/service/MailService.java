@@ -42,7 +42,7 @@ public class MailService {
             message.setRecipients(MimeMessage.RecipientType.TO,mail);  // 받는 사람
             message.setSubject("이메일 검증");
             String content = "<h2>요청하신 인증번호입니다.</h2>";
-            content+="<h1>"+randomNumber+"</h1>";
+            content+="<h1 style='font-size:100px; color:#f00;'>"+randomNumber+"</h1>";
             message.setText(content,"UTF-8","html");
         } catch (MessagingException e) {
             throw new RuntimeException(e);
