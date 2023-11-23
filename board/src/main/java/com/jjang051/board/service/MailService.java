@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class MailService {
 
     private final JavaMailSender javaMailSender;
-    /*public void sendMail(MailDto mailDto) {
+    public void sendMail(MailDto mailDto) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(mailDto.getReceiver());
         simpleMailMessage.setFrom("jjang051hta@naver.com");
@@ -23,7 +23,7 @@ public class MailService {
         simpleMailMessage.setText(mailDto.getContent());
         javaMailSender.send(simpleMailMessage);
 
-    }*/
+    }
 
     private int randomNumber;
     public void createRandomNumber() {
