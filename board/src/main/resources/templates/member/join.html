@@ -37,8 +37,8 @@
                     <div class="mb-3" id="emailConfirm" style="display: none">
                         <label for="email" class="form-label">email confirm</label>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" >
-                            <button class="btn btn-primary" type="button">이메일 인증</button>
+                            <input type="text" class="form-control" id="confirmNum">
+                            <button class="btn btn-primary" type="button" id="btnConfirm">이메일 인증</button>
                         </div>
                     </div>
 
@@ -57,9 +57,29 @@
         </div>
     </div>
     <script>
+        let confirmNum = 0;
         $("#btnSend").on("click",function() {
+            //requ
             $("#emailConfirm").show();
+            $.ajax({
+                url:"/mail/confirm",
+                method:"post",
+                data:{mail:$("#email").val()},
+                success:function(result) {
+                    alert("인증메일 발송되었습니다.");
+                    confirmNum = result.confirmNumber;
+                    console.log(result);
+                }
+
+            });
             return false;
+        });
+        $("#btnConfirm").on("click",function(){
+            if(confirmNum===$("#confirmNum").val()) {
+                alert("이메일 인증되었습니다");
+            } else {
+                alert("이메일 확인해 주세요.");
+            }
         })
     </script>
 </div>

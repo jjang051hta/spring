@@ -5,10 +5,10 @@ import com.jjang051.board.service.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -25,5 +25,15 @@ public class MailController {
     public String send(@ModelAttribute MailDto mailDto) {
         mailService.sendMail(mailDto);
         return "redirect:/";
+    }
+
+    @PostMapping("/confirm")
+    @ResponseBody
+    public Map<String, Integer> confirm(String mail) {
+        int randomNum = mailService.sendMailAuthEmail(mail);
+        Map<String,Integer> resultMap = new HashMap<>();
+        resultMap.put("confirmNumber",randomNum);
+        return resultMap;
+        //{confirmNumber:23435}
     }
 }

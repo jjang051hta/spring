@@ -1,6 +1,8 @@
 package com.jjang051.board.service;
 
 import com.jjang051.board.dto.MailDto;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +31,27 @@ public class MailService {
     public void createRandomNumber() {
         randomNumber = (int)(Math.random()*90000)+10000;
         log.info("randomNumber==={}",randomNumber);
+    }
+
+    public MimeMessage createMail(String mail) {
+        //렌덤 숫자 생성
+        createRandomNumber();
+        MimeMessage message =  javaMailSender.createMimeMessage();
+        try {
+            message.setFrom("jjang051hta@naver.com");  // 보내는 사람
+            message.setRecipients(MimeMessage.RecipientType.TO,mail);  // 받는 사람
+            message.setSubject("이메일 검증");
+            String content = "<h2>요청하신 인증번호입니다.</h2>";
+            content+="<h1>"+randomNumber+"</h1>";
+            message.setText(content,"UTF-8","html");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        return message;
+    }
+    public int sendMailAuthEmail(String mail) {
+        MimeMessage message = createMail(mail);
+        javaMailSender.send(message);
+        return randomNumber;
     }
 }
