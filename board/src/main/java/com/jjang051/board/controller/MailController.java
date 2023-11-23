@@ -23,7 +23,7 @@ public class MailController {
     }
     @PostMapping("/send")
     public String send(@ModelAttribute MailDto mailDto) {
-        //mailService.sendMail(mailDto);
+        mailService.sendMail(mailDto);
         return "redirect:/";
     }
 }
