@@ -9,6 +9,7 @@ import com.jjang051.board.exception.BoardException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -46,13 +47,21 @@ public class BoardService {
         return boardList;
     }
 
+    @Transactional
     public int insertBoard(BoardDto boardDto) {
         int result = boardDao.insertBoard(boardDto);
+        result = 0;
+        if(result <= 0) {
+            throw new BoardException(ErrorCode.INVALID_REQUEST);
+        }
         return result;
     }
 
     public int deleteBoard(int id) {
         int result = boardDao.deleteBoard(id);
+        if(result <= 0) {
+            throw new BoardException(ErrorCode.INVALID_REQUEST);
+        }
         return result;
     }
 
@@ -67,6 +76,9 @@ public class BoardService {
 
     public int modifyBoard(BoardDto boardDto) {
         int result = boardDao.modifyBoard(boardDto);
+        if(result <= 0) {
+            throw new BoardException(ErrorCode.INVALID_REQUEST);
+        }
         return result;
     }
 

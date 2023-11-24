@@ -7,18 +7,13 @@ import com.jjang051.board.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +26,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/login")
-    public String login( @RequestParam(value = "error", required = false) String error,
+    public String login( @RequestParam(value = "templates/error", required = false) String error,
                          @RequestParam(value = "exception", required = false) String exception,Model model) {
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
