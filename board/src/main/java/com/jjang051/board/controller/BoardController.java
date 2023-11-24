@@ -117,10 +117,10 @@ public class BoardController {
     public String getOneBoard(@PathVariable int id,Model model) {
         log.info("getOneBoard==={}",id);
         BoardDto boardDto = boardService.getOneBoard(id);
-        if(boardDto==null) {
+        /*if(boardDto==null) {
             //오류 났음....
             throw new BoardException(ErrorCode.INVALID_REQUEST);
-        }
+        }*/
 
         model.addAttribute("boardDto",boardDto);
 
@@ -254,10 +254,13 @@ public class BoardController {
         return resultMap;
     }
 
-    @ExceptionHandler(BoardException.class)
-    //@ResponseBody
-    public String runtimeHandle(Model model) {
-        model.addAttribute("title","오류");
-        return "/errors/error";
-    }
+    /*@ExceptionHandler(BoardException.class)
+    @ResponseBody
+    public ErrorDto runtimeHandle(BoardException e) {
+        ErrorDto response = ErrorDto.builder()
+                .errorCode(e.getErrorCode())
+                .errorMessage(e.getDetailMessage())
+                .build();
+        return response;
+    }*/
 }

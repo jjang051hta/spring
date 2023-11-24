@@ -53,4 +53,6 @@ public class MailController {
         mailService.sendMailAndChangePassword(updateDto);
         return "redirect:/member/login";
     }
+
+
 }

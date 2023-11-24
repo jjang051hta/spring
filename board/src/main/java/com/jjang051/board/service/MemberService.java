@@ -1,8 +1,10 @@
 package com.jjang051.board.service;
 
+import com.jjang051.board.code.ErrorCode;
 import com.jjang051.board.dao.MemberDao;
 import com.jjang051.board.dto.JoinDto;
 import com.jjang051.board.dto.LoginDto;
+import com.jjang051.board.exception.MemberException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,7 +28,13 @@ public class MemberService {
                 .email(joinDto.getEmail())
                 .name(joinDto.getName())
                 .build();
+        //여기다가 MemberException 을 터트려서 오류 처리 해보기...
+        //오류 코드는 DUPLICATE_MEMBER로 해보기....
         int result = memberDao.insertMember(insertJoinDto);
+        log.info("result==={}",result);
+        if(result<=0) {
+            throw new MemberException(ErrorCode.DUPLICATE_MEMBER);
+        }
         return result;
     }
 

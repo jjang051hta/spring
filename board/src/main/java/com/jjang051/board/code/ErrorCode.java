@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 public enum ErrorCode {
     // 내가 만든 오류들....
     INVALID_REQUEST("잘못된 요청입니다."),
+    DUPLICATE_MEMBER("이미 가입된 회원입니다."),
     INTERNAL_SERVER_ERROR("서버에 오류가 발생하였습니다.");
 
     private final String message;

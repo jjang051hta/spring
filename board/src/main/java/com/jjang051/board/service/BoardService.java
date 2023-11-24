@@ -5,6 +5,7 @@ import com.jjang051.board.code.ErrorCode;
 import com.jjang051.board.dao.BoardDao;
 import com.jjang051.board.dto.BoardDto;
 import com.jjang051.board.dto.Criteria;
+import com.jjang051.board.exception.BoardException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -56,9 +57,10 @@ public class BoardService {
     }
 
     public BoardDto getOneBoard(int id) {
+
         BoardDto result = boardDao.getOneBoard(id);
         if(result==null) {
-            //throw new BoardException(ErrorCode.NOT_FOUND_BOARD);
+            throw new BoardException(ErrorCode.INVALID_REQUEST);
         }
         return result;
     }
