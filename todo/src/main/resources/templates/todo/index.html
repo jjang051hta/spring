@@ -62,6 +62,9 @@
             if(i < firstDay.getDay()) {
                 output+=`<li class="blank"><span></span></li>`
             } else {
+                if(now.getDate()===count) {
+                    output += `<li class="today"><span>${count}</span></li>`
+                }
                 output += `<li><span>${count}</span></li>`
                 count++;
             }
