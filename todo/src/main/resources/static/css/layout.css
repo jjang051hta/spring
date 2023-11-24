@@ -32,7 +32,7 @@ button { background: none; border: none; padding: 0; outline: none; }
 
 .todo .todoList li .btnDelete { color: #fff; }
 
-.calendar-box { z-index: 3; }
+.calendar-box { z-index: 3;  width:400px; margin: auto}
 
 .calendar-box .inputBox { background: #fff; border-radius: 10px; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 10px 20px; margin-bottom: 10px; }
 
