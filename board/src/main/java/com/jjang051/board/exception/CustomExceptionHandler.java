@@ -34,6 +34,16 @@ public class CustomExceptionHandler {
         return response;
     }
 
+    @ExceptionHandler(MemberException.class)
+    @ResponseBody
+    public ErrorDto badName(MemberException e) {
+        ErrorDto response = ErrorDto.builder()
+                .errorCode(ErrorCode.BAD_NAME)
+                .errorMessage(ErrorCode.BAD_NAME.getMessage())
+                .build();
+        return response;
+    }
+
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
     public ErrorDto anonymousException(RuntimeException e) {

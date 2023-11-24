@@ -22,6 +22,13 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public int insertMember(@ModelAttribute JoinDto joinDto) {
+        // 이름을 개새끼 쓴 사람은 BAD_NAME ("이름에 욕이 들어가면 안됩니다")
+        // MemberException
+        if(joinDto.getName().contains("개새")) {
+            throw new MemberException(ErrorCode.BAD_NAME);
+        }
+
+
         JoinDto insertJoinDto = JoinDto.builder()
                 .userId(joinDto.getUserId())
                 .password(bCryptPasswordEncoder.encode(joinDto.getPassword()))
@@ -68,6 +75,9 @@ public class MemberService {
         }
         return result;
     }
+
+    // 메일이 중복인지 아닌지 따져보기....
+
 
 
     /*@Transactional
