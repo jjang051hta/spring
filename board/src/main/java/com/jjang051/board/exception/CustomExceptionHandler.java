@@ -4,6 +4,7 @@ import com.jjang051.board.code.ErrorCode;
 import com.jjang051.board.dto.ErrorDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,14 +37,24 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(MemberException.class)
     @ResponseBody
-    public ErrorDto badName(MemberException e) {
+    public ErrorDto memberHandler(MemberException e) {
         ErrorDto response = ErrorDto.builder()
-                .errorCode(ErrorCode.BAD_NAME)
-                .errorMessage(ErrorCode.BAD_NAME.getMessage())
+                .errorCode(e.getErrorCode())
+                .errorMessage(e.getMessage())
                 .build();
         return response;
     }
 
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseBody
+    public ErrorDto notFound(UsernameNotFoundException e) {
+        ErrorDto response = ErrorDto.builder()
+                .errorCode(ErrorCode.NOT_FOUND)
+                .errorMessage(ErrorCode.NOT_FOUND.getMessage())
+                .build();
+        return response;
+    }
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
     public ErrorDto anonymousException(RuntimeException e) {

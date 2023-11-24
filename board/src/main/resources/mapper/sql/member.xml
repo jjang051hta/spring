@@ -26,7 +26,6 @@
     <update id="updateMember" parameterType="JoinDto">
         update member set name=#{name}, email=#{email} WHERE userId = #{userId}
     </update>
-
     <update id="updatePassword" parameterType="UpdateDto">
         update member set password=#{password} WHERE email = #{email}
     </update>
@@ -39,4 +38,8 @@
         sysdate
         )
     </insert>
+    <select id="duplicateEmail" parameterType="String" resultType="int">
+        select count(*) as count from member where email = #{email}
+    </select>
+
 </mapper>

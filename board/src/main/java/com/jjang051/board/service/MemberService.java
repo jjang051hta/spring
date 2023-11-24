@@ -21,13 +21,16 @@ public class MemberService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Transactional
     public int insertMember(@ModelAttribute JoinDto joinDto) {
         // 이름을 개새끼 쓴 사람은 BAD_NAME ("이름에 욕이 들어가면 안됩니다")
         // MemberException
         if(joinDto.getName().contains("개새")) {
-            throw new MemberException(ErrorCode.BAD_NAME);
+            throw new MemberException(ErrorCode.BAD_NAME,"이름에 개새가 들어가면 안돼");
         }
-
+        if(memberDao.duplicateEmail(joinDto.getEmail())>0) {
+            throw new MemberException(ErrorCode.DUPLICATE_EMAIL);
+        }
 
         JoinDto insertJoinDto = JoinDto.builder()
                 .userId(joinDto.getUserId())

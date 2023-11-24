@@ -1,8 +1,10 @@
 package com.jjang051.board.service;
 
+import com.jjang051.board.code.ErrorCode;
 import com.jjang051.board.dao.MemberDao;
 import com.jjang051.board.dto.CustomUserDetails;
 import com.jjang051.board.dto.JoinDto;
+import com.jjang051.board.exception.MemberException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +24,6 @@ public class CustomUserDetailService implements UserDetailsService{
          if(loggedMember!=null) {
              return new CustomUserDetails(loggedMember);
          }
-        throw new UsernameNotFoundException("일치하는 사람이 없습니다.");
+        throw new UsernameNotFoundException("일치하는 회원이 없습니다.");
     }
 }
