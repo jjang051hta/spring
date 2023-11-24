@@ -57,7 +57,7 @@
         </div>
     </div>
     <script>
-        let isAuth = false;
+        let isAuth = true;
         let confirmNum = 0;
         $("#btnSend").on("click",function() {
             //requ
@@ -86,7 +86,7 @@
             if(isAuth) {
                 $("form").submit();
             }
-            alert("메일 인증하셔야 합니다.");
+            //alert("메일 인증하셔야 합니다.");
             return false;
         })
     </script>
