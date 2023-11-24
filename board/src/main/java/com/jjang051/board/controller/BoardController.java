@@ -1,23 +1,19 @@
 package com.jjang051.board.controller;
 
-import com.jjang051.board.dto.BoardDto;
-import com.jjang051.board.dto.Criteria;
-import com.jjang051.board.dto.ModalDto;
-import com.jjang051.board.dto.ToastDto;
+
+import com.jjang051.board.code.ErrorCode;
+import com.jjang051.board.dto.*;
+import com.jjang051.board.exception.BoardException;
 import com.jjang051.board.service.BoardService;
 import com.jjang051.board.utils.PaginationMaker;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -121,6 +117,11 @@ public class BoardController {
     public String getOneBoard(@PathVariable int id,Model model) {
         log.info("getOneBoard==={}",id);
         BoardDto boardDto = boardService.getOneBoard(id);
+        if(boardDto==null) {
+            //오류 났음....
+            throw new BoardException(ErrorCode.INVALID_REQUEST);
+        }
+
         model.addAttribute("boardDto",boardDto);
 
         return  "/board/view";
@@ -253,4 +254,10 @@ public class BoardController {
         return resultMap;
     }
 
+    @ExceptionHandler(BoardException.class)
+    //@ResponseBody
+    public String runtimeHandle(Model model) {
+        model.addAttribute("title","오류");
+        return "/errors/error";
+    }
 }

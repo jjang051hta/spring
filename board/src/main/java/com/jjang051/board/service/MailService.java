@@ -25,13 +25,51 @@ public class MailService {
     private final MemberDao memberDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public void sendMail(MailDto mailDto) {
+    /*public void sendMail(MailDto mailDto) {
+
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(mailDto.getReceiver());
         simpleMailMessage.setFrom("jjang051hta@naver.com");
         simpleMailMessage.setSubject(mailDto.getTitle());
         simpleMailMessage.setText(mailDto.getContent());
         javaMailSender.send(simpleMailMessage);
+
+    }*/
+
+    public void sendMail(MailDto mailDto) {
+        MimeMessage message =  javaMailSender.createMimeMessage();
+
+        try {
+            message.setFrom("jjang051hta@naver.com");  // 보내는 사람
+            message.setRecipients(MimeMessage.RecipientType.TO,mailDto.getReceiver());  // 받는 사람
+            message.setSubject(mailDto.getTitle());
+            message.setText(mailDto.getContent(),"UTF-8","html");
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        /*SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setTo(mailDto.getReceiver());
+        simpleMailMessage.setFrom("jjang051hta@naver.com");
+        simpleMailMessage.setSubject(mailDto.getTitle());
+        simpleMailMessage.setText(mailDto.getContent());
+        javaMailSender.send(simpleMailMessage);*/
+
+
+
+        /*try {
+            message.setFrom("jjang051hta@naver.com");  // 보내는 사람
+            message.setRecipients(MimeMessage.RecipientType.TO,mailDto.getReceiver());  // 받는 사람
+            message.setSubject(mailDto.getTitle());
+            message.setText(mailDto.getContent(),"UTF-8","html");
+
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }*/
+
 
     }
 

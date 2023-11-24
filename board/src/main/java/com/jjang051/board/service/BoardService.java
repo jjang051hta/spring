@@ -1,6 +1,7 @@
 package com.jjang051.board.service;
 
 
+import com.jjang051.board.code.ErrorCode;
 import com.jjang051.board.dao.BoardDao;
 import com.jjang051.board.dto.BoardDto;
 import com.jjang051.board.dto.Criteria;
@@ -38,6 +39,9 @@ public class BoardService {
             throw new CustomException(ErrorCode.INVALID_PARAMETER);
         }*/
         List<BoardDto> boardList = boardDao.getAllBoard(criteria);
+        if(boardList==null) {
+
+        }
         return boardList;
     }
 

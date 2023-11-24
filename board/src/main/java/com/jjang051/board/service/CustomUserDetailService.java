@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +22,6 @@ public class CustomUserDetailService implements UserDetailsService{
          if(loggedMember!=null) {
              return new CustomUserDetails(loggedMember);
          }
-        return null;
+        throw new UsernameNotFoundException("일치하는 사람이 없습니다.");
     }
 }
