@@ -103,12 +103,13 @@ public class MailService {
     }
 
     @Transactional
-    public void sendMailAndChangePassword(UpdateDto updateDto) {
+    public int sendMailAndChangePassword(UpdateDto updateDto) {
         String randomNum = sendAuthEmail(updateDto.getEmail());  // 비밀번호 보내기....
         UpdateDto dbUpdateDto = UpdateDto.builder()
                 .email(updateDto.getEmail())
                 .password(bCryptPasswordEncoder.encode(randomNum))
                 .build();
-        memberDao.updatePassword(dbUpdateDto);
+        int result = memberDao.updatePassword(dbUpdateDto);
+        return result;
     }
 }

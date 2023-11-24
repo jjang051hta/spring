@@ -1,11 +1,13 @@
 package com.jjang051.board.controller;
 
+import com.jjang051.board.code.ErrorCode;
 import com.jjang051.board.dto.LoginDto;
 import com.jjang051.board.dto.MailDto;
 import com.jjang051.board.dto.UpdateDto;
 import com.jjang051.board.service.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,9 +52,9 @@ public class MailController {
     public String findPasswordProcess(UpdateDto updateDto) {
         //비밀번호를 암호화해서 넣어둔다. update
         //int randomNum = mailService.sendAuthEmail(mail);  // 메일보내고 랜덤값 뱉어내기....
-        mailService.sendMailAndChangePassword(updateDto);
+        int result = mailService.sendMailAndChangePassword(updateDto);
         return "redirect:/member/login";
-    }
 
+    }
 
 }

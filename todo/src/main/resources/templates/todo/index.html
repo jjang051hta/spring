@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1>hello spring</h1>
+    <div class="calendar-box">
+        <div class="calendar">
+            <div class="days">
+                <ul>
+                    <li><span>sun</span></li>
+                    <li><span>mon</span></li>
+                    <li><span>tue</span></li>
+                    <li><span>wed</span></li>
+                    <li><span>thu</span></li>
+                    <li><span>fri</span></li>
+                    <li><span>sat</span></li>
+                </ul>
+                <div class="dates">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const leafYear = [31,29,31,30,31,30,31,31,30,31,30,31];
+        const notLeafYear = [31,28,31,30,31,30,31,31,30,31,30,31];
+        let output="";
+        for(let i=0;i<42;i++) {
+            output+=`<li>${i}</li>`
+        }
+        $(".calendar-box .dates ul").html(output);
+    </script>
+</body>
+</html>
