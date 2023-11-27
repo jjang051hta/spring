@@ -19,6 +19,14 @@
                 <input type="text" name="todo" id="todoTxt">
                 <button class="btnAdd">add</button>
             </div>
+            <div class="todoListBox">
+                <ul class="todoList">
+                    <!--<li data-no="1" class="yet"><span>밥먹기</span><button class="btnDelete">DEL</button></li>
+                    <li data-no="1" class="yet"><span>밥먹기</span><button class="btnDelete">DEL</button></li>
+                    <li data-no="1" class="yet"><span>밥먹기</span><button class="btnDelete">DEL</button></li>
+                    <li data-no="1" class="yet"><span>밥먹기</span><button class="btnDelete">DEL</button></li>-->
+                </ul>
+            </div>
         </div>
     </div>
     <div class="calendar-box">
@@ -148,6 +156,16 @@
                     todo:$("#todoTxt").val(),
                     pickedDate:queryDate,
                     isDone:"yet"
+                },
+                success:function(result) {
+                    console.log(result);
+                    $(".todoList li").remove();
+                    $.each(result,function(idx,item){
+                        $(".todoList").append(`
+                            <li data-no="1" class="yet"><span>${item.todo}</span><button class="btnDelete">DEL</button></li>
+                        `)
+                    })
+
                 }
             })
         });
@@ -158,6 +176,9 @@
         $("body").on("click",".dates ul li",function() {
             console.log("click");
             queryDate = $(this).data("picked");
+            $(this).addClass("picked");
+            $(this).siblings().removeClass("picked");
+
         });
 
         /*$(".dates ul li").on("click",function(){

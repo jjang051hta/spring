@@ -6,4 +6,7 @@
     <insert parameterType="TodoDto" id="insertTodo">
         insert into todo values(todo_seq.nextval,#{todo},#{pickedDate},#{isDone})
     </insert>
+    <select parameterType="TodoDto" id="getPickedDateTodo">
+        select * from todo where pickedDate = #{pickedDate} order by no desc
+    </select>
 </mapper>

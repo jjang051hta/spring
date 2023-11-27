@@ -5,10 +5,9 @@ import com.jjang051.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -22,9 +21,11 @@ public class TodoController {
         return "/todo/index";
     }
     @PostMapping("/insert")
-    public String insertTodo(@ModelAttribute TodoDto todoDto) {
+    @ResponseBody
+    public List<TodoDto> insertTodo(@ModelAttribute TodoDto todoDto) {
         log.info("todoDto==={}",todoDto.toString());
         todoService.insertTodo(todoDto);
-        return "/todo/index";
+        List<TodoDto> todolist = todoService.getPickedDateTodo(todoDto);
+        return todolist;
     }
 }
