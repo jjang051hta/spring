@@ -157,6 +157,7 @@
                     pickedDate:queryDate,
                     isDone:"yet"
                 },
+                // give me answer
                 success:function(result) {
                     console.log(result);
                     $(".todoList li").remove();
@@ -171,6 +172,8 @@
         });
 
 
+
+
         // 처음 렌더링것만 인식한다.
         // 부모에게이벤트를 위임한다.
         $("body").on("click",".dates ul li",function() {
@@ -178,6 +181,25 @@
             queryDate = $(this).data("picked");
             $(this).addClass("picked");
             $(this).siblings().removeClass("picked");
+
+            $.ajax({
+                url:"/todo/list",
+                method:"post",
+                data:{
+                    pickedDate:queryDate,
+                },
+                // give me answer
+                success:function(result) {
+                    console.log(result);
+                    $(".todoList li").remove();
+                    $.each(result,function(idx,item){
+                        $(".todoList").append(`
+                            <li data-no="1" class="yet"><span>${item.todo}</span><button class="btnDelete">DEL</button></li>
+                        `)
+                    })
+
+                }
+            })
 
         });
 

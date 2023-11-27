@@ -28,4 +28,12 @@ public class TodoController {
         List<TodoDto> todolist = todoService.getPickedDateTodo(todoDto);
         return todolist;
     }
+
+    @PostMapping("/list")
+    @ResponseBody
+    public List<TodoDto> getPickedDateTodo(@ModelAttribute TodoDto todoDto) {
+        List<TodoDto> todolist = todoService.getPickedDateTodo(todoDto);
+        return todolist;
+    }
+
 }
