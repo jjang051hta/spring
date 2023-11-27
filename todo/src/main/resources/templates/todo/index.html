@@ -55,8 +55,10 @@
 
 
 
+
         const now = new Date();  //2024/11/27
 
+        let queryDate = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
 
 
         function makeCalendar(pickedYear,pickedMonth) {
@@ -93,9 +95,20 @@
                     if(now.getDate()===count &&
                         now.getFullYear() === firstDay.getFullYear() &&
                         now.getMonth() === firstDay.getMonth()) {
-                        output += `<li class="today"><span>${count}</span></li>`
+                        output += `<li class="today" data-date="${count}"
+                                                     data-year="${firstDay.getFullYear()}"
+                                                     data-month="${firstDay.getMonth()+1}"
+                                                     data-picked =
+                                                     "${firstDay.getFullYear()}-${firstDay.getMonth()}-${count}"
+                                   ><span>${count}</span></li>`
                     } else {
-                        output += `<li><span>${count}</span></li>`
+                        output += `<li
+                                         data-date="${count}"
+                                         data-year="${firstDay.getFullYear()}"
+                                         data-month="${firstDay.getMonth()+1}"
+                                         data-picked =
+                                         "${firstDay.getFullYear()}-${firstDay.getMonth()+1}-${count}"
+                        ><span>${count}</span></li>`
                     }
                     count++;
                 }
@@ -128,8 +141,28 @@
         // add 눌렀을때 데이터 전달....
         $(".btnAdd").on("click",function(){
             console.log("add click");
-        })
+            $.ajax({
+                url:"/todo/insert",
+                method:"post",
+                data:{
+                    todo:$("#todoTxt").val(),
+                    pickedDate:queryDate,
+                    isDone:"yet"
+                }
+            })
+        });
 
+
+        // 처음 렌더링것만 인식한다.
+        // 부모에게이벤트를 위임한다.
+        $("body").on("click",".dates ul li",function() {
+            console.log("click");
+            queryDate = $(this).data("picked");
+        });
+
+        /*$(".dates ul li").on("click",function(){
+            console.log("click");
+        });*/
 
     </script>
 </body>

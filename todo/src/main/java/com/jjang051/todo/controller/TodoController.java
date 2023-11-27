@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,7 +22,8 @@ public class TodoController {
         return "/todo/index";
     }
     @PostMapping("/insert")
-    public String insertTodo(TodoDto todoDto) {
+    public String insertTodo(@ModelAttribute TodoDto todoDto) {
+        log.info("todoDto==={}",todoDto.toString());
         todoService.insertTodo(todoDto);
         return "/todo/index";
     }
