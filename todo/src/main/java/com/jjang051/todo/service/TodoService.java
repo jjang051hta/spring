@@ -12,14 +12,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TodoService {
     private final TodoDao todoDao;
-    public int insertTodo(TodoDto todoDto) {
+
+
+    @Transactional
+    public List<TodoDto> insertTodo(TodoDto todoDto) {
         int result  = todoDao.insertTodo(todoDto);
-        return result;
+        List<TodoDto> todoList = getPickedDateTodo(todoDto);
+        return todoList;
     }
 
     public List<TodoDto> getPickedDateTodo(TodoDto todoDto) {
         List<TodoDto> todoList  = todoDao.getPickedDateTodo(todoDto);
         return todoList;
     }
+
+    public int deleteTodo(TodoDto todoDto) {
+        int result  = todoDao.deleteTodo(todoDto);
+        return result;
+    }
+
 
 }

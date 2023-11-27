@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -23,10 +25,8 @@ public class TodoController {
     @PostMapping("/insert")
     @ResponseBody
     public List<TodoDto> insertTodo(@ModelAttribute TodoDto todoDto) {
-        log.info("todoDto==={}",todoDto.toString());
-        todoService.insertTodo(todoDto);
-        List<TodoDto> todolist = todoService.getPickedDateTodo(todoDto);
-        return todolist;
+        List<TodoDto> todoList = todoService.insertTodo(todoDto);
+        return todoList;
     }
 
     @PostMapping("/list")
@@ -36,4 +36,12 @@ public class TodoController {
         return todolist;
     }
 
+    @DeleteMapping("/delete")
+    @ResponseBody
+    public Map<String,Integer> deleteTodo(@ModelAttribute TodoDto todoDto) {
+        int result = todoService.deleteTodo(todoDto);
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("isDelete",result);
+        return resultMap;
+    }
 }

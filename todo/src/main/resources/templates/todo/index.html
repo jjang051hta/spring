@@ -6,6 +6,13 @@
     <title>Title</title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/layout.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="/js/jquery-3.7.1.min.js"></script>
 </head>
@@ -34,7 +41,7 @@
             <div class="header">
                 <button class="prev">prev</button>
                 <div class="monthBox">
-                    <span class="year">2023</span>
+                    <span class="year">2023</span> -
                     <span class="month">12</span>
                 </div>
                 <button class="next">next</button>
@@ -149,6 +156,7 @@
         // add 눌렀을때 데이터 전달....
         $(".btnAdd").on("click",function(){
             console.log("add click");
+
             $.ajax({
                 url:"/todo/insert",
                 method:"post",
@@ -160,10 +168,12 @@
                 // give me answer
                 success:function(result) {
                     console.log(result);
+                    $("#todoTxt").val("");
+                    $("#todoTxt").focus();
                     $(".todoList li").remove();
                     $.each(result,function(idx,item){
                         $(".todoList").append(`
-                            <li data-no="1" class="yet"><span>${item.todo}</span><button class="btnDelete">DEL</button></li>
+                            <li data-no="${item.no}" class="yet"><span>${item.todo}</span><button class="btnDelete">DEL</button></li>
                         `)
                     })
 
@@ -194,7 +204,7 @@
                     $(".todoList li").remove();
                     $.each(result,function(idx,item){
                         $(".todoList").append(`
-                            <li data-no="1" class="yet"><span>${item.todo}</span><button class="btnDelete">DEL</button></li>
+                            <li data-no="${item.no}" class="yet"><span>${item.todo}</span><button class="btnDelete">DEL</button></li>
                         `)
                     })
 
@@ -202,6 +212,57 @@
             })
 
         });
+
+
+
+
+        //  클릭이벤트를 하지 않아도 사람이 직접 누른것처럼 이벤트를 전파한다.
+        $(".dates ul li.today").trigger("click");
+
+        // dom
+        $("body").on("click",".todoList li .btnDelete",function(e){
+            // 이벤트 버블링 캡쳐링...
+            console.log("click btnDelete");
+            const clickedItem = $(this).parent();
+            $.ajax({
+                url:"/todo/delete",
+                method:"delete",
+                data:{
+                    //pickedDate:queryDate,
+                    no:$(this).parent().data("no")
+
+                },
+                // give me answer
+                success:function(result) {
+                    console.log(result);
+                    if(result.isDelete===1) {
+                        clickedItem.remove();
+                    }
+                }
+            })
+        });
+
+        /*queryDate = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
+        $.ajax({
+            url:"/todo/list",
+            method:"post",
+            data:{
+                pickedDate:queryDate,
+            },
+            // give me answer
+            success:function(result) {
+                console.log(result);
+                $(".todoList li").remove();
+                $.each(result,function(idx,item){
+                    $(".todoList").append(`
+                        <li data-no="1" class="yet"><span>${item.todo}</span><button class="btnDelete">DEL</button></li>
+                    `)
+                })
+
+            }
+        })*/
+
+
 
         /*$(".dates ul li").on("click",function(){
             console.log("click");

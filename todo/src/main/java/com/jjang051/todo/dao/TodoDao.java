@@ -9,4 +9,5 @@ import java.util.List;
 public interface TodoDao {
     int insertTodo(TodoDto todoDto);
     List<TodoDto> getPickedDateTodo(TodoDto todoDto);
+    int deleteTodo(TodoDto todoDto);
 }
