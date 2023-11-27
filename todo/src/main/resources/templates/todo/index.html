@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Title</title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/layout.css">
@@ -10,9 +11,27 @@
 
 </head>
 <body>
-    <h1>hello spring</h1>
+
+    <div class="todo">
+        <div>
+            <div class="day" id="pickedDay">MON</div>
+            <div class="date" id="pickedDate">27</div>
+            <div class="inputBox">
+                <input type="text" name="todo" id="todoBox">
+                <button class="btnAdd">add</button>
+            </div>
+        </div>
+    </div>
     <div class="calendar-box">
         <div class="calendar">
+            <div class="header">
+                <button class="prev">prev</button>
+                <div class="monthBox">
+                    <span class="year">2023</span>
+                    <span class="month">12</span>
+                </div>
+                <button class="next">next</button>
+            </div>
             <div class="days">
                 <ul>
                     <li class="sun"><span>sun</span></li>
@@ -44,9 +63,9 @@
         if(firstDay.getFullYear()%4===0) {
             if(firstDay.getFullYear() % 100===0) {
                 selectedYear = notLeafYear;
-            } else {
-                selectedYear = leafYear;
             }
+            selectedYear = leafYear;
+
         } else {
             selectedYear = notLeafYear;
         }

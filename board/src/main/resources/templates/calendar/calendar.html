@@ -1,0 +1,43 @@
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events : [
+                    {
+                        title: 'aaa',
+                        start: '2023-11-23'
+                    },
+                    {
+                        title: 'bbb',
+                        start: '2023-11-25',
+                        end: '2023-11-30'
+                    }
+                ]
+            });
+            calendar.render();
+
+            $.ajax({
+                url:"/calendar/list",
+                method:"get",
+                success:function(result) {
+                    calendar.events=result.calendarDtoList;
+                    calendar.render();
+                }
+            })
+        });
+
+
+
+    </script>
+</head>
+<body>
+<div id='calendar'></div>
+</body>
+</html>

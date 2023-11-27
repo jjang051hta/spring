@@ -2,12 +2,16 @@ package com.jjang051.board.exception;
 
 import com.jjang051.board.code.ErrorCode;
 import com.jjang051.board.dto.ErrorDto;
+import com.jjang051.board.dto.JoinDto;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.SQLException;
 
@@ -30,11 +34,12 @@ public class CustomExceptionHandler {
     public ErrorDto duplicateMember(SQLException e) {
         ErrorDto response = ErrorDto.builder()
                 .errorCode(ErrorCode.DUPLICATE_MEMBER)
-                .errorMessage("알 수 없는 에러로 회원가입이 되지 않았습니다.")
+                .errorMessage(ErrorCode.INTERNAL_SERVER_ERROR.getMessage())
                 .build();
         return response;
     }
 
+    /*
     @ExceptionHandler(MemberException.class)
     @ResponseBody
     public ErrorDto memberHandler(MemberException e) {
@@ -44,6 +49,20 @@ public class CustomExceptionHandler {
                 .build();
         return response;
     }
+    */
+    @ExceptionHandler(MemberException.class)
+    public String memberHandler(MemberException e, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        ErrorDto response = ErrorDto.builder()
+                .errorCode(e.getErrorCode())
+                .errorMessage(e.getMessage())
+                .build();
+        model.addAttribute("error",response);
+        model.addAttribute("joinDto",new JoinDto());
+        log.info("==============={}",request.getRequestURI());
+        //return "/errors/error";
+        return ""+request.getRequestURI();
+    }
+
 
 
     @ExceptionHandler(UsernameNotFoundException.class)
