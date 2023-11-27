@@ -43,7 +43,7 @@ mybatis:
 logging:
   level:
     root: info
-    '[com.jjang051.board]': info
+    '[com.jjang051.todo]': info
 
 file:
   path: C:/upload/

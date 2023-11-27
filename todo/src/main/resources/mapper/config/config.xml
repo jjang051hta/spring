@@ -4,6 +4,6 @@
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias alias="TodoDto"   type="com.jjang051.board.dto.TodoDto"></typeAlias>
+        <typeAlias alias="TodoDto" type="com.jjang051.todo.dto.TodoDto"></typeAlias>
     </typeAliases>
 </configuration>

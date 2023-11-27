@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class TodoService {
     private final TodoDao todoDao;
-
-    @Transactional
     public int insertTodo(TodoDto todoDto) {
         int result  = todoDao.insertTodo(todoDto);
         return result;
