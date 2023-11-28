@@ -55,5 +55,12 @@ public class TodoController {
         return todoList;
     }
 
+    @GetMapping("/all")
+    @ResponseBody
+    public List<TodoDto> all(@ModelAttribute TodoDto todoDto) {
+        List<TodoDto> dateCountList = todoService.getDateCount();
+        return dateCountList;
+    }
+
 
 }

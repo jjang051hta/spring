@@ -22,11 +22,12 @@ public class TodoService {
     }
 
     // 해당하는 날짜의
+    @Transactional
     public List<TodoDto> getPickedDateTodo(TodoDto todoDto) {
         List<TodoDto> todoList  = todoDao.getPickedDateTodo(todoDto);
         return todoList;
     }
-
+    @Transactional
     public List<TodoDto> deleteTodo(TodoDto todoDto) {
         int result  = todoDao.deleteTodo(todoDto);
         List<TodoDto> todoList  = todoDao.getPickedDateTodo(todoDto);
@@ -34,10 +35,16 @@ public class TodoService {
         //return result;
     }
 
-
+    @Transactional
     public List<TodoDto> updateTodo(TodoDto todoDto) {
         int result  = todoDao.updateTodo(todoDto);
         List<TodoDto> todoList  = todoDao.getPickedDateTodo(todoDto);
         return todoList;
     }
+
+    public List<TodoDto> getDateCount() {
+        List<TodoDto> todoList  = todoDao.getDateCount();
+        return todoList;
+    }
+
 }

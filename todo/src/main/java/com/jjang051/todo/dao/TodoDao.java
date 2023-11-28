@@ -12,4 +12,6 @@ public interface TodoDao {
     int deleteTodo(TodoDto todoDto);
 
     int updateTodo(TodoDto todoDto);
+
+    List<TodoDto> getDateCount();
 }

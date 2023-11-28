@@ -13,4 +13,5 @@ public class TodoDto {
     private String todo;
     private String pickedDate;
     private String isDone;
+    private  int count;
 }

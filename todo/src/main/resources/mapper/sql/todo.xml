@@ -15,4 +15,9 @@
     <update id="updateTodo" parameterType="TodoDto">
         update todo set isdone = #{isDone} where no = #{no}
     </update>
+
+    <select id="getDateCount">
+        SELECT PICKEDDATE , count(*) AS count FROM todo GROUP BY PICKEDDATE
+        ORDER BY to_date(PICKEDDATE) desc
+    </select>
 </mapper>

@@ -23,7 +23,7 @@
             <div class="day" id="pickedDay">MON</div>
             <div class="date" id="pickedDate">27</div>
             <div class="inputBox">
-                <input type="text" name="todo" id="todoTxt">
+                <input type="text" name="todo" id="todoTxt" />
                 <button class="btnAdd">add</button>
             </div>
             <div class="todoListBox">
@@ -75,71 +75,87 @@
 
         let queryDate = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
 
+
+        console.log("queryDate====",queryDate);
+
         const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
         $("#pickedDay").text(days[now.getDay()]);
         $("#pickedDate").text(now.getDate());
 
 
         function makeCalendar(pickedYear,pickedMonth) {
-            let output="";
-            let count = 1;
-            const firstDay  = new Date(pickedYear, pickedMonth,1);  //2024/11/1
-            console.log(firstDay.getDay());  // 요일 얻어오기...
-            $(".monthBox .year").text(firstDay.getFullYear());
-            $(".monthBox .month").text(firstDay.getMonth()+1);
+            $.ajax({
+                url:"/todo/all",
+                method:"get",
+                success:function(result){
+                    console.log(result);
+                    let output="";
+                    let count = 1;
+                    const firstDay  = new Date(pickedYear, pickedMonth,1);  //2024/11/1
+                    console.log(firstDay.getDay());  // 요일 얻어오기...
+                    $(".monthBox .year").text(firstDay.getFullYear());
+                    $(".monthBox .month").text(firstDay.getMonth()+1);
 
-            let selectedYear;
-            // 윤년 공식
-            if(firstDay.getFullYear()%4===0) {
-                if(firstDay.getFullYear() % 100===0) {
-                    selectedYear = notLeafYear;
-                }
-                selectedYear = leafYear;
+                    let selectedYear;
+                    // 윤년 공식
+                    if(firstDay.getFullYear()%4===0) {
+                        if(firstDay.getFullYear() % 100===0) {
+                            selectedYear = notLeafYear;
+                        }
+                        selectedYear = leafYear;
 
-            } else {
-                selectedYear = notLeafYear;
-            }
-            if(firstDay.getFullYear()%400===0) {
-                selectedYear = leafYear;
-            }
-            for(let i=0;i<42;i++) {
-                if(count>selectedYear[firstDay.getMonth()]) {
-                    break;
-                }
-                if(i < firstDay.getDay()) {
-                    // 달을 만드는 첫날의 요일까지는 비워둔다.
-                    output+=`<li class="blank"><span></span></li>`
-                } else {
-                    if(now.getDate()===count &&
-                        now.getFullYear() === firstDay.getFullYear() &&
-                        now.getMonth() === firstDay.getMonth()) {
-                        output += `<li class="today" data-date="${count}"
+                    } else {
+                        selectedYear = notLeafYear;
+                    }
+                    if(firstDay.getFullYear()%400===0) {
+                        selectedYear = leafYear;
+                    }
+                    for(let i=0;i<42;i++) {
+                        if(count>selectedYear[firstDay.getMonth()]) {
+                            break;
+                        }
+                        if(i < firstDay.getDay()) {
+                            // 달을 만드는 첫날의 요일까지는 비워둔다.
+                            output+=`<li class="blank"><span></span></li>`
+                        } else {
+                            if(now.getDate()===count &&
+                                now.getFullYear() === firstDay.getFullYear() &&
+                                now.getMonth() === firstDay.getMonth()) {
+                                output += `<li class="today" data-date="${count}"
                                                      data-year="${firstDay.getFullYear()}"
                                                      data-month="${firstDay.getMonth()+1}"
                                                      data-picked =
-                                                     "${firstDay.getFullYear()}-${firstDay.getMonth()}-${count}"
+                                                     "${firstDay.getFullYear()}-${firstDay.getMonth()+1}-${count}"
                                    ><span>${count}</span></li>`
-                    } else {
-                        output += `<li
+                            } else {
+                                output += `<li
                                          data-date="${count}"
                                          data-year="${firstDay.getFullYear()}"
                                          data-month="${firstDay.getMonth()+1}"
                                          data-picked =
                                          "${firstDay.getFullYear()}-${firstDay.getMonth()+1}-${count}"
                         ><span>${count}</span></li>`
+                            }
+                            count++;
+                        }
                     }
-                    count++;
+                    $(".calendar-box .dates ul").html(output);
+                    //달력 다만들었음....
+
+                    $(".calendar-box .dates ul li").each(function(index, item){
+                        $.each(result,function(index02,item02){
+                            if(item02.pickedDate===$(item).data("picked")) {
+                                $(item).append(`<div class="count">${item02.count}</div>`);
+                            }
+                        })
+                    })
+
+                    gsap.from(".calendar-box .dates ul li",{scale:0, ease:"back",duration:1, stagger:0.02});
                 }
-            }
-            $(".calendar-box .dates ul").html(output);
-            gsap.from(".calendar-box .dates ul li",{scale:0, ease:"back",duration:1, stagger:0.02});
+            });
         }
 
         makeCalendar(now.getFullYear(),now.getMonth());
-
-        $(".calendar-box .dates ul li").on("click",function() {
-            console.log("날짜 클릭");
-        });
 
         let pickedNow = new Date();
 
