@@ -75,6 +75,10 @@
 
         let queryDate = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
 
+        const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+        $("#pickedDay").text(days[now.getDay()]);
+        $("#pickedDate").text(now.getDate());
+
 
         function makeCalendar(pickedYear,pickedMonth) {
             let output="";
@@ -172,7 +176,10 @@
                     $(".todoList li").remove();
                     $.each(result,function(idx,item){
                         $(".todoList").append(`
-                            <li data-no="${item.no}" class="yet"><span>${item.todo}</span><button class="btnDelete">DEL</button></li>
+                            <li data-no="${item.no}" class="${item.isDone}" data-picked="${item.pickedDate}">
+                                <span class="txt">${item.todo}</span>
+                                <button class="btnDelete">DEL</button>
+                            </li>
                         `)
                     })
 
@@ -203,13 +210,12 @@
                     $(".todoList li").remove();
                     $.each(result,function(idx,item){
                         $(".todoList").append(`
-                            <li data-no="${item.no}" class="yet">
+                            <li data-no="${item.no}" class="${item.isDone}" data-picked="${item.pickedDate}">
                                 <span class="txt">${item.todo}</span>
                                 <button class="btnDelete">DEL</button>
                             </li>
                         `)
-                    })
-
+                    });
                 }
             })
         });
@@ -225,23 +231,32 @@
             // 이벤트 버블링 캡쳐링...
             console.log("click btnDelete");
             const clickedItem = $(this).parent();
+            const queryDate = clickedItem.data("picked");
+            console.log("delet 했을때 ===",queryDate);
             $.ajax({
                 url:"/todo/delete",
                 method:"delete",
                 data:{
                     //pickedDate:queryDate,
-                    no:$(this).parent().data("no")
+                    no:$(this).parent().data("no"),
+                    pickedDate:queryDate,
 
                 },
                 // give me answer
                 success:function(result) {
-                    console.log(result);
-                    if(result.isDelete===1) {
-                        clickedItem.remove();
-                    }
+                    $(".todoList li").remove();
+                    $.each(result,function(idx,item){
+                        $(".todoList").append(`
+                            <li data-no="${item.no}" class="${item.isDone}" data-picked="${item.pickedDate}">
+                                <span class="txt">${item.todo}</span>
+                                <button class="btnDelete">DEL</button>
+                            </li>
+                        `)
+                    });
                 }
             })
         });
+        // 화면 상태랑 값이 같게 맞추어야 한다.
 
 
         // 이벤트 위임....
@@ -249,6 +264,8 @@
             console.log("txt 클릭");
             const no = $(this).parent().data("no");
             const clickedItem = $(this).parent();
+            const queryDate = clickedItem.data("picked");
+            console.log("queryDate===",queryDate);
             let isState;
             if(clickedItem.hasClass("done")) {
                 isState="yet";
@@ -259,19 +276,20 @@
                 url:"/todo/update",
                 data:{
                     no:no,
-                    isDone:isState
+                    isDone:isState,
+                    pickedDate:queryDate
                 },
                 method:"put",
                 success:function(result) {
-                    console.log(result);
-                    if(result.isUpdate===1) {
-                        //clickedItem.removeClass("yet").addClass("done");
-                        if(clickedItem.hasClass("done")) {
-                            clickedItem.removeClass("done").addClass("yet");
-                        } else {
-                            clickedItem.removeClass("yet").addClass("done");
-                        }
-                    }
+                    $(".todoList li").remove();
+                    $.each(result,function(idx,item){
+                        $(".todoList").append(`
+                            <li data-no="${item.no}" class="${item.isDone}" data-picked="${item.pickedDate}">
+                                <span class="txt">${item.todo}</span>
+                                <button class="btnDelete">DEL</button>
+                            </li>
+                        `)
+                    });
                 }
             })
         })

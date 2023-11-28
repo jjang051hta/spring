@@ -21,19 +21,23 @@ public class TodoService {
         return todoList;
     }
 
+    // 해당하는 날짜의
     public List<TodoDto> getPickedDateTodo(TodoDto todoDto) {
         List<TodoDto> todoList  = todoDao.getPickedDateTodo(todoDto);
         return todoList;
     }
 
-    public int deleteTodo(TodoDto todoDto) {
+    public List<TodoDto> deleteTodo(TodoDto todoDto) {
         int result  = todoDao.deleteTodo(todoDto);
-        return result;
+        List<TodoDto> todoList  = todoDao.getPickedDateTodo(todoDto);
+        return todoList;
+        //return result;
     }
 
 
-    public int updateTodo(TodoDto todoDto) {
+    public List<TodoDto> updateTodo(TodoDto todoDto) {
         int result  = todoDao.updateTodo(todoDto);
-        return result;
+        List<TodoDto> todoList  = todoDao.getPickedDateTodo(todoDto);
+        return todoList;
     }
 }

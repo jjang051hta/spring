@@ -36,22 +36,23 @@ public class TodoController {
         return todolist;
     }
 
+
     @DeleteMapping("/delete")
     @ResponseBody
-    public Map<String,Integer> deleteTodo(@ModelAttribute TodoDto todoDto) {
-        int result = todoService.deleteTodo(todoDto);
-        Map<String, Integer> resultMap = new HashMap<>();
-        resultMap.put("isDelete",result);
-        return resultMap;
+    public List<TodoDto> deleteTodo(@ModelAttribute TodoDto todoDto) {
+        log.info("todoDto==={}",todoDto.toString());
+        List<TodoDto> todoList = todoService.deleteTodo(todoDto);
+        //Map<String, Integer> resultMap = new HashMap<>();
+        //resultMap.put("isDelete",result);
+        return todoList;
     }
 
     @PutMapping("/update")
     @ResponseBody
-    public Map<String,Integer> updateTodo(@ModelAttribute TodoDto todoDto) {
-        int result = todoService.updateTodo(todoDto);
-        Map<String, Integer> resultMap = new HashMap<>();
-        resultMap.put("isUpdate",result);
-        return resultMap;
+    public List<TodoDto> updateTodo(@ModelAttribute TodoDto todoDto) {
+        log.info("todoDto update==={}",todoDto.toString());
+        List<TodoDto> todoList = todoService.updateTodo(todoDto);
+        return todoList;
     }
 
 
