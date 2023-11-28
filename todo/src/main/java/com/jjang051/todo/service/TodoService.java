@@ -43,6 +43,7 @@ public class TodoService {
     }
 
     public List<TodoDto> getDateCount() {
+        // count,pickedDate, no
         List<TodoDto> todoList  = todoDao.getDateCount();
         return todoList;
     }

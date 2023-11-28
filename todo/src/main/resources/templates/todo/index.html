@@ -149,13 +149,15 @@
                             }
                         })
                     })
-
+                    $(".dates ul li.today").trigger("click");
                     gsap.from(".calendar-box .dates ul li",{scale:0, ease:"back",duration:1, stagger:0.02});
                 }
             });
         }
 
         makeCalendar(now.getFullYear(),now.getMonth());
+
+          // 없는거 렌더링되기전에 dom을 클릭을 한거랑 같다.
 
         let pickedNow = new Date();
 
@@ -239,8 +241,7 @@
 
 
 
-        //  클릭이벤트를 하지 않아도 사람이 직접 누른것처럼 이벤트를 전파한다.
-        $(".dates ul li.today").trigger("click");
+
 
         // dom
         $("body").on("click",".todoList li .btnDelete",function(e){
@@ -339,5 +340,10 @@
         });*/
 
     </script>
+
+
+
+
+
 </body>
 </html>
