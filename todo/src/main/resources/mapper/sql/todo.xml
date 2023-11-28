@@ -12,4 +12,7 @@
     <delete id="deleteTodo" parameterType="TodoDto">
         delete from todo where no = #{no}
     </delete>
+    <update id="updateTodo" parameterType="TodoDto">
+        update todo set isdone = #{isDone} where no = #{no}
+    </update>
 </mapper>

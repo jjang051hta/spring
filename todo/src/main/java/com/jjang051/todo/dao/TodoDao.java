@@ -10,4 +10,6 @@ public interface TodoDao {
     int insertTodo(TodoDto todoDto);
     List<TodoDto> getPickedDateTodo(TodoDto todoDto);
     int deleteTodo(TodoDto todoDto);
+
+    int updateTodo(TodoDto todoDto);
 }

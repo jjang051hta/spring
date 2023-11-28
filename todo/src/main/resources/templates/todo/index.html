@@ -98,7 +98,6 @@
             if(firstDay.getFullYear()%400===0) {
                 selectedYear = leafYear;
             }
-
             for(let i=0;i<42;i++) {
                 if(count>selectedYear[firstDay.getMonth()]) {
                     break;
@@ -204,13 +203,15 @@
                     $(".todoList li").remove();
                     $.each(result,function(idx,item){
                         $(".todoList").append(`
-                            <li data-no="${item.no}" class="yet"><span>${item.todo}</span><button class="btnDelete">DEL</button></li>
+                            <li data-no="${item.no}" class="yet">
+                                <span class="txt">${item.todo}</span>
+                                <button class="btnDelete">DEL</button>
+                            </li>
                         `)
                     })
 
                 }
             })
-
         });
 
 
@@ -241,6 +242,41 @@
                 }
             })
         });
+
+
+        // 이벤트 위임....
+        $("body").on("click",".todoList li .txt",function() {
+            console.log("txt 클릭");
+            const no = $(this).parent().data("no");
+            const clickedItem = $(this).parent();
+            let isState;
+            if(clickedItem.hasClass("done")) {
+                isState="yet";
+            } else {
+                isState="done";
+            }
+            $.ajax({
+                url:"/todo/update",
+                data:{
+                    no:no,
+                    isDone:isState
+                },
+                method:"put",
+                success:function(result) {
+                    console.log(result);
+                    if(result.isUpdate===1) {
+                        //clickedItem.removeClass("yet").addClass("done");
+                        if(clickedItem.hasClass("done")) {
+                            clickedItem.removeClass("done").addClass("yet");
+                        } else {
+                            clickedItem.removeClass("yet").addClass("done");
+                        }
+                    }
+                }
+            })
+        })
+
+
 
         /*queryDate = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
         $.ajax({

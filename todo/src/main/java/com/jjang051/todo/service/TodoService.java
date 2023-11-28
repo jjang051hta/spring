@@ -32,4 +32,8 @@ public class TodoService {
     }
 
 
+    public int updateTodo(TodoDto todoDto) {
+        int result  = todoDao.updateTodo(todoDto);
+        return result;
+    }
 }

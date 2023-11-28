@@ -44,4 +44,15 @@ public class TodoController {
         resultMap.put("isDelete",result);
         return resultMap;
     }
+
+    @PutMapping("/update")
+    @ResponseBody
+    public Map<String,Integer> updateTodo(@ModelAttribute TodoDto todoDto) {
+        int result = todoService.updateTodo(todoDto);
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("isUpdate",result);
+        return resultMap;
+    }
+
+
 }
