@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -34,7 +36,6 @@ public class CalendarController {
     }
 
     @PostMapping("/todo")
-    @ResponseBody
     public String calendarTodo(@ModelAttribute CalendarDto calendarDto) {
         log.info("calendarDto.toString()===={}",calendarDto.toString());
         CalendarDto dbInserCalendarDto = CalendarDto.builder()
@@ -48,7 +49,26 @@ public class CalendarController {
                 .borderColor(calendarDto.getBackgroundColor())
                 .build();
         calendarService.insertCalendar(dbInserCalendarDto);
-        return "/todo/calendar";
+        return "redirect:/calendar/";
     }
 
+    @PostMapping("/modalTodo")
+    @ResponseBody
+    public Map<String,String> modalTodo(@ModelAttribute CalendarDto calendarDto) {
+        log.info("calendarDto.toString()===={}",calendarDto.toString());
+        CalendarDto dbInserCalendarDto = CalendarDto.builder()
+                .id(calendarDto.getId())
+                .start(calendarDto.getStart()+" "+calendarDto.getStartTime())
+                .end(calendarDto.getEnd()+" "+calendarDto.getEndTime())
+                .allDay(calendarDto.isAllDay())
+                .title(calendarDto.getTitle())
+                .url(calendarDto.getUrl())
+                .backgroundColor(calendarDto.getBackgroundColor())
+                .borderColor(calendarDto.getBackgroundColor())
+                .build();
+        int result = calendarService.insertCalendar(dbInserCalendarDto);
+        Map<String, String > resultMap = new HashMap<>();
+        resultMap.put("isInsert","ok");
+        return resultMap;
+    }
 }
