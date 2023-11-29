@@ -11,11 +11,12 @@ import lombok.extern.apachecommons.CommonsLog;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-//@Table(name = "myBoard")
+@Table(name = "aaa")
 public class Board02 {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "boad02_seq_gen")
+    @SequenceGenerator(name="boad02_seq_gen",sequenceName = "boad02_seq", initialValue = 1, allocationSize = 1)
     @Column(name="boardId")
     private Integer id;
 
