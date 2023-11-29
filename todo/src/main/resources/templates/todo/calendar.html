@@ -99,7 +99,8 @@
 
         $("#btnConfirm").on("click",function(){
             // 기본 기능 막기
-            console.log("btnConfirm");
+
+            console.log(calendar.getEventSources());
             //form 안에 모든 input의 값을 key:value로 만들기...
             const sendData = $("#form").serialize();
             console.log(sendData);
@@ -110,7 +111,19 @@
                 success:function(result) {
                     console.log(result);
                     if(result.isInsert==="ok") {
-                        alert("일정이 추가되었습니다.");
+                        //alert("일정이 추가되었습니다.");
+//                        location.reload();
+                        console.log(result.calendarDtoList);
+                        myModal.hide();
+                        console.log(calendar);
+                        calendar.events(result.calendarDtoList);
+                        calendar.refetchEvents();
+                        calendar.render();
+                        /*calendar.currentData.eventSource.remove();
+                        calendar.eventSource.addEventSource(result.calendarDtoList);
+                        calendar.refetchEvents();
+*/
+                        //calendar.fullCalendar('refetchEvents');
                     }
                 }
 
@@ -128,6 +141,9 @@
             selectable:true,
             select:function(e) {
                 console.log(e)
+                $("#startDate").val(e.startStr);
+                $("#endDate").val(e.startStr);
+
                 myModal.show();
             },
             eventClick:function(e) {

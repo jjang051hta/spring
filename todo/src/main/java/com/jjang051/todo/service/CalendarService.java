@@ -28,4 +28,13 @@ public class CalendarService {
         List<CalendarDto> calendarDtoList  = calendarDao.getAllCalendar();
         return calendarDtoList;
     }
+    @Transactional
+    public List<CalendarDto> insertAjaxCalendar(CalendarDto calendarDto) {
+        int result  = calendarDao.insertCalendar(calendarDto);
+        if(result>0) {
+            List<CalendarDto> calendarDtoList  = calendarDao.getAllCalendar();
+            return calendarDtoList;
+        }
+        return null;
+    }
 }

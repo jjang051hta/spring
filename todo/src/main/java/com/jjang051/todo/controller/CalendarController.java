@@ -54,7 +54,7 @@ public class CalendarController {
 
     @PostMapping("/modalTodo")
     @ResponseBody
-    public Map<String,String> modalTodo(@ModelAttribute CalendarDto calendarDto) {
+    public Map<String,Object> modalTodo(@ModelAttribute CalendarDto calendarDto) {
         log.info("calendarDto.toString()===={}",calendarDto.toString());
         CalendarDto dbInserCalendarDto = CalendarDto.builder()
                 .id(calendarDto.getId())
@@ -66,9 +66,10 @@ public class CalendarController {
                 .backgroundColor(calendarDto.getBackgroundColor())
                 .borderColor(calendarDto.getBackgroundColor())
                 .build();
-        int result = calendarService.insertCalendar(dbInserCalendarDto);
-        Map<String, String > resultMap = new HashMap<>();
+        List<CalendarDto> calendarDtoList = calendarService.insertAjaxCalendar(dbInserCalendarDto);
+        Map<String, Object > resultMap = new HashMap<>();
         resultMap.put("isInsert","ok");
+        resultMap.put("calendarDtoList",calendarDtoList);
         return resultMap;
     }
 }
