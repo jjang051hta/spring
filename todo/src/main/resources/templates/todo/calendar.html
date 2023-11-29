@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
     <style>
         #calendar {
-            width:800px;
+            width:1200px;
             margin: 50px auto;
         }
     </style>
@@ -16,36 +16,39 @@
     <div id="calendar">
 
     </div>
-    <script>
+    <script th:inline="javascript">
         const calendarEl = document.querySelector("#calendar");
         const calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: "dayGridMonth",
             timeZone: "UTC",
             locale:"ko",
-            events: [
-                {
-                    id: 'a',
-                    title: '배고프당',
-                    start: '2023-11-28',
-                    backgroundColor:"#ff0000",
-                    textColor:"#fff",
-                    borderColor:"#ff0000"
-                },
-                {
-                    id: 'b',
-                    title: '배고프당02',
-                    start: '2023-11-28'
-                },
-                {
-                    id: 'b',
-                    title: '배고프당03',
-                    start: '2023-11-28',
-                    end:"2023-11-31"
-                },
-
-            ]
+            events: [[${calendarDtoList}]]
+            /*
+                [
+                    {
+                        id: 'a',
+                        title: '배고프당',
+                        start: '2023-11-28',
+                        backgroundColor:"#ff0000",
+                        textColor:"#fff",
+                        borderColor:"#ff0000"
+                    },
+                    {
+                        id: 'b',
+                        title: '배고프당02',
+                        start: '2023-11-28'
+                    },
+                    {
+                        id: 'b',
+                        title: '배고프당03',
+                        start: '2023-11-28',
+                        end:"2023-11-31"
+                    },
+                ]
+                */
         });
         calendar.render();
     </script>
+
 </body>
 </html>
