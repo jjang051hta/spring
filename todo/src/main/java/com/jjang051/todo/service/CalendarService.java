@@ -17,9 +17,8 @@ import java.util.List;
 public class CalendarService {
     private final CalendarDao calendarDao;
 
-    //@Transactional
+    @Transactional
     public int insertCalendar(CalendarDto calendarDto) {
-        log.info("calendarDto==={}",calendarDto.toString());
         int result  = calendarDao.insertCalendar(calendarDto);
         return result;
     }

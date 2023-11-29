@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +37,19 @@ public class CalendarController {
     }
 
     @PostMapping("/todo")
+    @ResponseBody
     public String calendarTodo(@ModelAttribute CalendarDto calendarDto) {
+        log.info("calendarDto.toString()===={}",calendarDto.toString());
+        CalendarDto dbInserCalendarDto = CalendarDto.builder()
+                .id(calendarDto.getId())
+                .start(calendarDto.getStart()+" "+calendarDto.getStartTime())
+                .end(calendarDto.getEnd()+" "+calendarDto.getEndTime())
+                .allDay(calendarDto.isAllDay())
+                .title(calendarDto.getTitle())
+                .backgroundColor(calendarDto.getBackgroundColor())
+                .borderColor(calendarDto.getBackgroundColor())
+                .build();
+        calendarService.insertCalendar(dbInserCalendarDto);
         return "/todo/calendar";
     }
 
