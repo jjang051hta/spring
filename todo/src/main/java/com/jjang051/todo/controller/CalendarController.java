@@ -23,12 +23,9 @@ public class CalendarController {
 
     @GetMapping("/")
     public String calendar(Model model) {
-//        List<CalendarDto> todo = new ArrayList<>();
-//        todo.add(TodoDto.builder().id("aaa").start("2023-11-28").title("밥먹고 합시다.").build());
-//        todo.add(TodoDto.builder().id("bbb").start("2023-11-29").title("밥먹고 합시다.").build());
-//        todo.add(TodoDto.builder().id("ccc").start("2023-11-15").title("밥먹고 합시다.").build());
-//
-//        model.addAttribute("todo",todo);
+        List<CalendarDto> calendarDtoList =
+                calendarService.getAllCalendar();
+        model.addAttribute("calendarDtoList",calendarDtoList);
         return "/todo/calendar";
     }
     @GetMapping("/form")
@@ -46,6 +43,7 @@ public class CalendarController {
                 .end(calendarDto.getEnd()+" "+calendarDto.getEndTime())
                 .allDay(calendarDto.isAllDay())
                 .title(calendarDto.getTitle())
+                .url(calendarDto.getUrl())
                 .backgroundColor(calendarDto.getBackgroundColor())
                 .borderColor(calendarDto.getBackgroundColor())
                 .build();

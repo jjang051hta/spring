@@ -22,6 +22,12 @@
             initialView: "dayGridMonth",
             timeZone: "UTC",
             locale:"ko",
+            eventClick:function(e) {
+                console.log(e.event.url);
+                e.jsEvent.preventDefault();
+                window.open(e.event.url,"_blank");
+            },
+            // 서버에 내려온 변수를 js에 사용할려면
             events: [[${calendarDtoList}]]
             /*
                 [
