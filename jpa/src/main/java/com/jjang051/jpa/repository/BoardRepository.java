@@ -13,4 +13,6 @@ public interface BoardRepository  extends JpaRepository<Board02,Integer> {
     // update == save
     // delete == delete
 
+    // save , findBy
+    // findByEmail
 }

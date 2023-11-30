@@ -6,17 +6,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-public class TestController {
+public class BoardController {
 
     private final BoardService boardService;
 
@@ -39,7 +36,6 @@ public class TestController {
         return "redirect:/list";
     }
 
-
     @GetMapping("/list")
     public String list(Model model) {
         List<Board02> boardList = boardService.getAllBoard();
@@ -47,4 +43,11 @@ public class TestController {
         return "/list";
     }
 
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable int id, Model model) {
+        log.info("id==={}",id);
+        Board02 board = boardService.getBoard(id);
+        model.addAttribute("board",board);
+        return "/view";
+    }
 }
