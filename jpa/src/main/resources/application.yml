@@ -22,7 +22,7 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: create  #update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     database: oracle
@@ -30,6 +30,7 @@ spring:
       hibernate:
         format_sql: true
         show-sql: true
+        dialect: org.hibernate.dialect.Oracle12cDialect
 
 
 
@@ -57,8 +58,8 @@ spring:
 #### log ??  fatal > error > warn > info > debug
 logging:
   level:
-    root: info
-    '[com.jjang051.todo]': info
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace # 파라미터 보여준다.
 
 file:
   path: C:/upload/
