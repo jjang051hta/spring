@@ -5,8 +5,8 @@
 <div layout:fragment="content" class="main">
     <div class="container">
         <ul>
-            <th:block th:each="item:${memberList}">
-                <li><a href="" th:href="@{/member/mypage(id=${item.userId})}"  th:text="${item.userId}">제목이 들어가겠죠....</a></li>
+            <th:block th:each="item:${boardList}">
+                <li ><a href="" th:href="@{/view/{idx}(idx=${item.id})}"  th:text="${item.subject}">제목이 들어가겠죠....</a></li>
             </th:block>
         </ul>
     </div>

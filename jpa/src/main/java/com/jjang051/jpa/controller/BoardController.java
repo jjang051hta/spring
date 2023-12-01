@@ -13,6 +13,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/board")
 public class BoardController {
 
     private final BoardService boardService;
@@ -23,7 +24,7 @@ public class BoardController {
     }
     @GetMapping("/insert")
     public String insert() {
-        return "/insert";
+        return "/board/insert";
     }
 
     @PostMapping("/insert")
@@ -33,14 +34,14 @@ public class BoardController {
                 .content(board02.getContent())
                 .build();
         boardService.insertBoard(dbInsertBoard);
-        return "redirect:/list";
+        return "redirect:/board/list";
     }
 
     @GetMapping("/list")
     public String list(Model model) {
         List<Board02> boardList = boardService.getAllBoard();
         model.addAttribute("boardList",boardList);
-        return "/list";
+        return "/board/list";
     }
 
     @GetMapping("/view/{id}")
@@ -48,6 +49,6 @@ public class BoardController {
         log.info("id==={}",id);
         Board02 board = boardService.getBoard(id);
         model.addAttribute("board",board);
-        return "/view";
+        return "/board/view";
     }
 }

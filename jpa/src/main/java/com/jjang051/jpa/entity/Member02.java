@@ -11,11 +11,9 @@ import lombok.*;
 @ToString
 public class Member02 {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
 
-    @Column(length = 30)
+    @Id
+    @Column(length = 30,unique = true)
     private String userId;
     @Column(length = 100)
     private String nickName;

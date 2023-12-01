@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,12 +22,20 @@ public class MemberController {
     public String join() {
         return "/member/join";
     }
+    @GetMapping("/mypage")
+    public String mypage(@RequestParam String id,Model model) {
+        //jfkjdksf?id=jjang
+        MemberDto memberInfo = memberService.getMemberInfo(id);
+        model.addAttribute("memberInfo",memberInfo);
+        return "/member/mypage";
+    }
 
     @PostMapping("/join")
     public String joinProcess(MemberDto memberDto) {
         memberService.join(memberDto);
         return "redirect:/";
     }
+
     @GetMapping("/list")
     public String list(Model model) {
         List<MemberDto> memberList = memberService.getAllMember();
