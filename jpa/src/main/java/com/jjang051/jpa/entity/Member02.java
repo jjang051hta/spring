@@ -2,12 +2,14 @@ package com.jjang051.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
 public class Member02 {
     @Id
     @Column(length = 30,unique = true)

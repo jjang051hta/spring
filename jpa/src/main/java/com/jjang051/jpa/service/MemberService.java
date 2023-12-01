@@ -71,4 +71,13 @@ public class MemberService {
         }
         return null;
     }
+
+    public boolean deleteMember(String id) {
+        Optional<Member02> member = memberRepository.findById(id);
+        if(member.isPresent()) {
+            memberRepository.delete(member.get());
+            return true;
+        }
+        return false;
+    }
 }

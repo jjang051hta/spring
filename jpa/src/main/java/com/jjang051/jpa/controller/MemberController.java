@@ -55,5 +55,9 @@ public class MemberController {
         return "/member/list";
     }
 
-
+    @GetMapping("/delete")
+    public String list(@RequestParam String id) {
+        memberService.deleteMember(id);
+        return "/member/list";
+    }
 }
