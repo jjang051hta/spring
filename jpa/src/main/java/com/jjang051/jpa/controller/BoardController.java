@@ -51,6 +51,7 @@ public class BoardController {
     public String view(@PathVariable int id, Model model) {
         log.info("id==={}",id);
         BoardDto board = boardService.getBoard(id);
+        log.info("commentList==={}",board.getCommentList().size());
         model.addAttribute("board",board);
         return "/board/view";
     }

@@ -7,14 +7,24 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h2>view</h2>
-                <h3 th:text="${board.subject}"></h3>
+                <h4 th:text="${board.subject}"></h4>
                 <hr>
-                <div th:text="${board.content}"></div>
-                <form action="" th:action="@{/comment/insert}" method="post">
+                <div th:text="${board.content}" class="mt-5 mb-5"></div>
+
+
+                <div class="mt-5 mb-5">
+                    <ul>
+                        <th:block th:each="comment:${board.commentList}">
+                            <li th:text="${comment.content}">여기에 코멘트 달립니다.</li>
+                        </th:block>
+                    </ul>
+                </div>
+
+                <form action="" th:action="@{/comment/insert/{id}(id=${board.id})}" method="post">
                     <div class="mb-3">
-                        <label for="content" class="form-label">CONTENT</label>
+                        <label for="content" class="form-label">comment</label>
                         <textarea type="text" class="form-control" id="content"
-                                  placeholder="content" name="content" rows="10"></textarea>
+                                  placeholder="content" name="content" rows="4"></textarea>
 
                     </div>
                     <div class="d-flex justify-content-center mt-5">

@@ -27,9 +27,11 @@ public class BoardDto {
 
     public static BoardDto fromEntity(Board02 board) {
         return BoardDto.builder()
+                .id(board.getId())
                 .subject(board.getSubject())
                 .content(board.getContent())
                 .createDate(board.getCreateDate())
+                .commentList(board.getCommentList())
                 .build();
     }
 }
