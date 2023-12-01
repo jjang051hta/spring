@@ -6,10 +6,7 @@ import com.jjang051.jpa.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +25,21 @@ public class MemberController {
         MemberDto memberInfo = memberService.getMemberInfo(id);
         model.addAttribute("memberInfo",memberInfo);
         return "/member/mypage";
+    }
+
+    @GetMapping("/modify")
+    public String modify(@RequestParam String id,Model model) {
+        MemberDto memberInfo = memberService.getMemberInfo(id);
+        model.addAttribute("memberInfo",memberInfo);
+        return "/member/modify";
+    }
+
+
+    @PostMapping("/modify")
+    public String modifyProcess(@ModelAttribute MemberDto memberDto, Model model) {
+        MemberDto memberInfo = memberService.modifyMember(memberDto);
+        //model.addAttribute("memberInfo",memberInfo);
+        return "redirect:/";
     }
 
     @PostMapping("/join")

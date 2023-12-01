@@ -8,10 +8,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Member02 {
-
-
     @Id
     @Column(length = 30,unique = true)
     private String userId;
@@ -19,6 +16,5 @@ public class Member02 {
     private String nickName;
     @Column(length = 100)
     private  String email;
-
     private Integer age;
 }
