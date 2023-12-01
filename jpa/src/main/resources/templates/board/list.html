@@ -17,7 +17,7 @@
                     <tr>
                         <th scope="row">1</th>
                         <td ><a href="" th:href="@{/board/view/{idx}(idx=${item.id})}"  th:text="${item.subject}">제목이 들어가겠죠....</a></td>
-                        <td th:text="${item.createDate}"></td>
+                        <td th:text="${#temporals.format(item.createDate,'yyyy-MM-dd HH:mm:ss')}"></td>
                     </tr>
                 </th:block>
             </tbody>

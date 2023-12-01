@@ -17,3 +17,12 @@
 .even td,.even th {
   background-color: #ccc !important;
 }
+
+ul {
+  padding-left: 0;
+}
+.comment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

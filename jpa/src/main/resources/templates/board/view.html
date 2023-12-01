@@ -15,7 +15,7 @@
                 <div class="mt-5 mb-5">
                     <ul>
                         <th:block th:each="comment:${board.commentList}">
-                            <li th:text="${comment.content}">여기에 코멘트 달립니다.</li>
+                            <li class="comment"><span th:text="${comment.content}">여기에 코멘트 달립니다.</span><span th:text="${#temporals.format(comment.createDate,'yyyy-mm-dd HH:mm:ss')}"></span></li>
                         </th:block>
                     </ul>
                 </div>
