@@ -1,5 +1,6 @@
 package com.jjang051.jpa.controller;
 
+import com.jjang051.jpa.dto.BoardDto;
 import com.jjang051.jpa.entity.Board02;
 import com.jjang051.jpa.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -28,10 +30,11 @@ public class BoardController {
     }
 
     @PostMapping("/insert")
-    public String insertProcess(@ModelAttribute Board02 board02) {
+    public String insertProcess(@ModelAttribute BoardDto boardDto) {
         Board02 dbInsertBoard = Board02.builder()
-                .subject(board02.getSubject())
-                .content(board02.getContent())
+                .subject(boardDto.getSubject())
+                .content(boardDto.getContent())
+                .createDate(LocalDateTime.now())
                 .build();
         boardService.insertBoard(dbInsertBoard);
         return "redirect:/board/list";
@@ -47,7 +50,7 @@ public class BoardController {
     @GetMapping("/view/{id}")
     public String view(@PathVariable int id, Model model) {
         log.info("id==={}",id);
-        Board02 board = boardService.getBoard(id);
+        BoardDto board = boardService.getBoard(id);
         model.addAttribute("board",board);
         return "/board/view";
     }

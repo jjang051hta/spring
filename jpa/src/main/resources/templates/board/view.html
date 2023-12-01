@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th = "http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>view</h1>
-    <div th:text="${board.subject}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>view</h2>
+                <h3 th:text="${board.subject}"></h3>
+                <hr>
+                <div th:text="${board.content}"></div>
+                <form action="" th:action="@{/comment/insert}" method="post">
+                    <div class="mb-3">
+                        <label for="content" class="form-label">CONTENT</label>
+                        <textarea type="text" class="form-control" id="content"
+                                  placeholder="content" name="content" rows="10"></textarea>
 
+                    </div>
+                    <div class="d-flex justify-content-center mt-5">
+                        <button class="btn btn-primary" id="btnJoinConfirm">COMMENT CONFIRM</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <hr>
-    <div th:text="${board.content}">
 
-    </div>
-</body>
+</div>
 </html>

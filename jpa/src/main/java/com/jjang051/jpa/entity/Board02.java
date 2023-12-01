@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.apachecommons.CommonsLog;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
-@Setter
 @Entity
 @Builder
 @RequiredArgsConstructor
@@ -24,4 +26,12 @@ public class Board02 {
 
     @Column(columnDefinition = "varchar2(1500)")
     private String content;
+
+    private LocalDateTime createDate;
+
+    @OneToMany(mappedBy = "board02", cascade = CascadeType.REMOVE)
+    private List<Comment02> commentList;
 }
+
+
+
