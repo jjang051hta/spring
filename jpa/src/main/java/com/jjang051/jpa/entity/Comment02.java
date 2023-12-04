@@ -25,6 +25,7 @@ public class Comment02 {
     private LocalDateTime createDate;
 
     @ManyToOne
+    @JoinColumn(name = "boardId")
     private Board02 board02;
 
 }

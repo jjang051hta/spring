@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +22,9 @@ public class CommentService {
                 .board02(board02)
                 .build();
         commentRepository.save(comment);
+    }
+
+    public void deleteComment(int id) {
+        commentRepository.deleteById(id);
     }
 }

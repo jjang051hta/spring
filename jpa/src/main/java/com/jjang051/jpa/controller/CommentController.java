@@ -1,15 +1,18 @@
 package com.jjang051.jpa.controller;
 
+
 import com.jjang051.jpa.dto.BoardDto;
 import com.jjang051.jpa.entity.Board02;
 import com.jjang051.jpa.service.BoardService;
 import com.jjang051.jpa.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/comment")
@@ -31,5 +34,14 @@ public class CommentController {
                 .build();
         commentService.insertComment(board02,content);
         return "redirect:/board/view/"+id;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public Map<String,String> delete(@PathVariable("id") int id) {
+        commentService.deleteComment(id);
+        Map<String,String> resultMap = new HashMap<>();
+        resultMap.put("isDelete","ok");
+        return resultMap;
     }
 }

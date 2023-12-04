@@ -5,6 +5,7 @@ import com.jjang051.jpa.entity.Board02;
 import com.jjang051.jpa.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,12 +41,28 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    @GetMapping("/list")
+    /*@GetMapping("/list")
     public String list(Model model) {
+        List<BoardDto> boardList =boardService.getAllBoard();
+        model.addAttribute("boardList",boardList);
+        return "/board/list";
+    }*/
+
+
+//    @GetMapping("/list")
+//    public String list02(Model model, @RequestParam(value = "page", required = true, defaultValue = "0") int page) {
+//        Page<Board02> boardList = boardService.getAllPageBoard(page);
+//        model.addAttribute("boardList",boardList);
+//        return "/board/list";
+//    }
+
+    @GetMapping("/list")
+    public String list02(Model model) {
         List<Board02> boardList = boardService.getAllBoard();
         model.addAttribute("boardList",boardList);
         return "/board/list";
     }
+
 
     @GetMapping("/view/{id}")
     public String view(@PathVariable int id, Model model) {

@@ -25,4 +25,12 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding:5px 0;
+  border-bottom:1px solid #eee;
+}
+.comment .date {
+  font-size: 12px;
+}
+.btn-del {
+  cursor: pointer;
 }

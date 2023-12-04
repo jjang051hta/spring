@@ -5,11 +5,15 @@ import com.jjang051.jpa.entity.Board02;
 import com.jjang051.jpa.exception.DataNotFoundException;
 import com.jjang051.jpa.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +25,11 @@ public class BoardService {
         Board02 board = boardRepository.save(board02);
         return BoardDto.fromEntity(board);
     }
+
+
+//    public Page<Board02> getAllPageBoard(int page) {
+//        return  boardRepository.findAll(pageable);
+//    }
 
     public List<Board02> getAllBoard() {
         List<Board02> boardList = boardRepository.findAll();
