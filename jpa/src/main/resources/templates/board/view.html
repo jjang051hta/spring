@@ -13,7 +13,7 @@
 
 
                 <div class="mt-5 mb-5">
-                    <ul>
+                    <ul id="commentList">
                         <th:block th:each="comment:${board.commentList}">
                             <li class="comment">
                                 <div>
@@ -72,6 +72,17 @@
                 method:"post",
                 success:function(result) {
                     console.log(result);
+                    if(result.isInsert==="ok") {
+                        $("#commentList").append(
+                        `<li class="comment">
+                            <div>
+                                <span>${result.content}</span>
+                                <span class="badge bg-primary btn-del"  data-idx="${result.id}">DELETE</span>
+                            </div>
+                            <span class="date">${result.date}</span>
+                        </li>`
+                        );
+                    }
                 }
             })
             return false;

@@ -53,6 +53,9 @@ public class CommentController {
         commentService.insertComment(board02,content);
         Map<String,String> resultMap = new HashMap<>();
         resultMap.put("isInsert","ok");
+        resultMap.put("content","db에서 들고온 값");
+        resultMap.put("id","10");
+        resultMap.put("date","2023-12-03 10:51");
         return resultMap;
     }
     @DeleteMapping("/delete/{id}")
