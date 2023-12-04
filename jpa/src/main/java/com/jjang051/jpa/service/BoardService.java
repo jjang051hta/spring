@@ -36,6 +36,13 @@ public class BoardService {
         return boardList;
     }
 
+    public Page<Board02> getAllPageBoard(int page) {
+        Pageable pageable = PageRequest.of(page,10);
+        Page<Board02> boardList = boardRepository.findAll(pageable);
+        return boardList;
+    }
+
+
     // Optional
     public BoardDto getBoard(int id) {
         Optional<Board02> board = boardRepository.findById(id);

@@ -63,6 +63,19 @@ public class BoardController {
         return "/board/list";
     }
 
+    @GetMapping("/list02")
+    public String pageList(Model model,
+                           @RequestParam(value="page", required = true, defaultValue = "0") int page) {
+        Page<Board02> pagination = boardService.getAllPageBoard(page);
+        log.info("pageBoardList.getTotalPages()==={}",pagination.getTotalPages());
+        log.info(pagination.toString());
+        List<Board02> boardList = pagination.getContent();
+        model.addAttribute("boardList",boardList);
+        model.addAttribute("pagination",pagination);
+
+        return "/board/list";
+    }
+
 
     @GetMapping("/view/{id}")
     public String view(@PathVariable int id, Model model) {
