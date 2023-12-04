@@ -5,6 +5,7 @@ import com.jjang051.jpa.entity.Board02;
 import com.jjang051.jpa.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/board")
 public class BoardController {
+
+    @Value("${pagination.size}")
+    private int paginationSize;
 
     private final BoardService boardService;
 
@@ -69,7 +73,16 @@ public class BoardController {
         Page<Board02> pagination = boardService.getAllPageBoard(page);
         log.info("pageBoardList.getTotalPages()==={}",pagination.getTotalPages());
         log.info(pagination.toString());
+
+
+
         List<Board02> boardList = pagination.getContent();
+        int start = (int)(Math.floor((double) pagination.getNumber() / paginationSize)*paginationSize);
+        int end =  start + paginationSize;
+
+        log.info("start==={},end==={}",start,end);
+        model.addAttribute("start",start);
+        model.addAttribute("end",end);
         model.addAttribute("boardList",boardList);
         model.addAttribute("pagination",pagination);
 
