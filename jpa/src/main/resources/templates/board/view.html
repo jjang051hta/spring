@@ -40,7 +40,42 @@
             </div>
         </div>
     </div>
-    <script>
+    <script th:inline="javascript">
+        $(".btn-del").on("click",function(){
+            const commentId = $(this).data("idx");
+            const commentItem = $(this).parent().parent();
+            console.log("btn-del");
+            $.ajax({
+                url:`/comment/delete/${commentId}`,
+                method:"delete",
+                success:function(result) {
+                    console.log(result);
+
+                    //commentItem.remove();
+                    commentItem.fadeOut();
+                }
+            })
+
+        })
+
+
+        const boardId = [[${board.id}]];
+        const sendCommentUrl = "/comment/ajaxinsert/"+boardId;
+        $("#btnJoinConfirm").on("click",function(e){
+
+            e.preventDefault();
+            $.ajax({
+                url:sendCommentUrl,
+                data:{
+                    content:$("#content").val()
+                },
+                method:"post",
+                success:function(result) {
+                    console.log(result);
+                }
+            })
+            return false;
+        })
 
     </script>
 </div>

@@ -24,6 +24,15 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
+    public Comment02 insertAjaxComment(Board02 board02, String content) {
+        Comment02 comment = Comment02.builder()
+                .content(content)
+                .createDate(LocalDateTime.now())
+                .board02(board02)
+                .build();
+        return commentRepository.save(comment);
+    }
+
     public void deleteComment(int id) {
         commentRepository.deleteById(id);
     }
