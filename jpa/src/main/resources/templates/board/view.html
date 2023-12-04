@@ -41,7 +41,7 @@
         </div>
     </div>
     <script th:inline="javascript">
-        $(".btn-del").on("click",function(){
+        $("body").on("click",".btn-del",function(){
             const commentId = $(this).data("idx");
             const commentItem = $(this).parent().parent();
             console.log("btn-del");
@@ -76,10 +76,10 @@
                         $("#commentList").append(
                         `<li class="comment">
                             <div>
-                                <span>${result.content}</span>
-                                <span class="badge bg-primary btn-del"  data-idx="${result.id}">DELETE</span>
+                                <span>${result.responseComment.content}</span>
+                                <span class="badge bg-primary btn-del"  data-idx="${result.responseComment.id}">DELETE</span>
                             </div>
-                            <span class="date">${result.date}</span>
+                            <span class="date">${result.responseComment.strCreateDate}</span>
                         </li>`
                         );
                     }
