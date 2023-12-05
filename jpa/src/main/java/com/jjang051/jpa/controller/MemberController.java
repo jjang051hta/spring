@@ -48,6 +48,13 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @GetMapping("/login")
+    public String login(MemberDto memberDto, Model model) {
+        model.addAttribute("memberDto",new MemberDto());
+        return "/member/login";
+    }
+
+
     @GetMapping("/list")
     public String list(Model model) {
         List<MemberDto> memberList = memberService.getAllMember();
