@@ -5,10 +5,17 @@
 <div layout:fragment="content" class="main">
     <div class="container">
         <table class="table">
+            <colgroup>
+                <col style="width:20px">
+                <col >
+                <col style="width:100px">
+                <col style="width:150px">
+            </colgroup>
             <thead>
             <tr>
-                <th scope="col">번호</th>
-                <th scope="col">SUBJECT</th>
+                <th scope="col">NO</th>
+                <th scope="col" class="d-flex justify-content-center">SUBJECT</th>
+                <th scope="col">WRITER</th>
                 <th scope="col">DATE</th>
             </tr>
             </thead>
@@ -16,8 +23,8 @@
                 <th:block th:each="item:${boardList}">
                     <tr>
                         <th scope="row">1</th>
-                        <td ><a href="" th:href="@{/board/view/{idx}(idx=${item.id})}"  th:text="${item.subject}">제목이 들어가겠죠....</a></td>
-<!--                        <td th:text="${#temporals.format(item.createDate,'yyyy-MM-dd HH:mm:ss')}"></td>-->
+                        <td><a href="" th:href="@{/board/view/{idx}(idx=${item.id})}"  th:text="${item.subject}">제목이 들어가겠죠....</a></td>
+                        <td ><span  th:text="${item.writer.nickName}">제목이 들어가겠죠....</span></td>
                         <td th:text="${#temporals.format(item.createDate,'yyyy/MM/dd HH:mm')}"></td>
                     </tr>
                 </th:block>

@@ -44,10 +44,10 @@ public class BoardService {
 
 
     // Optional
-    public BoardDto getBoard(int id) {
+    public Board02 getBoard(int id) {
         Optional<Board02> board = boardRepository.findById(id);
         if(board.isPresent()) {
-            return BoardDto.fromEntity(board.get());
+            return board.get();
         }
         throw new DataNotFoundException("찾는 거 없음");
         //return null;

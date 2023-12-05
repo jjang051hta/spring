@@ -2,6 +2,7 @@ package com.jjang051.jpa.dto;
 
 import com.jjang051.jpa.entity.Board02;
 import com.jjang051.jpa.entity.Comment02;
+import com.jjang051.jpa.entity.Member02;
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
@@ -24,12 +25,15 @@ public class CommentDto {
 
     private String strCreateDate;
 
+    private Member02 member02;
+
     private Board02 board02;
     public static CommentDto fromEntity(Comment02 comment) {
         return CommentDto.builder()
                 .id(comment.getId())
                 .content(comment.getContent())
                 .createDate(comment.getCreateDate())
+                .member02(comment.getWriter())
                 .strCreateDate(comment.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
     }
