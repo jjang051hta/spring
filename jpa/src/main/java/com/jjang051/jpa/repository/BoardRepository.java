@@ -30,6 +30,14 @@ public interface BoardRepository  extends JpaRepository<Board02,Integer> {
     @Query("select b from Board02 b where b.subject like %:keyword%")
     Page<Board02> findBySubject(@Param("keyword") String keyword,Pageable pageable);
 
+    @Query("select b from Board02 b where b.content like %:keyword%")
+    Page<Board02> findByContent(@Param("keyword") String keyword,Pageable pageable);
+
+    @Query("select b from Board02 b where b.writer.nickName like %:keyword%")
+    Page<Board02> findByWriter(@Param("keyword") String keyword,Pageable pageable);
+
+
+
 
     // select를 제외한 나머지는 반드시(dml) @Modifying을 붙여야 한다.
     /*@Modifying
@@ -38,6 +46,16 @@ public interface BoardRepository  extends JpaRepository<Board02,Integer> {
 
     @Query(value = "select * from Board02 b where b.subject like %:keyword%", nativeQuery = true)
     Page<Board02> findBySubjectNative(@Param("keyword") String keyword,Pageable pageable);
+
+    @Query(value = "select * from Board02 b where b.writer like %:keyword%", nativeQuery = true)
+    Page<Board02> findByWriterNative(@Param("keyword") String keyword,Pageable pageable);
+
+    @Query(value = "select * from Board02 b where b.content like %:keyword%", nativeQuery = true)
+    Page<Board02> findByContentNative(@Param("keyword") String keyword,Pageable pageable);
+
+
+
+
 }
 
 

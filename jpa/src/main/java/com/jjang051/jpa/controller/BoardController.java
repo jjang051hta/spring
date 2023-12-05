@@ -96,13 +96,10 @@ public class BoardController {
 
     @GetMapping("/search")
     public String pageSearchList(Model model,
+                           @RequestParam String category,
                            @RequestParam String keyword,
                            @RequestParam(value="page", required = true, defaultValue = "0") int page) {
-        Page<Board02> pagination = boardService.getSearchBoard(keyword,page);
-        log.info("pageBoardList.getTotalPages()==={}",pagination.getTotalPages());
-        log.info(pagination.toString());
-
-
+        Page<Board02> pagination = boardService.getSearchBoard(category,keyword,page);
 
         List<Board02> boardList = pagination.getContent();
         int start = (int)(Math.floor((double) pagination.getNumber() / paginationSize)*paginationSize);

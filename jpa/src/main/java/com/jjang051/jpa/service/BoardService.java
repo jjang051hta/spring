@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -37,7 +38,8 @@ public class BoardService {
     }
 
     public Page<Board02> getAllPageBoard(int page) {
-        Pageable pageable = PageRequest.of(page,10);
+        Pageable pageable = PageRequest.of(page,10,
+                Sort.by(Sort.Direction.DESC,"createDate"));
         Page<Board02> boardList = boardRepository.findAll(pageable);
         return boardList;
     }
@@ -54,9 +56,18 @@ public class BoardService {
     }
 
 
-    public Page<Board02> getSearchBoard(String keyword, int page) {
-        Pageable pageable = PageRequest.of(page,10);
-        Page<Board02> boardList = boardRepository.findBySubject(keyword,pageable);
-        return boardList;
+    public Page<Board02> getSearchBoard(String category,String keyword, int page) {
+        Pageable pageable = PageRequest.of(page,10, Sort.by(Sort.Direction.DESC,"createDate"));
+        if(category.equals("subject")) {
+            Page<Board02> boardList = boardRepository.findBySubject(keyword, pageable);
+            return boardList;
+        } else if(category.equals("content")) {
+            Page<Board02> boardList = boardRepository.findByContent(keyword, pageable);
+            return boardList;
+        }else if(category.equals("writer")) {
+            Page<Board02> boardList = boardRepository.findByWriter(keyword, pageable);
+            return boardList;
+        }
+        throw new RuntimeException("검색 결과가 없습니다.");
     }
 }
