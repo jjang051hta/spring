@@ -94,6 +94,29 @@ public class BoardController {
     }
 
 
+    @GetMapping("/search")
+    public String pageSearchList(Model model,
+                           @RequestParam String keyword,
+                           @RequestParam(value="page", required = true, defaultValue = "0") int page) {
+        Page<Board02> pagination = boardService.getSearchBoard(keyword,page);
+        log.info("pageBoardList.getTotalPages()==={}",pagination.getTotalPages());
+        log.info(pagination.toString());
+
+
+
+        List<Board02> boardList = pagination.getContent();
+        int start = (int)(Math.floor((double) pagination.getNumber() / paginationSize)*paginationSize);
+        int end =  start + paginationSize;
+
+        log.info("start==={},end==={}",start,end);
+        model.addAttribute("start",start);
+        model.addAttribute("end",end);
+        model.addAttribute("boardList",boardList);
+        model.addAttribute("pagination",pagination);
+
+        return "/board/list";
+    }
+
     @GetMapping("/view/{id}")
     public String view(@PathVariable int id, Model model) {
         log.info("id==={}",id);

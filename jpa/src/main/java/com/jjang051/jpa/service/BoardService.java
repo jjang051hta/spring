@@ -52,4 +52,11 @@ public class BoardService {
         throw new DataNotFoundException("찾는 거 없음");
         //return null;
     }
+
+
+    public Page<Board02> getSearchBoard(String keyword, int page) {
+        Pageable pageable = PageRequest.of(page,10);
+        Page<Board02> boardList = boardRepository.findBySubject(keyword,pageable);
+        return boardList;
+    }
 }
