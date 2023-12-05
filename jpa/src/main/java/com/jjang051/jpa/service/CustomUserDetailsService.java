@@ -1,5 +1,6 @@
 package com.jjang051.jpa.service;
 
+import com.jjang051.jpa.dto.CustomUserDetails;
 import com.jjang051.jpa.entity.Member02;
 import com.jjang051.jpa.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         Optional<Member02> loggedMember = memberRepository.findByUserId(userId);
         if(loggedMember.isPresent()) {
-
+            return new CustomUserDetails(loggedMember.get());
         }
-        return null;
+        throw new UsernameNotFoundException("아이디 패스워드 확인해 주세요.");
     }
 }

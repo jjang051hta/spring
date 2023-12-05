@@ -5,6 +5,7 @@ import com.jjang051.jpa.entity.Member02;
 import com.jjang051.jpa.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,17 +19,20 @@ import java.util.stream.Collectors;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public MemberDto join(MemberDto memberDto) {
+    public Member02 join(MemberDto memberDto) {
                 Member02 dbJoinMember = Member02.builder()
                 .userId(memberDto.getUserId())
+                .password(bCryptPasswordEncoder.encode(memberDto.getPassword()))
+                .role("ROLE_USER")
                 .email(memberDto.getEmail())
                 .nickName(memberDto.getNickName())
                 .age(memberDto.getAge())
                 .build();
         Member02 responseMember = memberRepository.save(dbJoinMember);
-        MemberDto responseMemberDto = MemberDto.fromEntity(responseMember);
-        return responseMemberDto;
+        //MemberDto responseMemberDto = MemberDto.fromEntity(responseMember);
+        return responseMember;
     }
 
     public List<MemberDto> getAllMember() {
