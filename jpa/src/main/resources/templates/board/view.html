@@ -26,7 +26,9 @@
                             <li class="comment">
                                 <div>
                                     <span th:text="${comment.content}">여기에 코멘트 달립니다.</span>
-                                    <span class="badge bg-primary btn-del"  th:data-idx="${comment.id}">DELETE</span>
+
+                                    <span class="badge bg-primary btn-del"  th:data-idx="${comment.id}"
+                                          th:if="${comment.writer.userId==#authentication.principal.loggedMember.userId}">DELETE</span>
                                 </div>
                                 <div>
                                     <span class="writer" th:text="${comment.writer.nickName}"></span>
@@ -91,7 +93,7 @@
                                 <span class="badge bg-primary btn-del"  data-idx="${result.responseComment.id}">DELETE</span>
                             </div>
                             <div>
-                                <span class="writer">${result.responseComment}</span>
+                                <span class="writer">${result.responseComment.writer.nickName}</span>
                                 <span class="date">${result.responseComment.strCreateDate}</span>
                             </div>
                         </li>`

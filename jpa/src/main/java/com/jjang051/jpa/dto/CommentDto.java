@@ -25,7 +25,7 @@ public class CommentDto {
 
     private String strCreateDate;
 
-    private Member02 member02;
+    private Member02 writer;
 
     private Board02 board02;
     public static CommentDto fromEntity(Comment02 comment) {
@@ -33,7 +33,7 @@ public class CommentDto {
                 .id(comment.getId())
                 .content(comment.getContent())
                 .createDate(comment.getCreateDate())
-                .member02(comment.getWriter())
+                .writer(comment.getWriter())
                 .strCreateDate(comment.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
     }
