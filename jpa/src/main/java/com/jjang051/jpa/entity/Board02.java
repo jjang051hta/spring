@@ -18,7 +18,7 @@ public class Board02 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name="boardId")
+    //@Column(name="boardId")
     private Integer id;
 
     //@Column(name = "mySubject")
@@ -31,6 +31,9 @@ public class Board02 {
 
     @OneToMany(mappedBy = "board02", cascade = CascadeType.REMOVE)
     private List<Comment02> commentList;
+
+    @ManyToOne
+    private Member02 writer;
 }
 
 

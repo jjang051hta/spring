@@ -1,12 +1,14 @@
 package com.jjang051.jpa.controller;
 
 import com.jjang051.jpa.dto.BoardDto;
+import com.jjang051.jpa.dto.CustomUserDetails;
 import com.jjang051.jpa.entity.Board02;
 import com.jjang051.jpa.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,14 +37,16 @@ public class BoardController {
     }
 
     @PostMapping("/insert")
-    public String insertProcess(@ModelAttribute BoardDto boardDto) {
+    public String insertProcess(@ModelAttribute BoardDto boardDto,
+                                @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         Board02 dbInsertBoard = Board02.builder()
+                .writer(customUserDetails.getLoggedMember())
                 .subject(boardDto.getSubject())
                 .content(boardDto.getContent())
                 .createDate(LocalDateTime.now())
                 .build();
         boardService.insertBoard(dbInsertBoard);
-        return "redirect:/board/list";
+        return "redirect:/board/list02";
     }
 
     /*@GetMapping("/list")

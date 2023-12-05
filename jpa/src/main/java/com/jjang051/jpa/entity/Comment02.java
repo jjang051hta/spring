@@ -34,6 +34,9 @@ public class Comment02 {
     @JoinColumn(name = "boardId")
     private Board02 board02;
 
+    @ManyToOne
+    private Member02 writer;
+
 }
 
 
