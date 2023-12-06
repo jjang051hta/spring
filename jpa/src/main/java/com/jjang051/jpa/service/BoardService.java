@@ -111,4 +111,39 @@ public class BoardService {
 
         return new PageImpl<>(boardList,pageable,total);
     }
+
+
+
+
+    public Page<Board02> getSearchBoardDsl(String category,String keyword, int page) {
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+
+        QBoard02 qBoard = QBoard02.board02;
+        Pageable pageable = PageRequest.of(page,10,
+                Sort.by(Sort.Direction.DESC,"createDate"));
+
+        if(StringUtils.equals(category,"subject")) {
+            log.info("subject 검색");
+            booleanBuilder.and(qBoard.subject.contains(keyword));
+        }
+        if(StringUtils.equals(category,"writer")) {
+            log.info("writer 검색");
+            booleanBuilder.and(qBoard.writer.nickName.contains(keyword));
+        }
+        if(StringUtils.equals(category,"content")) {
+            log.info("content 검색");
+            booleanBuilder.and(qBoard.content.contains(keyword));
+        }
+        List<Board02> boardList =
+                queryFactory.selectFrom(qBoard)
+                //.where(qBoard.subject.contains(keyword))
+                .where(booleanBuilder)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        Long total = queryFactory.select(qBoard.count()).from(qBoard).fetchOne();
+        return new PageImpl<>(boardList,pageable,total);
+        //throw new RuntimeException("검색 결과가 없습니다.");
+    }
 }

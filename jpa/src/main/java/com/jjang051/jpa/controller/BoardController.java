@@ -119,7 +119,7 @@ public class BoardController {
                            @RequestParam String category,
                            @RequestParam String keyword,
                            @RequestParam(value="page", required = true, defaultValue = "0") int page) {
-        Page<Board02> pagination = boardService.getSearchBoard(category,keyword,page);
+        Page<Board02> pagination = boardService.getSearchBoardDsl(category,keyword,page);
 
         List<Board02> boardList = pagination.getContent();
         int start = (int)(Math.floor((double) pagination.getNumber() / paginationSize)*paginationSize);
