@@ -42,7 +42,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.commonmark:commonmark:0.21.0'
 
-
 	// querydsl 추가 2
 	implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
 	annotationProcessor(
@@ -63,6 +62,7 @@ sourceSets {
 		}
 	}
 }
+
 
 
 //compileJava.dependsOn("clean")

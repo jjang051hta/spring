@@ -64,14 +64,35 @@ public class BoardController {
 //        return "/board/list";
 //    }
 
-    @GetMapping("/list")
+    /*@GetMapping("/list02")
     public String list02(Model model) {
-        List<Board02> boardList = boardService.getAllBoard();
+        List<Board02> boardList = boardService.getAllBoardDsl();
         model.addAttribute("boardList",boardList);
+        return "/board/listdsl";
+    }*/
+
+    @GetMapping("/list02")
+    public String pageList(Model model,
+                           @RequestParam(value="page", required = true, defaultValue = "0") int page) {
+        Page<Board02> pagination = boardService.getAllPageBoardDsl(page);
+        log.info("pageBoardList.getTotalPages()==={}",pagination.getTotalPages());
+        log.info(pagination.toString());
+
+        List<Board02> boardList = pagination.getContent();
+        int start = (int)(Math.floor((double) pagination.getNumber() / paginationSize)*paginationSize);
+        int end =  start + paginationSize;
+
+        log.info("start==={},end==={}",start,end);
+        model.addAttribute("start",start);
+        model.addAttribute("end",end);
+        model.addAttribute("boardList",boardList);
+        model.addAttribute("pagination",pagination);
+
         return "/board/list";
     }
 
-    @GetMapping("/list02")
+
+    /*@GetMapping("/list02")
     public String pageList(Model model,
                            @RequestParam(value="page", required = true, defaultValue = "0") int page) {
         Page<Board02> pagination = boardService.getAllPageBoard(page);
@@ -91,8 +112,7 @@ public class BoardController {
         model.addAttribute("pagination",pagination);
 
         return "/board/list";
-    }
-
+    }*/
 
     @GetMapping("/search")
     public String pageSearchList(Model model,
@@ -117,7 +137,8 @@ public class BoardController {
     @GetMapping("/view/{id}")
     public String view(@PathVariable int id, Model model) {
         log.info("id==={}",id);
-        Board02 board = boardService.getBoard(id);
+        //Board02 board = boardService.getBoard(id);
+        Board02 board = boardService.getBoardDsl(id);
         log.info("commentList==={}",board.getCommentList().size());
         model.addAttribute("board",board);
         return "/board/view";

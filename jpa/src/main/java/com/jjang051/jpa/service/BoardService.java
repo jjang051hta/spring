@@ -10,10 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
@@ -85,25 +82,33 @@ public class BoardService {
         //throw new RuntimeException("검색 결과가 없습니다.");
     }
 
-    public Page<Board02> getSearchBoardQueryDsl(String category,String keyword, int page) {
+    public Board02 getBoardDsl(int id) {
+        QBoard02 qBoard = QBoard02.board02;
+        Board02 selectedBoard02 =
+                queryFactory.select(qBoard).from(qBoard).where(qBoard.id.eq(id)).fetchOne();
+        return selectedBoard02;
+    }
 
+    public List<Board02> getAllBoardDsl() {
+        QBoard02 qBoard = QBoard02.board02;
+        List<Board02> boardList = queryFactory.select(qBoard).from(qBoard).fetch();
+        return boardList;
+    }
 
-        QBoard02 qBoard02= QBoard02.board02;
+    public Page<Board02> getAllPageBoardDsl(int page) {
+        QBoard02 qBoard = QBoard02.board02;
+        Pageable pageable = PageRequest.of(page,10,
+                Sort.by(Sort.Direction.DESC,"createDate"));
+        List<Board02> boardList =
+                queryFactory
+                .select(qBoard)
+                .from(qBoard)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
 
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        Long total = queryFactory.select(qBoard.count()).from(qBoard).fetchOne();
 
-        if(StringUtils.equals(category,"subject")) {
-
-        }
-
-        Pageable pageable = PageRequest.of(page,10, Sort.by(Sort.Direction.DESC,"createDate"));
-
-        BooleanBuilder builder = new BooleanBuilder();
-
-
-
-        return null;
-
-
+        return new PageImpl<>(boardList,pageable,total);
     }
 }
