@@ -34,7 +34,6 @@ public class MemberController {
         return "/member/modify";
     }
 
-
     @PostMapping("/modify")
     public String modifyProcess(@ModelAttribute MemberDto memberDto, Model model) {
         memberService.modifyMember(memberDto);

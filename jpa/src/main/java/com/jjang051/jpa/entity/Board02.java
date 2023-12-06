@@ -24,7 +24,8 @@ public class Board02 {
     //@Column(name = "mySubject")
     private String subject;
 
-    @Column(columnDefinition = "varchar2(1500)")
+    //@Column(columnDefinition = "varchar2(1500)")
+    @Lob
     private String content;
 
     private LocalDateTime createDate;

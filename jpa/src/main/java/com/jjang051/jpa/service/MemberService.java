@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,24 +59,37 @@ public class MemberService {
         }
         throw new RuntimeException("찾는 사람이 옶습니다.");
     }
+
+    @Transactional
     public void modifyMember(MemberDto memberDto) {
         log.info(memberDto.toString());
         Optional<Member02> member = memberRepository.findByUserId(memberDto.getUserId());
         // jpa 에 id로 잡힌 컬럼의 이름이 같으면 update를 한다. 아니면 insert
         if(member.isPresent()) {
+            member.get().updateMemberInfo(memberDto.getNickName(), memberDto.getEmail(), memberDto.getAge());
+            //memberRepository.save(member.get());
+            //member.get();
+//            Member02 dbInsertMember = Member02.builder()
+//                     .id(member.get().getId())
+//                     .userId(member.get().getUserId())
+//                     .email(memberDto.getEmail())
+//                     .role(member.get().getRole())
+//                     .age(memberDto.getAge())
+//                     .nickName(memberDto.getNickName())
+//                     .build();
+            //memberRepository.save(dbInsertMember);
 
-            Member02 dbInsertMember = member.get();
-            dbInsertMember.setAge(memberDto.getAge());
-            dbInsertMember.setEmail(memberDto.getEmail());
-            dbInsertMember.setNickName(memberDto.getNickName());
-
+//            dbInsertMember.setAge(memberDto.getAge());
+//            dbInsertMember.setEmail(memberDto.getEmail());
+//            dbInsertMember.setNickName(memberDto.getNickName());
+            //memberRepository.save(dbInsertMember);
 //            dbInsertMember.builder()
 //                    .age(memberDto.getAge())
 //                    .email(memberDto.getEmail())
 //                    .nickName(memberDto.getNickName())
 //                    .build();
         }
-        throw  new RuntimeException("없음");
+        //throw  new RuntimeException("없음");
     }
 
     public boolean deleteMember(String id) {

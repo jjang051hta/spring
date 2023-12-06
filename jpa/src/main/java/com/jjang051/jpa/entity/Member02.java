@@ -6,7 +6,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
-@Setter
+//@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,6 +34,10 @@ public class Member02 {
     private Integer age;
 
 
-
+    public void updateMemberInfo(String nickName,String email, int age) {
+        this.nickName= nickName;
+        this.email = email;
+        this.age= age;
+    }
     // 생성자에 @Builder 적용
 }
