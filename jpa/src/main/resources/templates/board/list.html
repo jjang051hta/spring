@@ -24,8 +24,22 @@
 
                     <tr>
                         <th scope="row" th:text="${pagination.totalElements - pagination.number*pagination.size - status.index}">1</th>
-                        <td><a href="" th:href="@{/board/view/{idx}(idx=${item.id})}"  th:text="${item.subject}">제목이 들어가겠죠....</a></td>
-                        <td ><span  th:text="${item.writer.nickName}">제목이 들어가겠죠....</span></td>
+                        <td>
+                            <a href="" th:href="@{/board/view/{idx}(idx=${item.id})}"  th:text="${item.subject}">제목이 들어가겠죠....</a>
+                            <span class="small text-danger"
+                                  th:text="${item.commentList.size()}"
+                                  th:if="${item.commentList.size() > 0}">
+                            </span>
+                        </td>
+                        <td>
+                            <th:block th:if="${item.writer}">
+                                <span th:text="${item.writer.nickName}">제목이 들어가겠죠....</span>
+                            </th:block>
+                            <th:block th:unless="${item.writer}">
+                                <span>이름없음</span>
+                            </th:block>
+
+                        </td>
                         <td th:text="${#temporals.format(item.createDate,'yyyy/MM/dd HH:mm')}"></td>
                     </tr>
                 </th:block>

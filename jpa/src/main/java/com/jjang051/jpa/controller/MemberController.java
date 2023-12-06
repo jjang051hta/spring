@@ -22,14 +22,14 @@ public class MemberController {
     @GetMapping("/mypage")
     public String mypage(@RequestParam String id,Model model) {
         //jfkjdksf?id=jjang
-        MemberDto memberInfo = memberService.getMemberInfo(id);
+        Member02 memberInfo = memberService.getMemberInfo(id);
         model.addAttribute("memberInfo",memberInfo);
         return "/member/mypage";
     }
 
     @GetMapping("/modify")
     public String modify(@RequestParam String id,Model model) {
-        MemberDto memberInfo = memberService.getMemberInfo(id);
+        Member02 memberInfo = memberService.getMemberInfo(id);
         model.addAttribute("memberInfo",memberInfo);
         return "/member/modify";
     }
@@ -37,7 +37,7 @@ public class MemberController {
 
     @PostMapping("/modify")
     public String modifyProcess(@ModelAttribute MemberDto memberDto, Model model) {
-        MemberDto memberInfo = memberService.modifyMember(memberDto);
+        memberService.modifyMember(memberDto);
         //model.addAttribute("memberInfo",memberInfo);
         return "redirect:/";
     }

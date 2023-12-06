@@ -10,7 +10,7 @@
                 <h4 th:text="${board.subject}"></h4>
                 <hr>
                 <div  class="mt-5 mb-5 d-flex justify-content-between">
-                    <div th:text="${board.content}">
+                    <div th:utext="${@commonMarkDownRender.markdownRender(board.content)}">
 
                     </div>
                     <div class="writerInfo">

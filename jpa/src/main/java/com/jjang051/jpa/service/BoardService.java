@@ -2,14 +2,21 @@ package com.jjang051.jpa.service;
 
 import com.jjang051.jpa.dto.BoardDto;
 import com.jjang051.jpa.entity.Board02;
+import com.jjang051.jpa.entity.QBoard02;
 import com.jjang051.jpa.exception.DataNotFoundException;
 import com.jjang051.jpa.repository.BoardRepository;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,9 +25,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BoardService {
     // 얘가 db에 왔다 갔다 하는 애....
     private final BoardRepository boardRepository;
+    private final JPAQueryFactory queryFactory;
 
     public BoardDto insertBoard(Board02 board02){
         Board02 board = boardRepository.save(board02);
@@ -57,7 +66,8 @@ public class BoardService {
 
 
     public Page<Board02> getSearchBoard(String category,String keyword, int page) {
-        Pageable pageable = PageRequest.of(page,10, Sort.by(Sort.Direction.DESC,"createDate"));
+        Pageable pageable = PageRequest.of(page,10,
+                Sort.by(Sort.Direction.DESC,"createDate"));
         if(category.equals("subject")) {
             Page<Board02> boardList = boardRepository.findBySubject(keyword, pageable);
             return boardList;
@@ -67,7 +77,33 @@ public class BoardService {
         }else if(category.equals("writer")) {
             Page<Board02> boardList = boardRepository.findByWriter(keyword, pageable);
             return boardList;
+        } else {
+            log.info("전체검색");
+            Page<Board02> boardList = boardRepository.fingByAllCategory(keyword, pageable);
+            return boardList;
         }
-        throw new RuntimeException("검색 결과가 없습니다.");
+        //throw new RuntimeException("검색 결과가 없습니다.");
+    }
+
+    public Page<Board02> getSearchBoardQueryDsl(String category,String keyword, int page) {
+
+
+        QBoard02 qBoard02= QBoard02.board02;
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        if(StringUtils.equals(category,"subject")) {
+
+        }
+
+        Pageable pageable = PageRequest.of(page,10, Sort.by(Sort.Direction.DESC,"createDate"));
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+
+
+        return null;
+
+
     }
 }

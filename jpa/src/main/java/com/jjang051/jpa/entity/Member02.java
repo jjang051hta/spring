@@ -6,9 +6,10 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicUpdate
 public class Member02 {
     @Id
@@ -31,4 +32,8 @@ public class Member02 {
     private  String email;
 
     private Integer age;
+
+
+
+    // 생성자에 @Builder 적용
 }

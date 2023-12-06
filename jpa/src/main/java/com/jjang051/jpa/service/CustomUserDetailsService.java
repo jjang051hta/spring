@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        Optional<Member02> loggedMember = memberRepository.findByUserId(userId);
+        Optional<Member02> loggedMember = memberRepository.findByUserId(userId); // 6개의 속성을 가진애를 
         if(loggedMember.isPresent()) {
             return new CustomUserDetails(loggedMember.get());
         }
