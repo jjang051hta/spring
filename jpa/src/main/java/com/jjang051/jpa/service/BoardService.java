@@ -123,18 +123,27 @@ public class BoardService {
         Pageable pageable = PageRequest.of(page,10,
                 Sort.by(Sort.Direction.DESC,"createDate"));
 
+        //BooleanBuilder 참 거짓 만들어 주는 builder역할을 함....
+
         if(StringUtils.equals(category,"subject")) {
             log.info("subject 검색");
-            booleanBuilder.and(qBoard.subject.contains(keyword));
+            booleanBuilder.or(qBoard.subject.contains(keyword));
         }
         if(StringUtils.equals(category,"writer")) {
             log.info("writer 검색");
-            booleanBuilder.and(qBoard.writer.nickName.contains(keyword));
+            booleanBuilder.or(qBoard.writer.nickName.contains(keyword));
         }
         if(StringUtils.equals(category,"content")) {
             log.info("content 검색");
-            booleanBuilder.and(qBoard.content.contains(keyword));
+            booleanBuilder.or(qBoard.content.contains(keyword));
         }
+        if(StringUtils.equals(category,"all")) {
+            log.info("all 검색");
+            booleanBuilder.or(qBoard.content.contains(keyword))
+                    .or(qBoard.writer.nickName.contains(keyword))
+                    .or(qBoard.subject.contains(keyword));
+        }
+
         List<Board02> boardList =
                 queryFactory.selectFrom(qBoard)
                 //.where(qBoard.subject.contains(keyword))

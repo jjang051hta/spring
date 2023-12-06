@@ -33,7 +33,7 @@ public class Board02 {
     @OneToMany(mappedBy = "board02", cascade = CascadeType.REMOVE)
     private List<Comment02> commentList;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member02 writer;
 }
 
