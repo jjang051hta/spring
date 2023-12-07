@@ -1,5 +1,7 @@
 package com.jjang051.jpa.config;
 
+import com.jjang051.jpa.service.OAuth2DetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,11 +12,17 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final OAuth2DetailsService oAuth2DetailsService;
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -34,6 +42,13 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
+                )
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .loginPage("/member/login")
+                        .defaultSuccessUrl("/")
+                        .userInfoEndpoint(userInfo->userInfo
+                                .userService(oAuth2DetailsService)
+                        )
                 )
                 .csrf((auth)-> auth.disable());
                 return httpSecurity.build();

@@ -5,19 +5,23 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-@RequiredArgsConstructor
 @Getter
+@RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private final Member02 loggedMember;
+    private Member02 loggedMember;
+    public CustomUserDetails(Member02 loggedMember) {
 
-    /*public CustomUserDetails(Member02 loggedMember) {
         this.loggedMember = loggedMember;
-    }*/
+    }
+
+    //private final Member02 loggedMember;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,4 +64,5 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

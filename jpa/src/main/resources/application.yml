@@ -32,6 +32,21 @@ spring:
         show-sql: true
         dialect: org.hibernate.dialect.Oracle12cDialect
 
+  ######구글 로그인 정보 #######
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 160447529731-4q5hpngmudqtntjsdiltb9q7cvmka0f4.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - profile
+              - email
+
+
+
+
 
 
 
