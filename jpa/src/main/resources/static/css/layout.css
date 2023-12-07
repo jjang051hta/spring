@@ -51,3 +51,7 @@ ul {
 .text-box {
   width:900px;
 }
+
+.socialLogin {
+  display: flex;
+}

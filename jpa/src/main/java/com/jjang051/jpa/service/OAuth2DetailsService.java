@@ -53,6 +53,11 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
             email = (String)naverResponse.get("email");
             nickName =  (String)naverResponse.get("nickname");
             userId = provider+"_"+(String)naverResponse.get("id");
+        } else if(provider.equals("kakao")) {
+            Map<String, Object> kakaoResponse = (Map)oAuth2UserInfo.get("properties");
+            email = (String)kakaoResponse.get("email");
+            nickName =  (String)kakaoResponse.get("nickname");
+            userId = provider+"_"+(String)oAuth2UserInfo.get("id").toString();
         }
         String role = "ROLE_USER";
         String password = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
