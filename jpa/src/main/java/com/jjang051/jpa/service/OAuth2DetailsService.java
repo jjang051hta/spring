@@ -37,15 +37,25 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
         //log.info("구글 로그인 하면 여기로 들어온다. 여기서 필요한 작업 하면 된다.");
         OAuth2User oAuth2User = super.loadUser(userRequest);
         log.info("oAuth2User.getAttributes()==={}",oAuth2User.getAttributes());
+        log.info("userRequest======{}",userRequest.getClientRegistration().getRegistrationId());
         Map<String,Object> oAuth2UserInfo = (Map)oAuth2User.getAttributes();
 
-        String email = (String)oAuth2UserInfo.get("email");
-        String nickName =  (String)oAuth2UserInfo.get("name");
-        String userId = "google_"+(String)oAuth2UserInfo.get("sub");
+        String provider = userRequest.getClientRegistration().getRegistrationId();
+        String email = null;
+        String nickName=  null;
+        String userId = null;
+        if(provider.equals("google")) {
+            email = (String)oAuth2UserInfo.get("email");
+            nickName =  (String)oAuth2UserInfo.get("name");
+            userId = provider+"_"+(String)oAuth2UserInfo.get("sub");
+        } else  if(provider.equals("naver")) {
+            Map<String, Object> naverResponse = (Map)oAuth2UserInfo.get("response");
+            email = (String)naverResponse.get("email");
+            nickName =  (String)naverResponse.get("nickname");
+            userId = provider+"_"+(String)naverResponse.get("id");
+        }
         String role = "ROLE_USER";
         String password = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
-
-
         Member02 returnMember = null;
         Optional<Member02> foundMember =  memberRepository.findByUserId(userId);
         if(foundMember.isPresent()) {

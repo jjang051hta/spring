@@ -31,7 +31,7 @@ public class SecurityConfig {
                                 .loginPage("/member/login")
                                 .usernameParameter("userId")
                                 .loginProcessingUrl("/member/login")
-                                .defaultSuccessUrl("/board/list02")
+                                .defaultSuccessUrl("/board/list02",true)
                                 .permitAll()
                         )
                 .logout((auth)->auth
