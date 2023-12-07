@@ -1,5 +1,6 @@
 package com.jjang051.jpa.service;
 
+import com.jjang051.jpa.dto.CustomUserDetails;
 import com.jjang051.jpa.entity.Member02;
 import com.jjang051.jpa.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -32,7 +30,7 @@ import java.util.UUID;
 public class OAuth2DetailsService extends DefaultOAuth2UserService {
 
     private final MemberRepository memberRepository;
-    //private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -41,23 +39,28 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
         log.info("oAuth2User.getAttributes()==={}",oAuth2User.getAttributes());
         Map<String,Object> oAuth2UserInfo = (Map)oAuth2User.getAttributes();
 
-
         String email = (String)oAuth2UserInfo.get("email");
         String nickName =  (String)oAuth2UserInfo.get("name");
         String userId = "google_"+(String)oAuth2UserInfo.get("sub");
         String role = "ROLE_UER";
-        String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
+        String password = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
 
-        Member02 dbIsertMember = Member02.builder()
-                .userId(userId)
-                .password(password)
-                .role(role)
-                .nickName(nickName)
-                .email(email)
-                .build();
 
-        memberRepository.save(dbIsertMember);
+        Member02 returnMember = null;
+        Optional<Member02> foundMember =  memberRepository.findByUserId(userId);
+        if(foundMember.isPresent()) {
+            returnMember = foundMember.get();
+        } else {
+            returnMember = Member02.builder()
+                    .userId(userId)
+                    .password(password)
+                    .role(role)
+                    .nickName(nickName)
+                    .email(email)
+                    .build();
 
-        return oAuth2User;
+            memberRepository.save(returnMember);
+        }
+        return new CustomUserDetails(returnMember,oAuth2User.getAttributes());
     }
 }

@@ -12,16 +12,26 @@ import java.util.Collection;
 import java.util.Map;
 
 @Getter
-@RequiredArgsConstructor
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, OAuth2User {
 
     private Member02 loggedMember;
-    public CustomUserDetails(Member02 loggedMember) {
+    private Map<String, Object> attributes;
 
+    public CustomUserDetails(Member02 loggedMember) {
         this.loggedMember = loggedMember;
     }
+    public CustomUserDetails(Member02 loggedMember, Map<String,Object> attributes) {
+        this.loggedMember = loggedMember;
+        this.attributes = attributes;
+    }
+
 
     //private final Member02 loggedMember;
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -65,4 +75,8 @@ public class CustomUserDetails implements UserDetails {
         return true;
     }
 
+    @Override
+    public String getName() {
+        return (String)attributes.get("name");
+    }
 }
