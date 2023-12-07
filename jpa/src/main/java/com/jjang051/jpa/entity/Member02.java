@@ -31,13 +31,13 @@ public class Member02 {
     @Column(length = 100)
     private  String email;
 
-    private Integer age;
+    //private Integer age;
 
 
-    public void updateMemberInfo(String nickName,String email, int age) {
+    public void updateMemberInfo(String nickName,String email) {
         this.nickName= nickName;
         this.email = email;
-        this.age= age;
+       // this.age= age;
     }
     // 생성자에 @Builder 적용
 }

@@ -29,7 +29,7 @@ public class MemberService {
                 .role("ROLE_USER")
                 .email(memberDto.getEmail())
                 .nickName(memberDto.getNickName())
-                .age(memberDto.getAge())
+                //.age(memberDto.getAge())
                 .build();
         Member02 responseMember = memberRepository.save(dbJoinMember);
         //MemberDto responseMemberDto = MemberDto.fromEntity(responseMember);
@@ -66,7 +66,7 @@ public class MemberService {
         Optional<Member02> member = memberRepository.findByUserId(memberDto.getUserId());
         // jpa 에 id로 잡힌 컬럼의 이름이 같으면 update를 한다. 아니면 insert
         if(member.isPresent()) {
-            member.get().updateMemberInfo(memberDto.getNickName(), memberDto.getEmail(), memberDto.getAge());
+            member.get().updateMemberInfo(memberDto.getNickName(), memberDto.getEmail());
             //memberRepository.save(member.get());
             //member.get();
 //            Member02 dbInsertMember = Member02.builder()

@@ -28,7 +28,7 @@ public class MemberDto {
                 .role(member02.getRole())
                 .email(member02.getEmail())
                 .nickName(member02.getNickName())
-                .age(member02.getAge())
+                //.age(member02.getAge())
                 .build();
     }
 

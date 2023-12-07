@@ -42,15 +42,17 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
         String email = (String)oAuth2UserInfo.get("email");
         String nickName =  (String)oAuth2UserInfo.get("name");
         String userId = "google_"+(String)oAuth2UserInfo.get("sub");
-        String role = "ROLE_UER";
+        String role = "ROLE_USER";
         String password = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
 
 
         Member02 returnMember = null;
         Optional<Member02> foundMember =  memberRepository.findByUserId(userId);
         if(foundMember.isPresent()) {
+            log.info("있는 멤버");
             returnMember = foundMember.get();
         } else {
+            log.info("없는 멤버");
             returnMember = Member02.builder()
                     .userId(userId)
                     .password(password)
