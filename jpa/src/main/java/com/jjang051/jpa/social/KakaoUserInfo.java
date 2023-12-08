@@ -13,14 +13,15 @@ public class KakaoUserInfo implements SocialUserInfo {
     }
     @Override
     public String getProviderId() {
-        return getProvider()+"_"+(String)attibutes.get("sub");
+        return getProvider()+"_"+attibutes.get("id");
     }
     @Override
     public String getEmail() {
-        return (String)attibutes.get("email");
+        return "이메일 등록해주세요.";
     }
     @Override
     public String getName() {
-        return (String)attibutes.get("nickname");
+        Map<String, Object> properties = (Map)attibutes.get("properties");
+        return (String)properties.get("nickname");
     }
 }

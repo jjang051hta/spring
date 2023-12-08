@@ -59,7 +59,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 //            nickName =  (String)naverResponse.get("nickname");
 //            userId = provider+"_"+(String)naverResponse.get("id");
         } else if(provider.equals("kakao")) {
-            socialUserInfo = new KakaoUserInfo((Map)oAuth2UserInfo.get("properties"));
+            socialUserInfo = new KakaoUserInfo(oAuth2UserInfo);
 //            Map<String, Object> kakaoResponse = (Map)oAuth2UserInfo.get("properties");
 //            email = (String)kakaoResponse.get("email");
 //            nickName =  (String)kakaoResponse.get("nickname");
