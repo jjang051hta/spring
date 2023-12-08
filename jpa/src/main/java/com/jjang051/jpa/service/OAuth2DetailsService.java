@@ -3,8 +3,7 @@ package com.jjang051.jpa.service;
 import com.jjang051.jpa.dto.CustomUserDetails;
 import com.jjang051.jpa.entity.Member02;
 import com.jjang051.jpa.repository.MemberRepository;
-import com.jjang051.jpa.social.GoogleUserInfo;
-import com.jjang051.jpa.social.SocialUserInfo;
+import com.jjang051.jpa.social.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.RequestEntity;
@@ -45,13 +44,33 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
         SocialUserInfo socialUserInfo = null;
 
         String provider = userRequest.getClientRegistration().getRegistrationId();
+//        String email = null;
+//        String nickName=  null;
+//        String userId = null;
         if(provider.equals("google")) {
             socialUserInfo = new GoogleUserInfo(oAuth2UserInfo);
+            //email = (String)oAuth2UserInfo.get("email");
+            //nickName =  (String)oAuth2UserInfo.get("name");
+            //userId = provider+"_"+(String)oAuth2UserInfo.get("sub");
         } else  if(provider.equals("naver")) {
-            socialUserInfo = new GoogleUserInfo(oAuth2UserInfo);
+            socialUserInfo = new NaverUserInfo((Map)oAuth2UserInfo.get("response"));
+//            Map<String, Object> naverResponse = (Map)oAuth2UserInfo.get("response");
+//            email = (String)naverResponse.get("email");
+//            nickName =  (String)naverResponse.get("nickname");
+//            userId = provider+"_"+(String)naverResponse.get("id");
         } else if(provider.equals("kakao")) {
-            socialUserInfo = new GoogleUserInfo(oAuth2UserInfo);
-
+            socialUserInfo = new KakaoUserInfo((Map)oAuth2UserInfo.get("properties"));
+//            Map<String, Object> kakaoResponse = (Map)oAuth2UserInfo.get("properties");
+//            email = (String)kakaoResponse.get("email");
+//            nickName =  (String)kakaoResponse.get("nickname");
+//            userId = provider+"_"+oAuth2UserInfo.get("id");
+        }
+        else if(provider.equals("github")) {
+            socialUserInfo = new GithubUserInfo(oAuth2UserInfo);
+//            Map<String, Object> kakaoResponse = (Map)oAuth2UserInfo.get("properties");
+//            email = (String)kakaoResponse.get("email");
+//            nickName =  (String)kakaoResponse.get("nickname");
+//            userId = provider+"_"+oAuth2UserInfo.get("id");
         }
         String email = socialUserInfo.getEmail();
         String nickName = socialUserInfo.getName();
@@ -72,7 +91,6 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
                     .nickName(nickName)
                     .email(email)
                     .build();
-
             memberRepository.save(returnMember);
         }
         return new CustomUserDetails(returnMember,oAuth2User.getAttributes());

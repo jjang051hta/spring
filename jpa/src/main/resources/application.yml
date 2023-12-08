@@ -44,6 +44,15 @@ spring:
               - profile
               - email
 
+          github:
+            client-id: 076098305e5006091a2f
+            client-secret: 0cde5e233b09f1ea27d6e38d18102be1b487b235
+#            scope:
+#              - profile
+#              - email
+
+
+
           naver:
             client-id: AdrCYpBiExYeAhFzopVY
             client-secret: RwCRxuWcCU

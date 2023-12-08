@@ -37,7 +37,9 @@ public class MemberController {
     }
 
     @PostMapping("/modify")
-    public String modifyProcess(@ModelAttribute MemberDto memberDto, Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    public String modifyProcess(@ModelAttribute MemberDto memberDto, Model model,
+                                @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
         Member02 updateMember = memberService.modifyMember(memberDto);
         customUserDetails.getLoggedMember().updateMemberInfo(memberDto.getNickName(),memberDto.getEmail());
         //customUserDetails.getLoggedMember().setEmail(updateMember.getEmail());
