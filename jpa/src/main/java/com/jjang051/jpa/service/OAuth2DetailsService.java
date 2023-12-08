@@ -3,6 +3,8 @@ package com.jjang051.jpa.service;
 import com.jjang051.jpa.dto.CustomUserDetails;
 import com.jjang051.jpa.entity.Member02;
 import com.jjang051.jpa.repository.MemberRepository;
+import com.jjang051.jpa.social.GoogleUserInfo;
+import com.jjang051.jpa.social.SocialUserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.RequestEntity;
@@ -40,25 +42,20 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
         log.info("userRequest======{}",userRequest.getClientRegistration().getRegistrationId());
         Map<String,Object> oAuth2UserInfo = (Map)oAuth2User.getAttributes();
 
+        SocialUserInfo socialUserInfo = null;
+
         String provider = userRequest.getClientRegistration().getRegistrationId();
-        String email = null;
-        String nickName=  null;
-        String userId = null;
         if(provider.equals("google")) {
-            email = (String)oAuth2UserInfo.get("email");
-            nickName =  (String)oAuth2UserInfo.get("name");
-            userId = provider+"_"+(String)oAuth2UserInfo.get("sub");
+            socialUserInfo = new GoogleUserInfo(oAuth2UserInfo);
         } else  if(provider.equals("naver")) {
-            Map<String, Object> naverResponse = (Map)oAuth2UserInfo.get("response");
-            email = (String)naverResponse.get("email");
-            nickName =  (String)naverResponse.get("nickname");
-            userId = provider+"_"+(String)naverResponse.get("id");
+            socialUserInfo = new GoogleUserInfo(oAuth2UserInfo);
         } else if(provider.equals("kakao")) {
-            Map<String, Object> kakaoResponse = (Map)oAuth2UserInfo.get("properties");
-            email = (String)kakaoResponse.get("email");
-            nickName =  (String)kakaoResponse.get("nickname");
-            userId = provider+"_"+(String)oAuth2UserInfo.get("id").toString();
+            socialUserInfo = new GoogleUserInfo(oAuth2UserInfo);
+
         }
+        String email = socialUserInfo.getEmail();
+        String nickName = socialUserInfo.getName();
+        String userId = socialUserInfo.getProviderId();
         String role = "ROLE_USER";
         String password = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
         Member02 returnMember = null;

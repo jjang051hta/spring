@@ -1,9 +1,11 @@
 package com.jjang051.jpa.controller;
 
+import com.jjang051.jpa.dto.CustomUserDetails;
 import com.jjang051.jpa.dto.MemberDto;
 import com.jjang051.jpa.entity.Member02;
 import com.jjang051.jpa.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +37,10 @@ public class MemberController {
     }
 
     @PostMapping("/modify")
-    public String modifyProcess(@ModelAttribute MemberDto memberDto, Model model) {
-        memberService.modifyMember(memberDto);
-        //model.addAttribute("memberInfo",memberInfo);
+    public String modifyProcess(@ModelAttribute MemberDto memberDto, Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        Member02 updateMember = memberService.modifyMember(memberDto);
+        customUserDetails.getLoggedMember().updateMemberInfo(memberDto.getNickName(),memberDto.getEmail());
+        //customUserDetails.getLoggedMember().setEmail(updateMember.getEmail());
         return "redirect:/";
     }
 

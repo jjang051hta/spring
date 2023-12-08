@@ -119,3 +119,6 @@ file:
 
 pagination:
   size: 5
+
+#  main:
+#    allow-circular-references: true
