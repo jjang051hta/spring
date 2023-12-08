@@ -16,13 +16,13 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521:xe
-    username: jjang052
+    username: jjang053
     password: 1234
 
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: update  #update
+      ddl-auto: create  #update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     database: oracle
