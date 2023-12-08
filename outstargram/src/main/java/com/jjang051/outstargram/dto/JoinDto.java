@@ -8,9 +8,9 @@ import lombok.*;
 
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class JoinDto {
     @NotBlank
     @Size(min = 4, max=20)
@@ -18,10 +18,9 @@ public class JoinDto {
 
     @NotBlank
     @Size(min = 4, max=20)
-    //@Pattern()
     private String password;
 
-    @Email
+    @Email(message = "이메일 형식이 맞질 않습니다.")
     private String email;
 
     private String name;

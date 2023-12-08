@@ -30,7 +30,7 @@ public class SecurityConfig {
                 )
                 .logout((form)->form
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
-                                .logoutSuccessUrl("/auth/login")
+                                .logoutSuccessUrl("/")
                                 .invalidateHttpSession(true)
                 )
                 .oauth2Login((ouath2Login) -> ouath2Login
