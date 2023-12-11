@@ -20,7 +20,10 @@ public class MemberApiController {
     private final MemberService memberService;
 
     @PutMapping("/api/member/{id}/profileImageUrl")
-    public Map<String,Object> profileImageUpdate(@PathVariable int id, MultipartFile profileImage) {
+    public Map<String,Object> profileImageUpdate(@PathVariable int id,
+                                                 MultipartFile profileImageUrl) {
+        log.info("profileImageUrl==={}",profileImageUrl);
+        memberService.changeProfile(id, profileImageUrl);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("isState","ok");
         return resultMap;
