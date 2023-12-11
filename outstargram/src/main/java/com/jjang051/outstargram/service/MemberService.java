@@ -34,7 +34,7 @@ public class MemberService {
     }
 
     @Transactional
-    public void updateMember(int id,UpdateMemberDto updateMemberDto) {
+    public Member updateMember(int id,UpdateMemberDto updateMemberDto) {
         log.info("id==={}",id);
         log.info("updateMemberDto==={}",updateMemberDto.toString());
 
@@ -47,6 +47,7 @@ public class MemberService {
             member.setDescription(updateMemberDto.getDescription());
             member.setName(updateMemberDto.getName());
             //memberRepository.save(member);
+            return member;
         } else {
             throw new UsernameNotFoundException("서버 오류입니다.");
         }

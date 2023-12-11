@@ -46,6 +46,8 @@ public class Member {
     @Column(name="role")
     private Role role;
 
+    private String profileImageUrl;
+
     @CreatedDate
     private LocalDateTime createDate;
 

@@ -2,6 +2,7 @@ package com.jjang051.outstargram.controller;
 
 import com.jjang051.outstargram.dto.CustomUserDetails;
 import com.jjang051.outstargram.dto.UpdateMemberDto;
+import com.jjang051.outstargram.entity.Member;
 import com.jjang051.outstargram.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,8 +40,9 @@ public class MemberController {
     }
 
     @PostMapping("/modify/{id}")
-    public String modifyProcess(@PathVariable int id, Model model, UpdateMemberDto updateMemberDto) {
-        memberService.updateMember(id,updateMemberDto);
+    public String modifyProcess(@PathVariable int id, Model model, UpdateMemberDto updateMemberDto,@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        Member returnMember =memberService.updateMember(id,updateMemberDto);
+        customUserDetails.setLoggedMember(returnMember);
         return "redirect:/member/mypage/"+id;
     }
 }

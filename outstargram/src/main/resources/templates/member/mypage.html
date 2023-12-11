@@ -8,15 +8,24 @@
             <h2>MY PAGE</h2>
             <div class="mypage-header">
                 <div class="profile">
-                    <i class="bi bi-person-circle" style="font-size: 100px"></i>
+                    <th:block th:if="${memberInfo.profileImageUrl==null}">
+                        <i class="bi bi-person-circle" style="font-size: 100px"></i>
+                    </th:block>
+                    <th:block th:unless="${memberInfo.profileImageUrl==null}">
+                        <img src="https://t1.daumcdn.net/media/common/newsview_2021/pc/rtn/logo_daum.png">
+                    </th:block>
                 </div>
+                <form method="post" action="" enctype="multipart/form-data" id="profileImageForm" style="display: none">
+                    <input th:type="file" name="profileImageUrl" id="profileSelect">
+                </form>
                 <div class="info">
                     <div class="btns">
                         <a href="" class="btn btn-primary">STORY</a>
                         <button class="btn btn-outline-primary">SUBSCRIBE</button>
                         <button class="btn btn-outline-info"
                                 data-bs-toggle="modal"
-                                data-bs-target="#menuModal">MODIFY</button>
+                                data-bs-target="#menuModal">MODIFY
+                        </button>
                     </div>
                     <div class="title mt-3">
                         <h3 th:text="${memberInfo.userId}">fjdsklf</h3>
@@ -29,17 +38,52 @@
     </div>
     <!-- Button trigger modal -->
     <!-- Modal -->
-    <div class="modal fade" id="menuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="menuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body d-grid">
                     <a href="/auth/logout" class="btn btn-primary"> LOG OUT </a>
-                    <a href="/member/modify/1" th:href="@{/member/modify/{id}(id=${memberInfo.id})}" class="btn btn-outline-primary mt-2"> MODIFY </a>
+                    <a href="/member/modify/1" th:href="@{/member/modify/{id}(id=${memberInfo.id})}"
+                       class="btn btn-outline-primary mt-2"> MODIFY </a>
                     <button type="button" class="btn btn-outline-danger mt-2"
-                            data-bs-dismiss="modal">CLOSE</button>
+                            data-bs-dismiss="modal">CLOSE
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        const id = [[${memberInfo.id}]];
+        $(".profile").on("click",function(){
+            console.log("click");
+            $("#profileSelect").trigger("click");
+            $("#profileSelect").on("change",function(e) {
+                console.log(e);
+                const file = e.target.files[0];
+                if(!file.type.match("image.*")) {
+                    alert("이미지 파일만 가능합니다.");
+                    return false;
+                }
+
+                const profileImageForm = $("#profileImageForm")[0];
+                const formData = new FormData(profileImageForm);
+                console.log(formData);
+                $.ajax({
+                    url:`/api/member/${id}/profileImageUrl`,
+                    data:formData,
+                    contentType:false,  //  x-www-form-urlencoded로 되는거 막기
+                    processData:false,  //  query string으로 파싱되는거 막기
+                    //enctype:"multipart/form-data"
+                    method:"PUT",
+                    success:function(response) {
+                        console.log(response);
+                    }
+                })
+                //  key:value
+
+            });
+        })
+    </script>
 </div>
 </html>
