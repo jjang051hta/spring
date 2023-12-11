@@ -1,7 +1,9 @@
 package com.jjang051.outstargram.controller;
 
 import com.jjang051.outstargram.dto.JoinDto;
+import com.jjang051.outstargram.service.MemberService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
+
+    private final MemberService memberService;
+
     @GetMapping("/login")
     public String login() {
         return "/auth/login";
@@ -26,12 +32,14 @@ public class AuthController {
 
     @PostMapping("/join")
     public String joinProcess(@Valid @ModelAttribute JoinDto joinDto,
-                              BindingResult bindingResult, Model model) {
+                              BindingResult bindingResult,
+                              Model model) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("joinDto",joinDto);
             return "/auth/join";
         }
-        model.addAttribute("joinDto", new JoinDto());
+        // 회원가입 서비스....
+        memberService.join(joinDto);
         return "redirect:/auth/login";
     }
 }

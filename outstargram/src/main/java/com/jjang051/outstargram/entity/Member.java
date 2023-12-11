@@ -1,8 +1,12 @@
 package com.jjang051.outstargram.entity;
 
+import com.jjang051.outstargram.constant.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @DynamicUpdate
 @Table(name="table_member")
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
     // join되게 해보기....
     @Id
@@ -31,4 +36,22 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String email;
 
+    private String mbti;
+
+    private String description;
+
+    private String phone;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="role")
+    private Role role;
+
+    @CreatedDate
+    private LocalDateTime createDate;
+
+    @LastModifiedDate
+    private LocalDateTime modifyDate;
 }
+
+
+
