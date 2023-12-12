@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -65,20 +66,23 @@ public class MemberService {
     }
 
     @Transactional
-    public void changeProfile(int id, MultipartFile profileImageUrl) {
+    public Member changeProfile(int id, MultipartFile profileImageUrl) {
         log.info("id===={}",id);
+        String originalFileName = profileImageUrl.getOriginalFilename();
         UUID uuid = UUID.randomUUID();
         String imageFileName = uuid+"_"+profileImageUrl.getOriginalFilename();
 
         Path imageFilePath = Paths.get(uploadFoler+imageFileName);
+        //String thumbsName = "thumb_"+imageFileName;
         try {
             Files.write(imageFilePath,profileImageUrl.getBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Optional<Member> optionalMember = memberRepository.findById(id);
+        Optional<Member> optionalMember = memberRepository.findById(id);  // member
         if(optionalMember.isPresent()) {
             optionalMember.get().setProfileImageUrl(imageFileName);
+            return optionalMember.get();
         } else {
             throw new UsernameNotFoundException("서버 오류입니다.");
         }

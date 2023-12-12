@@ -1,5 +1,6 @@
 package com.jjang051.outstargram.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jjang051.outstargram.constant.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,6 +30,7 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String userId;
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     private String name;
@@ -47,6 +49,10 @@ public class Member {
     private Role role;
 
     private String profileImageUrl;
+
+//    private String thumbProfileImageUrl;
+//
+//    private String renamedProfileImageUrl;
 
     @CreatedDate
     private LocalDateTime createDate;

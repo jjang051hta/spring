@@ -1,5 +1,6 @@
 package com.jjang051.outstargram.api;
 
+import com.jjang051.outstargram.entity.Member;
 import com.jjang051.outstargram.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +24,11 @@ public class MemberApiController {
     public Map<String,Object> profileImageUpdate(@PathVariable int id,
                                                  MultipartFile profileImageUrl) {
         log.info("profileImageUrl==={}",profileImageUrl);
-        memberService.changeProfile(id, profileImageUrl);
+        Member memberInfo = memberService.changeProfile(id, profileImageUrl); //void
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("isState","ok");
+        resultMap.put("memberInfo",memberInfo);
+
         return resultMap;
     }
 }
