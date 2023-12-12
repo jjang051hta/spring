@@ -8,11 +8,11 @@
             <h2>MY PAGE</h2>
             <div class="mypage-header">
                 <div class="profile">
-                    <th:block th:if="${memberInfo.profileImageUrl==null}">
+                    <th:block th:if="${memberInfo.member.profileImageUrl==null}">
                         <i class="bi bi-person-circle" style="font-size: 100px"></i>
                     </th:block>
-                    <th:block th:unless="${memberInfo.profileImageUrl==null}">
-                        <img src="" th:src="@{|/upload/${memberInfo.profileImageUrl}|}" id="memberProfileImage">
+                    <th:block th:unless="${memberInfo.member.profileImageUrl==null}">
+                        <img src="" th:src="@{|/upload/${memberInfo.member.profileImageUrl}|}" id="memberProfileImage">
                     </th:block>
                 </div>
                 <form method="post" action="" enctype="multipart/form-data" id="profileImageForm" style="display: none">
@@ -20,19 +20,26 @@
                 </form>
                 <div class="info">
                     <div class="btns">
-                        <a href="" class="btn btn-primary">STORY</a>
-                        <button class="btn btn-outline-primary" id="btnSubscribe">SUBSCRIBE</button>
+                        <th:block th:if="${memberInfo.pageOwner}">
+                            <a href="" class="btn btn-primary">STORY</a>
+                        </th:block>
+                        <th:block th:unless="${memberInfo.pageOwner}">
+                            <button class="btn btn-outline-primary" id="btnSubscribe"
+                                    th:if="${memberInfo.subscribeState}">구독취소</button>
+                            <button class="btn btn-outline-primary" id="btnSubscribe"
+                                    th:unless="${memberInfo.subscribeState}">구독하기</button>
+                        </th:block>
                         <button class="btn btn-outline-info"
                                 data-bs-toggle="modal"
-                                data-bs-target="#menuModal">MODIFY
+                                data-bs-target="#menuModal">SETTING
                         </button>
                     </div>
                     <div class="subscribe">
-                        <span>구독자수</span><span th:text="${subscribeCount}">3</span>
+                        <span>구독자수</span><span th:text="${memberInfo.subscribeCount}">3</span>
                     </div>
                     <div class="title mt-3">
-                        <h3 th:text="${memberInfo.userId}">fjdsklf</h3>
-                        <div th:text="${memberInfo.description}">여기에 소개글</div>
+                        <h3 th:text="${memberInfo.member.userId}">fjdsklf</h3>
+                        <div th:text="${memberInfo.member.description}">여기에 소개글</div>
                     </div>
                 </div>
             </div>
@@ -47,7 +54,7 @@
             <div class="modal-content">
                 <div class="modal-body d-grid">
                     <a href="/auth/logout" class="btn btn-primary"> LOG OUT </a>
-                    <a href="/member/modify/1" th:href="@{/member/modify/{id}(id=${memberInfo.id})}"
+                    <a href="/member/modify/1" th:href="@{/member/modify/{id}(id=${memberInfo.member.id})}"
                        class="btn btn-outline-primary mt-2"> MODIFY </a>
                     <button type="button" class="btn btn-outline-danger mt-2"
                             data-bs-dismiss="modal">CLOSE
@@ -57,7 +64,7 @@
         </div>
     </div>
     <script th:inline="javascript">
-        const id = [[${memberInfo.id}]];
+        const id = [[${memberInfo.member.id}]];
         $(".profile").on("click", function () {
             $("#profileSelect").trigger("click");
         });
@@ -82,7 +89,7 @@
                     console.log("fileReader===", fileReader);
                     fileReader.onload = function () {
                         console.log("파일 변경");
-                        $("#memberProfileImage").attr("src", "/upload/" + response.memberInfo.profileImageUrl);
+                        $("#memberProfileImage").attr("src", "/upload/" + response.memberInfo.member.profileImageUrl);
                     }
                     fileReader.readAsDataURL(file); // 요거 써야지만 onload 이벤트 발생한다.
                 }

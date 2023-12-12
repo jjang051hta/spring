@@ -1,6 +1,7 @@
 package com.jjang051.outstargram.controller;
 
 import com.jjang051.outstargram.dto.CustomUserDetails;
+import com.jjang051.outstargram.dto.MemberProfileDto;
 import com.jjang051.outstargram.dto.UpdateMemberDto;
 import com.jjang051.outstargram.entity.Member;
 import com.jjang051.outstargram.service.MemberService;
@@ -26,14 +27,8 @@ public class MemberController {
 
     @GetMapping("/mypage/{id}")
     public String mypage(@PathVariable int id, Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        //log.info(customUserDetails.getLoggedMember().getUserId());
-        //log.info(customUserDetails.getLoggedMember().getName());
-        Member memberInfo = memberService.getProfile(id);
-        int subscribeCount = subscribeService.subscribeCount(id);
-        //model.addAttribute("memberInfo",customUserDetails.getLoggedMember());
+        MemberProfileDto memberInfo = memberService.getProfile(id,customUserDetails.getLoggedMember().getId());
         model.addAttribute("memberInfo",memberInfo);
-        model.addAttribute("subscribeCount",subscribeCount);
-
         return  "/member/mypage";
     }
 

@@ -2,6 +2,7 @@ package com.jjang051.outstargram.service;
 
 import com.jjang051.outstargram.constant.Role;
 import com.jjang051.outstargram.dto.JoinDto;
+import com.jjang051.outstargram.dto.MemberProfileDto;
 import com.jjang051.outstargram.dto.UpdateMemberDto;
 import com.jjang051.outstargram.entity.Member;
 import com.jjang051.outstargram.repository.MemberRepository;
@@ -96,12 +97,21 @@ public class MemberService {
         }
     }
 
-    public Member getProfile(int id) {
+    public MemberProfileDto getProfile(int id,int customerDetailsId) {
+        MemberProfileDto memberProfileDto = new MemberProfileDto();
         Member  memberInfo =
                 memberRepository.findById(id).orElseThrow(
                         ()-> new UsernameNotFoundException("없는 사용자 입니다.")
                 );
-        //int subscribeCount = subscribeRepository.subscribeCount(id);
-        return memberInfo;
+        int subscribeCount = subscribeRepository.subscribeCount(id);
+        int subscribeState = subscribeRepository.subscribeState(id,customerDetailsId);
+        log.info("subscribeState==={}",subscribeState);
+        log.info("id==={}===customerDetailsId==={}",id,customerDetailsId);
+
+        memberProfileDto.setPageOwner(id==customerDetailsId);
+        memberProfileDto.setMember(memberInfo);
+        memberProfileDto.setSubscribeCount(subscribeCount);
+        memberProfileDto.setSubscribeState(subscribeState >= 1);
+        return memberProfileDto;
     }
 }
