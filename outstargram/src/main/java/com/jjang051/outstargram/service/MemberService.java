@@ -93,4 +93,12 @@ public class MemberService {
             throw new UsernameNotFoundException("서버 오류입니다.");
         }
     }
+
+    public Member getProfile(int id) {
+        Member  memberInfo =
+                memberRepository.findById(id).orElseThrow(
+                        ()-> new UsernameNotFoundException("없는 사용자 입니다.")
+                );
+        return memberInfo;
+    }
 }

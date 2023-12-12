@@ -1,0 +1,29 @@
+package com.jjang051.outstargram.api;
+
+import com.jjang051.outstargram.dto.CustomUserDetails;
+import com.jjang051.outstargram.service.SubscribeService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@Slf4j
+@RequiredArgsConstructor
+public class SubscribeApiController {
+    private final SubscribeService subscribeService;
+    @PostMapping("/api/subscribe/{toMemberId}")
+    public Map<String,Object> subscribe(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                        @PathVariable int toMemberId) {
+        subscribeService.subscribe(customUserDetails.getLoggedMember().getId(),toMemberId);
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("isSubscribe","ok");
+        return resultMap;
+    }
+}

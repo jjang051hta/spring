@@ -24,9 +24,11 @@ public class MemberController {
 
     @GetMapping("/mypage/{id}")
     public String mypage(@PathVariable int id, Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        log.info(customUserDetails.getLoggedMember().getUserId());
-        log.info(customUserDetails.getLoggedMember().getName());
-        model.addAttribute("memberInfo",customUserDetails.getLoggedMember());
+        //log.info(customUserDetails.getLoggedMember().getUserId());
+        //log.info(customUserDetails.getLoggedMember().getName());
+        Member memberInfo = memberService.getProfile(id);
+        //model.addAttribute("memberInfo",customUserDetails.getLoggedMember());
+        model.addAttribute("memberInfo",memberInfo);
         return  "/member/mypage";
     }
 

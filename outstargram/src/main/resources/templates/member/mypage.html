@@ -21,7 +21,7 @@
                 <div class="info">
                     <div class="btns">
                         <a href="" class="btn btn-primary">STORY</a>
-                        <button class="btn btn-outline-primary">SUBSCRIBE</button>
+                        <button class="btn btn-outline-primary" id="btnSubscribe">SUBSCRIBE</button>
                         <button class="btn btn-outline-info"
                                 data-bs-toggle="modal"
                                 data-bs-target="#menuModal">MODIFY
@@ -91,6 +91,18 @@
             //  key:value
 
         });
+
+        $("#btnSubscribe").on("click",function(){
+            $.ajax({
+                url:"/api/subscribe/2",   // insert를 하는 뭔가가 있다.
+                method: "POST",
+                success:function(response) {
+                    // 구독성공
+                    console.log(response);
+                }
+            })
+        })
+
     </script>
 </div>
 </html>
