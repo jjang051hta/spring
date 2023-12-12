@@ -7,6 +7,7 @@ import com.jjang051.outstargram.entity.Member;
 import com.jjang051.outstargram.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -71,17 +72,22 @@ public class MemberService {
         String originalFileName = profileImageUrl.getOriginalFilename();
         UUID uuid = UUID.randomUUID();
         String imageFileName = uuid+"_"+profileImageUrl.getOriginalFilename();
+        String thumbnailFileName = "thumb_"+imageFileName;
 
         Path imageFilePath = Paths.get(uploadFoler+imageFileName);
-        //String thumbsName = "thumb_"+imageFileName;
+        File originalFile = new File(uploadFoler+imageFileName);
         try {
             Files.write(imageFilePath,profileImageUrl.getBytes());
+            Thumbnailator.createThumbnail(originalFile,
+                                          new File(uploadFoler+thumbnailFileName),150,150);
+            originalFile.delete();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         Optional<Member> optionalMember = memberRepository.findById(id);  // member
         if(optionalMember.isPresent()) {
-            optionalMember.get().setProfileImageUrl(imageFileName);
+            optionalMember.get().setProfileImageUrl(thumbnailFileName);
             return optionalMember.get();
         } else {
             throw new UsernameNotFoundException("서버 오류입니다.");
