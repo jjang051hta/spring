@@ -104,7 +104,7 @@ public class MemberService {
                         ()-> new UsernameNotFoundException("없는 사용자 입니다.")
                 );
         int subscribeCount = subscribeRepository.subscribeCount(id);
-        int subscribeState = subscribeRepository.subscribeState(id,customerDetailsId);
+        int subscribeState = subscribeRepository.subscribeState(customerDetailsId,id);
         log.info("subscribeState==={}",subscribeState);
         log.info("id==={}===customerDetailsId==={}",id,customerDetailsId);
 

@@ -25,9 +25,9 @@
                         </th:block>
                         <th:block th:unless="${memberInfo.pageOwner}">
                             <button class="btn btn-outline-primary" id="btnSubscribe"
-                                    th:if="${memberInfo.subscribeState}">구독취소</button>
+                                    th:if="${memberInfo.subscribeState}"  data-subscribe="cancel">구독취소</button>
                             <button class="btn btn-outline-primary" id="btnSubscribe"
-                                    th:unless="${memberInfo.subscribeState}">구독하기</button>
+                                    th:unless="${memberInfo.subscribeState}" data-subscribe="confirm">구독하기</button>
                         </th:block>
                         <button class="btn btn-outline-info"
                                 data-bs-toggle="modal"
@@ -98,13 +98,29 @@
 
         });
         $("#btnSubscribe").on("click",function(){
-            $.ajax({
-                url:"/api/subscribe/"+id,
-                method: "POST",
-                success:function(response) {
-                    console.log(response);
-                }
-            })
+            const subscribe = $(this).data("subscribe");
+            const _this = $(this);
+            if(subscribe==="confirm") {
+                $.ajax({
+                    url: "/api/subscribe/" + id,
+                    method: "POST",
+                    success: function (response) {
+                        console.log(response);
+                        _this.attr("data-subscribe","cancel");
+                        _this.text("구독취소");
+                    }
+                })
+            } else {
+                $.ajax({
+                    url: "/api/subscribe/" + id,
+                    method: "DELETE",
+                    success: function (response) {
+                        console.log(response);
+                        _this.attr("data-subscribe","confirm");
+                        _this.text("구독하기");
+                    }
+                })
+            }
         })
 
     </script>

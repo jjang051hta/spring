@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,12 +22,25 @@ public class SubscribeApiController {
     @PostMapping("/api/subscribe/{toMemberId}")
     public Map<String,Object> subscribe(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                         @PathVariable int toMemberId) {
-        log.info("customUserDetails.getLoggedMember().getId()==={}",customUserDetails.getLoggedMember().getId());
-        log.info("toMemberId==={}",toMemberId);
+//        log.info("customUserDetails.getLoggedMember().getId()==={}",customUserDetails.getLoggedMember().getId());
+//        log.info("toMemberId==={}",toMemberId);
 
         subscribeService.subscribe(customUserDetails.getLoggedMember().getId(),toMemberId);
         Map<String,Object> resultMap = new HashMap<>();
         resultMap.put("isSubscribe","ok");
         return resultMap;
     }
+
+    @DeleteMapping("/api/subscribe/{toMemberId}")
+    public Map<String,Object> subscribeDelete(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                        @PathVariable int toMemberId) {
+//        log.info("customUserDetails.getLoggedMember().getId()==={}",customUserDetails.getLoggedMember().getId());
+//        log.info("toMemberId==={}",toMemberId);
+
+        subscribeService.unSubscribe(customUserDetails.getLoggedMember().getId(),toMemberId);
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("isUnsubscribe","ok");
+        return resultMap;
+    }
+
 }

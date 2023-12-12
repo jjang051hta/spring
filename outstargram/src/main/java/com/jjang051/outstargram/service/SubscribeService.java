@@ -19,4 +19,10 @@ public class SubscribeService {
     public int subscribeCount(int memberId) {
         return subscribeRepository.subscribeCount(memberId);   //count
     }
+
+
+    @Transactional
+    public void unSubscribe(int customerDetailsId, int urlId) {
+        subscribeRepository.subscribe(customerDetailsId,urlId);
+    }
 }
