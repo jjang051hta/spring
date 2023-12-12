@@ -96,30 +96,34 @@
             })
             //  key:value
 
-        });
-        $("#btnSubscribe").on("click",function(){
+        })
+
+        $("body").on("click","#btnSubscribe",function(){
             const subscribe = $(this).data("subscribe");
             const _this = $(this);
-            if(subscribe==="confirm") {
+            console.log("subscribe===",subscribe);
+            if(subscribe=="confirm") {
                 $.ajax({
                     url: "/api/subscribe/" + id,
                     method: "POST",
                     success: function (response) {
                         console.log(response);
-                        _this.attr("data-subscribe","cancel");
+                        _this.data("subscribe","cancel");
                         _this.text("구독취소");
                     }
                 })
+                console.log("confirm");
             } else {
                 $.ajax({
                     url: "/api/subscribe/" + id,
                     method: "DELETE",
                     success: function (response) {
                         console.log(response);
-                        _this.attr("data-subscribe","confirm");
+                        _this.data("subscribe","confirm");
                         _this.text("구독하기");
                     }
-                })
+                });
+                console.log("cancel");
             }
         })
 
