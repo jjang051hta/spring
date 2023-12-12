@@ -28,7 +28,7 @@
                         </button>
                     </div>
                     <div class="subscribe">
-                        <span>구독자수</span><span>3</span>
+                        <span>구독자수</span><span th:text="${subscribeCount}">3</span>
                     </div>
                     <div class="title mt-3">
                         <h3 th:text="${memberInfo.userId}">fjdsklf</h3>
@@ -58,7 +58,6 @@
     </div>
     <script th:inline="javascript">
         const id = [[${memberInfo.id}]];
-        let i = 0;
         $(".profile").on("click", function () {
             $("#profileSelect").trigger("click");
         });
@@ -91,13 +90,11 @@
             //  key:value
 
         });
-
         $("#btnSubscribe").on("click",function(){
             $.ajax({
-                url:"/api/subscribe/2",   // insert를 하는 뭔가가 있다.
+                url:"/api/subscribe/"+id,
                 method: "POST",
                 success:function(response) {
-                    // 구독성공
                     console.log(response);
                 }
             })

@@ -4,6 +4,7 @@ import com.jjang051.outstargram.dto.CustomUserDetails;
 import com.jjang051.outstargram.dto.UpdateMemberDto;
 import com.jjang051.outstargram.entity.Member;
 import com.jjang051.outstargram.service.MemberService;
+import com.jjang051.outstargram.service.SubscribeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,14 +22,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
 
     private final MemberService memberService;
+    private final SubscribeService subscribeService;
 
     @GetMapping("/mypage/{id}")
     public String mypage(@PathVariable int id, Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         //log.info(customUserDetails.getLoggedMember().getUserId());
         //log.info(customUserDetails.getLoggedMember().getName());
         Member memberInfo = memberService.getProfile(id);
+        int subscribeCount = subscribeService.subscribeCount(id);
         //model.addAttribute("memberInfo",customUserDetails.getLoggedMember());
         model.addAttribute("memberInfo",memberInfo);
+        model.addAttribute("subscribeCount",subscribeCount);
+
         return  "/member/mypage";
     }
 

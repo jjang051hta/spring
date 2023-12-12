@@ -5,6 +5,7 @@ import com.jjang051.outstargram.dto.JoinDto;
 import com.jjang051.outstargram.dto.UpdateMemberDto;
 import com.jjang051.outstargram.entity.Member;
 import com.jjang051.outstargram.repository.MemberRepository;
+import com.jjang051.outstargram.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -28,6 +29,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final SubscribeRepository subscribeRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -99,6 +101,7 @@ public class MemberService {
                 memberRepository.findById(id).orElseThrow(
                         ()-> new UsernameNotFoundException("없는 사용자 입니다.")
                 );
+        //int subscribeCount = subscribeRepository.subscribeCount(id);
         return memberInfo;
     }
 }

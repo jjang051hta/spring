@@ -15,7 +15,13 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Integer> {
     @Modifying
     @Query(
             value="INSERT INTO SUBSCRIBE " +
-                    "(fromMemberId,toMemberId, createdate) VALUES (:fromMemberId,:toMemebrId, sysdate)"
+                    "(id,fromMemberId,toMemberId, createdate) VALUES (SUBSCRIBE_SEQ.nextval,:fromMemberId,:toMemebrId, sysdate)"
             ,nativeQuery = true)
-    void subscribe(@Param("fromMemberId") int fromMemberId, @Param("toMemberId") int toMemberId);
+    void subscribe(@Param("fromMemberId") int fromMemberId, @Param("toMemebrId") int toMemebrId);
+
+    @Query(value="SELECT COUNT(*) FROM SUBSCRIBE WHERE fromMemberId = :memberId",nativeQuery = true)
+    int subscribeCount(@Param("memberId") int memberId);
+
+
+
 }

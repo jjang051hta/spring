@@ -21,6 +21,9 @@ public class SubscribeApiController {
     @PostMapping("/api/subscribe/{toMemberId}")
     public Map<String,Object> subscribe(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                         @PathVariable int toMemberId) {
+        log.info("customUserDetails.getLoggedMember().getId()==={}",customUserDetails.getLoggedMember().getId());
+        log.info("toMemberId==={}",toMemberId);
+
         subscribeService.subscribe(customUserDetails.getLoggedMember().getId(),toMemberId);
         Map<String,Object> resultMap = new HashMap<>();
         resultMap.put("isSubscribe","ok");
