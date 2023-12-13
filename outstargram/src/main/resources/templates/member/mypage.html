@@ -179,17 +179,34 @@
                 url:`/api/member/${id}/subscribe`,
                 success:function(response){
                     console.log(response);
-                    let tempHtml = "";
-                    console.log(response.subscribeList.length);
-                    $.each(response.subscribeList,function(idx,item){
 
-                        tempHtml+=`<li>
-                            <span><img src="/upload/${item.profileImageUrl}"></span>
-                            <span>${item.name}</span>
-                            <button class="btn btn-primary">구독하기</button>
+                    let tempHtml = "";
+                    if(response.subscribeList.length===0) {
+                        tempHtml="<p>구독하는 사람이 없습니다.</p>"
+                    } else {
+                        $.each(response.subscribeList,function(idx,item){
+                            const profileImageUrl = item.profileImageUrl;
+                            const name = item.name;
+                            const equalState = item.equalState;
+                            const subscribeState= item.subscribeState;
+                            let btn = "";
+                            if(equalState==="1") {
+                                btn = "";
+                            } else {
+                                if(subscribeState!=="1") {
+                                    btn = '<button class="btn btn-primary">구독하기</button>';
+                                } else {
+                                    btn = '<button class="btn btn-primary">구독취소</button>';
+                                }
+                            }
+                            tempHtml+=`<li>
+                            <span><img src="/upload/${profileImageUrl}"  class="thumb"></span>
+                            <span class="name">${name}</span>
+                            ${btn}
                         </li>`
-                    });
-                    $(".subscribeList").append(tempHtml);
+                        });
+                    }
+                    $(".subscribeList").html(tempHtml);
                 }
             })
         });
