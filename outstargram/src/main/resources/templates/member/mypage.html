@@ -194,9 +194,11 @@
                                 btn = "";
                             } else {
                                 if(subscribeState!=="1") {
-                                    btn = '<button class="btn btn-primary">구독하기</button>';
+                                    btn = '<button class="btn btn-primary"  ' +
+                                        'id="btnSubscribe" data-subscribe="confirm">구독하기</button>';
                                 } else {
-                                    btn = '<button class="btn btn-primary">구독취소</button>';
+                                    btn = '<button class="btn btn-primary" ' +
+                                        'id="btnSubscribe" data-subscribe="cancel">구독취소</button>';
                                 }
                             }
                             tempHtml+=`<li>
