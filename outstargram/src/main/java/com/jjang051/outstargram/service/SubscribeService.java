@@ -29,12 +29,10 @@ public class SubscribeService {
 
     @Transactional
     public void subscribe(int customerDetailsId, int urlId) {
-        log.info("subscribe===");
         subscribeRepository.subscribe(customerDetailsId,urlId);
     }
     @Transactional
     public void unSubscribe(int customerDetailsId, int urlId) {
-        log.info("unSubscribe===");
         subscribeRepository.unSubscribe(customerDetailsId,urlId);
     }
 

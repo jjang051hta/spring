@@ -42,9 +42,8 @@
                         <button type="button" class="btn btn-primary position-relative" id="btnSubscribeInfo">
                             구독자수
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                  th:text="${memberInfo.subscribeCount}"
                             >
-                                99+
+                            <span th:text="${memberInfo.subscribeCount}" id="subscribeCount"></span>
                             <span class="visually-hidden">unread messages</span>
                             </span>
                         </button>
@@ -110,7 +109,7 @@
 
     <script th:inline="javascript">
         const subscribeInfoModal = new bootstrap.Modal("#subscribeInfoModal");
-
+        let subscribeCount = [[${memberInfo.subscribeCount}]];
 
         const id = [[${memberInfo.member.id}]];
         $(".profile").on("click", function () {
@@ -159,6 +158,8 @@
                         console.log(response);
                         _this.data("subscribe", "cancel");
                         _this.text("구독취소");
+                        subscribeCount++;
+                        $("#subscribeCount").text(subscribeCount);
                     }
                 })
                 console.log("confirm");
@@ -170,6 +171,8 @@
                         console.log(response);
                         _this.data("subscribe", "confirm");
                         _this.text("구독하기");
+                        subscribeCount--;
+                        $("#subscribeCount").text(subscribeCount);
                     }
                 });
                 console.log("cancel");
