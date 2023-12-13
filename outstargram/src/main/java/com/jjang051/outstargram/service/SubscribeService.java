@@ -45,9 +45,9 @@ public class SubscribeService {
 
         String queryString =
                 "SELECT tm.MEMBER_ID AS id , tm.PROFILEIMAGEURL , tm.NAME, " +
-                        "NVL2((SELECT 1 FROM SUBSCRIBE WHERE FROMMEMBERID = ? AND TOMEMBERID = tm.MEMBER_ID),1,0) " +
+                        "NVL2((SELECT 1 FROM SUBSCRIBE WHERE FROMMEMBERID = ? AND TOMEMBERID = tm.MEMBER_ID),TO_CHAR(1),TO_CHAR(0)) " +
                         "AS subscribeState, " +
-                        "NVL2((SELECT 1 FROM dual WHERE ? = tm.MEMBER_ID),1,0) AS equalState " +
+                        "NVL2((SELECT 1 FROM dual WHERE ? = tm.MEMBER_ID),TO_CHAR(1),TO_CHAR(0)) AS equalState " +
                         "FROM TABLE_MEMBER tm INNER JOIN SUBSCRIBE s " +
                         "ON tm.MEMBER_ID = s.TOMEMBERID " +
                         "WHERE s.FROMMEMBERID = ?";

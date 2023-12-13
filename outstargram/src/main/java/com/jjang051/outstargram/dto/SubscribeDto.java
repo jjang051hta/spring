@@ -13,6 +13,6 @@ public class SubscribeDto {
     private Integer id;
     private String profileImageUrl;
     private String name;
-    private Integer subscribeState;
-    private Integer equalState;
+    private Character subscribeState;
+    private Character equalState;
 }
