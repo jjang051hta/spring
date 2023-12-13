@@ -25,9 +25,11 @@
                         </th:block>
                         <th:block th:unless="${memberInfo.pageOwner}">
                             <button class="btn btn-outline-primary" id="btnSubscribe"
+                                    th:data-idx="${memberInfo.member.id}"
                                     th:if="${memberInfo.subscribeState}" data-subscribe="cancel">구독취소
                             </button>
                             <button class="btn btn-outline-primary" id="btnSubscribe"
+                                    th:data-idx="${memberInfo.member.id}"
                                     th:unless="${memberInfo.subscribeState}" data-subscribe="confirm">구독하기
                             </button>
                         </th:block>
@@ -147,6 +149,7 @@
         $("body").on("click", "#btnSubscribe", function () {
             const subscribe = $(this).data("subscribe");
             const _this = $(this);
+            const id = $(this).data("idx");
             console.log("subscribe===", subscribe);
             if (subscribe == "confirm") {
                 $.ajax({
@@ -194,11 +197,9 @@
                                 btn = "";
                             } else {
                                 if(subscribeState!=="1") {
-                                    btn = '<button class="btn btn-primary"  ' +
-                                        'id="btnSubscribe" data-subscribe="confirm">구독하기</button>';
+                                    btn = `<button class="btn btn-primary"  id="btnSubscribe" data-subscribe="confirm" data-idx="${item.id}">구독하기</button>`;
                                 } else {
-                                    btn = '<button class="btn btn-primary" ' +
-                                        'id="btnSubscribe" data-subscribe="cancel">구독취소</button>';
+                                    btn = `<button class="btn btn-primary" id="btnSubscribe" data-subscribe="cancel"  data-idx="${item.id}">구독취소</button>`;
                                 }
                             }
                             tempHtml+=`<li>
