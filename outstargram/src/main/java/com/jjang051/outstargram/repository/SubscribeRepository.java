@@ -32,4 +32,7 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Integer> {
 
     @Query(value="SELECT COUNT(*) FROM SUBSCRIBE WHERE fromMemberId = :loggedMemberId and toMemberId = :urlId",nativeQuery = true)
     int subscribeState(@Param("loggedMemberId") int loggedMemberId,@Param("urlId") int urlId );
+
+
+    // 여기다가
 }
