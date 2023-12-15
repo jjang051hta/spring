@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -50,9 +51,10 @@ public class Member {
 
     private String profileImageUrl;
 
-//    private String thumbProfileImageUrl;
-//
-//    private String renamedProfileImageUrl;
+
+    // 양방향 매핑....
+    @OneToMany(mappedBy = "member") // 원래대로라면  column만들어지지만 내가 주인이 아니니까 만들지 마라...
+    private List<Image> imageList;
 
     @CreatedDate
     private LocalDateTime createDate;

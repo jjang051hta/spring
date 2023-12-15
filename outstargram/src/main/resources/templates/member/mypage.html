@@ -53,6 +53,15 @@
                         <div th:text="${memberInfo.member.description}">여기에 소개글</div>
                     </div>
                 </div>
+                <div class="story-list">
+                    <ul>
+                        <th:block th:each="item:${memberInfo.member.imageList}">
+                        <li>
+                            <img src="/images/500.png" th:src="@{|/upload/${item.imgUrl}|}">
+                        </li>
+                        </th:block>
+                    </ul>
+                </div>
             </div>
 
         </div>
