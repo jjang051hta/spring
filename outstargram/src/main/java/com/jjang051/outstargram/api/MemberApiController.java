@@ -30,6 +30,7 @@ public class MemberApiController {
                                                  MultipartFile profileImageUrl) {
         log.info("profileImageUrl==={}",profileImageUrl);
         Member memberInfo = memberService.changeProfile(id, profileImageUrl); //void
+        log.info(memberInfo.toString());
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("isState","ok");
         resultMap.put("memberInfo",memberInfo);

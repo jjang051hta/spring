@@ -6,7 +6,7 @@
     <div class="container justify-content-center d-flex">
         <div class="col-12">
             <h2>MY PAGE</h2>
-            <div class="mypage-header">
+            <div class="mypage-header mt-5">
                 <div class="profile">
                     <th:block th:if="${memberInfo.member.profileImageUrl==null}">
                         <i class="bi bi-person-circle" style="font-size: 100px"></i>
@@ -131,12 +131,12 @@
                 //enctype:"multipart/form-data"
                 method: "PUT",
                 success: function (response) {
-                    console.log(response);
+                    console.log("파일 변환 성공===",response);
                     const fileReader = new FileReader();
                     console.log("fileReader===", fileReader);
                     fileReader.onload = function () {
                         console.log("파일 변경");
-                        $("#memberProfileImage").attr("src", "/upload/" + response.memberInfo.member.profileImageUrl);
+                        $("#memberProfileImage").attr("src", "/upload/" + response.memberInfo.profileImageUrl);
                     }
                     fileReader.readAsDataURL(file); // 요거 써야지만 onload 이벤트 발생한다.
                 }
