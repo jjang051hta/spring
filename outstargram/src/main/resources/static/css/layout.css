@@ -58,3 +58,7 @@
 .comment-box .btn {
   margin-left: auto;
 }
+
+#preview {
+  width:100%;
+}

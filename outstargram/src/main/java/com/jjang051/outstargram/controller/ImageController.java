@@ -11,4 +11,11 @@ public class ImageController {
     public String story() {
         return "/image/story";
     }
+
+
+    @GetMapping("/upload")
+    public String upload() {
+        return "/image/upload";
+    }
+
 }
