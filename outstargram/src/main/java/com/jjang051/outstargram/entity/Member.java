@@ -1,6 +1,7 @@
 package com.jjang051.outstargram.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jjang051.outstargram.constant.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -53,7 +54,9 @@ public class Member {
 
 
     // 양방향 매핑....
+
     @OneToMany(mappedBy = "member") // 원래대로라면  column만들어지지만 내가 주인이 아니니까 만들지 마라...
+    @JsonIgnoreProperties({"member"})
     private List<Image> imageList;
 
     @CreatedDate
