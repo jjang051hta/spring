@@ -21,7 +21,6 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name="member_id")
     private int id;
 
     private String caption;

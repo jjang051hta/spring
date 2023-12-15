@@ -1,12 +1,23 @@
 package com.jjang051.outstargram.controller;
 
+import com.jjang051.outstargram.dto.CustomUserDetails;
+import com.jjang051.outstargram.dto.ImageUploadDto;
+import com.jjang051.outstargram.service.ImageService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/image")
+@RequiredArgsConstructor
+@Slf4j
 public class ImageController {
+
+    private final ImageService imageService;
     @GetMapping("/story")
     public String story() {
         return "/image/story";
@@ -18,4 +29,12 @@ public class ImageController {
         return "/image/upload";
     }
 
+    @PostMapping("/upload")
+    public String uploadProcess(ImageUploadDto imageUploadDto,
+                                @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        log.info("imageUploadDto==={}",imageUploadDto.getCaption());
+        log.info("imageUploadDto==={}",imageUploadDto.getFile());
+        imageService.upload(imageUploadDto,customUserDetails);
+        return "redirect:/member/mypage/"+customUserDetails.getLoggedMember().getId();
+    }
 }
