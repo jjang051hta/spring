@@ -88,7 +88,7 @@
             const wh = $(window).height();
             const dh = $(document).height();
             const st = $(window).scrollTop();
-            if(wh+st == dh) {
+            if(wh+st >= dh - 100) {
                 loadPage++;
                 loadStory();
                 if(loadPage>=totalPages) {
