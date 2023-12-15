@@ -1,5 +1,6 @@
 package com.jjang051.outstargram.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -28,6 +29,7 @@ public class Image {
 
     @JoinColumn(name="member_id")
     @ManyToOne
+    @JsonIgnoreProperties({"imageList"})
     private Member member;
 
     @CreatedDate
