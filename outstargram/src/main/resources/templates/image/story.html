@@ -49,8 +49,9 @@
                     let tempHtml = "";
                     totalPages= response.imageList.totalPages - 1;
                     $.each(response.imageList.content, function (idx, item) {
+                        const likeState = item.likeState;
                         tempHtml += `
-                        <li>
+                        <li data-image="${item.id}">
                             <div class="story-box mt-5">
                                 <div class="mypage-header">
                                     <img src="/upload/${item.member.profileImageUrl}" alt="">
@@ -64,8 +65,8 @@
                                 <div class="caption fs-4  p-3 fw-bold">${item.caption}</div>
                                 <!-- 제목 -->
                                 <div class="like-box p-3">
-                                    <span class="icon" data-state="hate">
-                                        <i class="bi bi-balloon-heart-fill text-danger fs-3"></i>
+                                    <span class="icon" data-state=${likeState?"like":"hate"}>
+                                        <i class="bi ${likeState?" bi-balloon-heart-fill text-danger":" bi-balloon-heart"} fs-3"></i>
                                         <!--<i class="bi bi-balloon-heart fs-3"></i>-->
                                     </span>
                                     <span class="num">3</span>
@@ -89,6 +90,7 @@
 
         $("body").on("click",".icon",function(){
             console.log("icon click");
+            const selectedImage =  $(this).closest("li").data("image");
             const heart = $(this).find("i");
             if($(this).data("state")=="like") {
                 $(this).data("state","hate");
@@ -98,7 +100,7 @@
             } else {
                 $.ajax({
                     method:"POST",
-                    url:"/api/image/152/likes",
+                    url:`/api/image/${selectedImage}/likes`,
                     success:function(response){
                         console.log(response);
                     }

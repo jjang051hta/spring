@@ -29,12 +29,19 @@ public class Image {
     private String imgUrl;
 
     @JoinColumn(name="member_id")
-    @ManyToOne
+    @ManyToOne()
     @JsonIgnoreProperties({"imageList"})
     private Member member;
 
+    @JsonIgnoreProperties({"image"})
     @OneToMany(mappedBy = "image")
     private List<Likes> likes;
+
+
+    // 152번 이미지에 1번 유저가 좋아요를 눌렀는지 안눌렀는지...
+    // entity에 있는 속성은 column을 만든다 이때 컬럼을 만들지 않을려면....
+    @Transient
+    private boolean likeState;
 
 
     @CreatedDate

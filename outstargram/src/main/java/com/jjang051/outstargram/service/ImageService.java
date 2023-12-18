@@ -44,6 +44,15 @@ public class ImageService {
     }
 
     public Page<Image> loadStory(int customDetailsId, Pageable pageable) {
-        return imageRepository.loadStory(customDetailsId,pageable);
+        Page<Image> images = imageRepository.loadStory(customDetailsId,pageable);
+        images.forEach((image)->{
+            image.getLikes().forEach((like)->{
+                // 152번 이미지 user 1,2,3
+                if(like.getMember().getId()==customDetailsId) {
+                    image.setLikeState(true);
+                }
+            });
+        });
+        return images;
     }
 }
