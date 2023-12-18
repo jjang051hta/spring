@@ -61,10 +61,10 @@
                                     <img src="/upload/${item.imgUrl}">
                                 </div>
                                 <!-- 이미지 불러오는 곳 -->
-                                <div class="caption">${item.caption}</div>
+                                <div class="caption fs-4  p-3 fw-bold">${item.caption}</div>
                                 <!-- 제목 -->
-                                <div class="like-box">
-                                    <span class="icon" data-state="like">
+                                <div class="like-box p-3">
+                                    <span class="icon" data-state="hate">
                                         <i class="bi bi-balloon-heart-fill text-danger fs-3"></i>
                                         <!--<i class="bi bi-balloon-heart fs-3"></i>-->
                                     </span>
@@ -72,7 +72,7 @@
                                 </div>
                                 <!-- 종ㅎ아요...-->
 
-                                <div class="mb-3 comment-box">
+                                <div class="mb-3 comment-box p-3">
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     <button class="btn btn-outline-primary mt-2">comment</button>
                                 </div>
@@ -96,6 +96,13 @@
                 heart.removeClass("text-danger");
                 heart.addClass("bi-balloon-heart");
             } else {
+                $.ajax({
+                    method:"POST",
+                    url:"/api/image/152/likes",
+                    success:function(response){
+
+                    }
+                });
                 $(this).data("state","like");
                 heart.addClass("bi-balloon-heart-fill");
                 heart.addClass("text-danger");
