@@ -22,6 +22,8 @@ public class Likes {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
+
+
     @ManyToOne
     @JoinColumn(name = "imageId")
     private Image image;

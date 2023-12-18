@@ -64,9 +64,9 @@
                                 <div class="caption">${item.caption}</div>
                                 <!-- 제목 -->
                                 <div class="like-box">
-                                    <span class="icon">
-                                        <i class="bi bi-balloon-heart-fill"></i>
-                                        <i class="bi bi-balloon-heart"></i>
+                                    <span class="icon" data-state="like">
+                                        <i class="bi bi-balloon-heart-fill text-danger fs-3"></i>
+                                        <!--<i class="bi bi-balloon-heart fs-3"></i>-->
                                     </span>
                                     <span class="num">3</span>
                                 </div>
@@ -86,6 +86,22 @@
 
             });
         }
+
+        $("body").on("click",".icon",function(){
+            console.log("icon click");
+            const heart = $(this).find("i");
+            if($(this).data("state")=="like") {
+                $(this).data("state","hate");
+                heart.removeClass("bi-balloon-heart-fill");
+                heart.removeClass("text-danger");
+                heart.addClass("bi-balloon-heart");
+            } else {
+                $(this).data("state","like");
+                heart.addClass("bi-balloon-heart-fill");
+                heart.addClass("text-danger");
+                heart.removeClass("bi-balloon-heart");
+            }
+        })
 
         $(".btn-more").on("click", function () {
             loadPage++;
