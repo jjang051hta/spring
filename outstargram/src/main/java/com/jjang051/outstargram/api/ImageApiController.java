@@ -37,8 +37,10 @@ public class ImageApiController {
     @PostMapping("/image/{imageId}/likes")
     public Map<String,Object> likes(@PathVariable int imageId,
                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        likesService.like(imageId,customUserDetails.getLoggedMember().getId());
-        return null;
+        int result = likesService.like(imageId,customUserDetails.getLoggedMember().getId());
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("like","ok");
+        return resultMap;
     }
 
 
