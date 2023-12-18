@@ -18,4 +18,11 @@ public class LikesService {
         log.info("result==={}",result);
         return result;
     }
+
+    @Transactional
+    public int hate(int imageId, int customDetailsId){
+        int result = likesRepository.hate(imageId, customDetailsId);
+        log.info("result==={}",result);
+        return result;
+    }
 }

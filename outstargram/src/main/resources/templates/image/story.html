@@ -92,23 +92,34 @@
             console.log("icon click");
             const selectedImage =  $(this).closest("li").data("image");
             const heart = $(this).find("i");
+            const _this = $(this);
             if($(this).data("state")=="like") {
-                $(this).data("state","hate");
-                heart.removeClass("bi-balloon-heart-fill");
-                heart.removeClass("text-danger");
-                heart.addClass("bi-balloon-heart");
+                $.ajax({
+                    method:"DELETE",
+                    url:`/api/image/${selectedImage}/likes`,
+                    success:function(response){
+                        console.log(response);
+                        _this.data("state","hate");
+                        heart.removeClass("bi-balloon-heart-fill");
+                        heart.removeClass("text-danger");
+                        heart.addClass("bi-balloon-heart");
+                    }
+                });
+
+
             } else {
                 $.ajax({
                     method:"POST",
                     url:`/api/image/${selectedImage}/likes`,
                     success:function(response){
                         console.log(response);
+                        _this.data("state","like");
+                        heart.addClass("bi-balloon-heart-fill");
+                        heart.addClass("text-danger");
+                        heart.removeClass("bi-balloon-heart");
                     }
                 });
-                $(this).data("state","like");
-                heart.addClass("bi-balloon-heart-fill");
-                heart.addClass("text-danger");
-                heart.removeClass("bi-balloon-heart");
+
             }
         })
 

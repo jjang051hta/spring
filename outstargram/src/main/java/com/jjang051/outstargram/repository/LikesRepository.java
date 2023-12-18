@@ -14,4 +14,8 @@ public interface LikesRepository extends JpaRepository<Likes,Integer> {
     @Query(value="INSERT INTO LIKES(id,imageId,memberId,createDate) " +
             "VALUES(LIKES_SEQ.nextval,:imageId,:customDetailsId, sysdate)", nativeQuery=true)
     int like(@Param("imageId") int imageId,@Param("customDetailsId") int customDetailsId);
+
+    @Modifying
+    @Query(value="DELETE FROM LIKES WHERE imageId = :imageId AND memberId = :customDetailsId", nativeQuery=true)
+    int hate(@Param("imageId") int imageId,@Param("customDetailsId") int customDetailsId);
 }

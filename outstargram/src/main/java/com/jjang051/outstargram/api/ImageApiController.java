@@ -43,5 +43,17 @@ public class ImageApiController {
         return resultMap;
     }
 
+    @DeleteMapping("/image/{imageId}/likes")
+    public Map<String,Object> hate(@PathVariable int imageId,
+                                    @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        int result = likesService.hate(imageId,customUserDetails.getLoggedMember().getId());
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("hate","ok");
+        return resultMap;
+    }
+
+
+
+
 
 }
