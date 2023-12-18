@@ -1,6 +1,5 @@
 package com.jjang051.outstargram.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -9,7 +8,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -19,27 +17,23 @@ import java.util.List;
 @AllArgsConstructor
 @DynamicUpdate
 @EntityListeners(AuditingEntityListener.class)
-public class Image {
-
+public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    private String caption;
-    private String imgUrl;
-
-    @JoinColumn(name="member_id")
     @ManyToOne
-    @JsonIgnoreProperties({"imageList"})
+    @JoinColumn(name = "imageId")
+    private Image image;
+
+    @ManyToOne
+    @JoinColumn(name = "memberId")
     private Member member;
-
-    @OneToMany(mappedBy = "image")
-    private List<Likes> likes;
-
 
     @CreatedDate
     private LocalDateTime createDate;
 
     @LastModifiedDate
     private LocalDateTime modifyDate;
+
 }

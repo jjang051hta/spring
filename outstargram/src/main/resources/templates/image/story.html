@@ -56,14 +56,27 @@
                                     <img src="/upload/${item.member.profileImageUrl}" alt="">
                                     <span>${item.member.name}</span>
                                 </div>
+                                <!-- 상단 글쓴 사람 정보-->
                                 <div class="main-image">
                                     <img src="/upload/${item.imgUrl}">
                                 </div>
+                                <!-- 이미지 불러오는 곳 -->
                                 <div class="caption">${item.caption}</div>
+                                <!-- 제목 -->
+                                <div class="like-box">
+                                    <span class="icon">
+                                        <i class="bi bi-balloon-heart-fill"></i>
+                                        <i class="bi bi-balloon-heart"></i>
+                                    </span>
+                                    <span class="num">3</span>
+                                </div>
+                                <!-- 종ㅎ아요...-->
+
                                 <div class="mb-3 comment-box">
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     <button class="btn btn-outline-primary mt-2">comment</button>
                                 </div>
+                                <!-- 댓글 -->
                             </div>
                         </li>
                     `
