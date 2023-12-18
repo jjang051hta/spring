@@ -69,7 +69,7 @@
                                         <i class="bi ${likeState?" bi-balloon-heart-fill text-danger":" bi-balloon-heart"} fs-3"></i>
                                         <!--<i class="bi bi-balloon-heart fs-3"></i>-->
                                     </span>
-                                    <span class="num">3</span>
+                                    <span class="num">${item.likeTotal}</span>
                                 </div>
                                 <!-- 종ㅎ아요...-->
 
@@ -93,6 +93,8 @@
             const selectedImage =  $(this).closest("li").data("image");
             const heart = $(this).find("i");
             const _this = $(this);
+            const _num = $(this).next();
+            let num =  parseInt(_num.text());
             if($(this).data("state")=="like") {
                 $.ajax({
                     method:"DELETE",
@@ -103,10 +105,10 @@
                         heart.removeClass("bi-balloon-heart-fill");
                         heart.removeClass("text-danger");
                         heart.addClass("bi-balloon-heart");
+                        num--;
+                        _num.text(num);
                     }
                 });
-
-
             } else {
                 $.ajax({
                     method:"POST",
@@ -114,13 +116,16 @@
                     success:function(response){
                         console.log(response);
                         _this.data("state","like");
+
                         heart.addClass("bi-balloon-heart-fill");
                         heart.addClass("text-danger");
                         heart.removeClass("bi-balloon-heart");
+                        num++;
+                        _num.text(num);
                     }
                 });
-
             }
+
         })
 
         $(".btn-more").on("click", function () {
