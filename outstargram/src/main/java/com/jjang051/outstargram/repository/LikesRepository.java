@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LikesRepository extends JpaRepository<Likes,Integer> {
 
+
     @Modifying
     @Query(value="INSERT INTO LIKES(id,imageId,memberId,createDate) " +
             "VALUES(LIKES_SEQ.nextval,:imageId,:customDetailsId, sysdate)", nativeQuery=true)

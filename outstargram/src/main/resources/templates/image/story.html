@@ -110,14 +110,30 @@
         }
         $("body").on("click",".comment-box .btn-comment",function(){
             //console.log("코멘트 눌렀음...");
+            const imageId = $(this).closest("li").data("image");
             const comment =  $(this).prev().val();
-            const insertComment = `<li class="d-flex mb-1">
+            const insertItem = `<li class="d-flex mb-1">
                 <span class="profile-image"><img src="/images/alien.png"></span>
                 <span class="writer mx-1">장성호</span>
                 <span class="content mx-2">${comment}</span>
                 <button class="btn btn-close btn-sm"></button>
             </li>`;
-            $(".comment-list").prepend(insertComment);
+            const sendData = {
+                content:comment,
+                imageId:imageId
+            }
+            // imageId,memberId, content
+
+            $.ajax({
+                url:"/api/comment",
+                method:"POST",
+                data:sendData,
+                success:function(response){
+                    console.log(response.insert);
+                }
+            });
+
+            $(".comment-list").prepend(insertItem);
         });
         $("body").on("click",".icon",function(){
             console.log("icon click");
