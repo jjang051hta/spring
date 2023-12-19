@@ -41,6 +41,9 @@
         let loadPage = 0;
         loadStory();
         let totalPages = 0;
+
+        const loggedId = [[${#authentication.principal.loggedMember.id}]];
+
         function loadStory() {
             $.ajax({
                 url: `/api/image?page=${loadPage}`,
@@ -57,7 +60,7 @@
                                 <span class="profile-image"><img src="/upload/${item02.member.profileImageUrl}"></span>
                                 <span class="writer mx-1">${item02.member.name}</span>
                                 <span class="content mx-2">${item02.content}</span>
-                                <button class="btn btn-close btn-sm"></button>
+                                ${item02.member.id==loggedId?`<button class="btn btn-close btn-sm"></button>`:``}
                             </li>`
                         })
                         tempHtml += `
@@ -126,8 +129,11 @@
         });
         $("body").on("click",".comment-box .btn-comment",function(){
             //console.log("코멘트 눌렀음...");
+            const commetList = $(this).parent().prev().find(".comment-list");
+
             const imageId = $(this).closest("li").data("image");
             const comment =  $(this).prev().val();
+            const commentBox = $(this).prev();
 
             const sendData = {
                 content:comment,
@@ -149,7 +155,8 @@
                                 <span class="content mx-2">${response.comments.content}</span>
                                 <button class="btn btn-close btn-sm"></button>
                             </li>`;
-                        $(".comment-list").prepend(insertItem);
+                        commetList.prepend(insertItem);
+                        commentBox.val("");
                     }
                 }
             });

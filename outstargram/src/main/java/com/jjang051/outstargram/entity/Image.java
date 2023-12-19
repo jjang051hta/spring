@@ -37,7 +37,7 @@ public class Image {
     @OneToMany(mappedBy = "image")
     private List<Likes> likes;
 
-
+    @OrderBy("createDate DESC, id ASC")
     @OneToMany(mappedBy = "image")
     @JsonIgnoreProperties({"image"})
     private List<Comments> commentsList;
