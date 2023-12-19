@@ -39,6 +39,7 @@ public class Image {
 
 
     @OneToMany(mappedBy = "image")
+    @JsonIgnoreProperties({"image"})
     private List<Comments> commentsList;
 
 

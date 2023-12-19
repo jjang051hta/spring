@@ -50,6 +50,16 @@
                     totalPages= response.imageList.totalPages - 1;
                     $.each(response.imageList.content, function (idx, item) {
                         const likeState = item.likeState;
+                        let commentsList="";
+                        $.each(item.commentsList,function(idx02, item02){
+                            commentsList+=`
+                            <li class="d-flex mb-1">
+                                <span class="profile-image"><img src="/upload/${item02.member.profileImageUrl}"></span>
+                                <span class="writer mx-1">${item02.member.name}</span>
+                                <span class="content mx-2">${item02.content}</span>
+                                <button class="btn btn-close btn-sm"></button>
+                            </li>`
+                        })
                         tempHtml += `
                         <li data-image="${item.id}">
                             <div class="story-box mt-5">
@@ -74,24 +84,15 @@
                                 <!-- 종ㅎ아요...-->
                                 <div class="comment-list-box p-3">
                                     <ul class="comment-list">
+                                        ${commentsList}
+                                    <!--
                                         <li class="d-flex mb-1">
                                             <span class="profile-image"><img src="/images/alien.png"></span>
                                             <span class="writer mx-1">장성호</span>
                                             <span class="content mx-2">jdksajd sajdsa</span>
                                             <button class="btn btn-close btn-sm"></button>
                                         </li>
-                                        <li class="d-flex mb-1">
-                                            <span class="profile-image"><img src="/images/alien.png"></span>
-                                            <span class="writer mx-1">장성호</span>
-                                            <span class="content mx-2">jdksajd sajdsa</span>
-                                            <button class="btn btn-close btn-sm"></button>
-                                        </li>
-                                        <li class="d-flex mb-1">
-                                            <span class="profile-image"><img src="/images/alien.png"></span>
-                                            <span class="writer mx-1">장성호</span>
-                                            <span class="content mx-2">jdksajd sajdsa</span>
-                                            <button class="btn btn-close btn-sm"></button>
-                                        </li>
+                                    -->
                                     </ul>
                                 </div>
                                 <div class="mb-3 comment-box p-3">
@@ -112,12 +113,7 @@
             //console.log("코멘트 눌렀음...");
             const imageId = $(this).closest("li").data("image");
             const comment =  $(this).prev().val();
-            const insertItem = `<li class="d-flex mb-1">
-                <span class="profile-image"><img src="/images/alien.png"></span>
-                <span class="writer mx-1">장성호</span>
-                <span class="content mx-2">${comment}</span>
-                <button class="btn btn-close btn-sm"></button>
-            </li>`;
+
             const sendData = {
                 content:comment,
                 imageId:imageId
@@ -129,11 +125,21 @@
                 method:"POST",
                 data:sendData,
                 success:function(response){
-                    console.log(response.insert);
+                    console.log(response);
+                    if(response.insert=="ok") {
+                        const insertItem = `
+                            <li class="d-flex mb-1">
+                                <span class="profile-image"><img src="/upload/${response.comments.member.profileImageUrl}"></span>
+                                <span class="writer mx-1">${response.comments.member.name}</span>
+                                <span class="content mx-2">${response.comments.content}</span>
+                                <button class="btn btn-close btn-sm"></button>
+                            </li>`;
+                        $(".comment-list").prepend(insertItem);
+                    }
                 }
             });
 
-            $(".comment-list").prepend(insertItem);
+
         });
         $("body").on("click",".icon",function(){
             console.log("icon click");

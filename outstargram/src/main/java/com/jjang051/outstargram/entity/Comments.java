@@ -1,5 +1,6 @@
 package com.jjang051.outstargram.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -27,6 +28,7 @@ public class Comments {
 
     @ManyToOne
     @JoinColumn(name="memberId")
+    @JsonIgnoreProperties({"imageList"})
     private Member member;
 
     @ManyToOne

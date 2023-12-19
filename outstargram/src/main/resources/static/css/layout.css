@@ -119,6 +119,9 @@ li {
   margin-left: auto;
 }
 
-.comment-list li {
-
+.comment-list li .profile-image img {
+  width:30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 100px;
 }
