@@ -21,7 +21,14 @@
                 <div class="info">
                     <div class="btns">
                         <th:block th:if="${memberInfo.pageOwner}">
-                            <a href="/image/upload" class="btn btn-primary">STORY</a>
+                            <a href="/image/upload" class="btn btn-primary position-relative">STORY
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                      th:text="${memberInfo.imageTotal}"
+                                >
+                            </span>
+                            <span class="visually-hidden">unread messages</span>
+                            </span>
+                            </a>
                         </th:block>
                         <th:block th:unless="${memberInfo.pageOwner}">
                             <button class="btn btn-outline-primary" id="btnSubscribe"
@@ -53,11 +60,17 @@
                         <div th:text="${memberInfo.member.description}">여기에 소개글</div>
                     </div>
                 </div>
-                <div class="story-list">
+                <div class="story-list mypage-story-list">
                     <ul>
                         <th:block th:each="item:${memberInfo.member.imageList}">
                         <li>
                             <img src="/images/500.png" th:src="@{|/upload/${item.imgUrl}|}">
+                            <div class="overlay">
+                                <span class="icon">
+                                    <i class="bi bi-balloon-heart-fill text-white fs-3"></i>
+                                </span>
+                                <span class="text-white fs-3" th:text="${item.likeTotal}"></span>
+                            </div>
                         </li>
                         </th:block>
                     </ul>
