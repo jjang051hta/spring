@@ -7,9 +7,7 @@ import com.jjang051.outstargram.service.CommentsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +30,14 @@ public class CommentsApiController {
         log.info("commentDto==={}",commentDto);
         resultMap.put("insert","ok");
         resultMap.put("comments",comments);
+        return resultMap;
+    }
+
+    @DeleteMapping("/comment/{id}")
+    public Map<String, Object> deleteComment(@PathVariable int id) {
+        commentsService.deleteComment(id);
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("delete","ok");
         return resultMap;
     }
 }

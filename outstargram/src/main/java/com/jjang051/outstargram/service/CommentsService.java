@@ -8,6 +8,7 @@ import com.jjang051.outstargram.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ public class CommentsService {
     private final CommentsRepository commentsRepository;
     private final MemberRepository memberRepository;
 
+    @Transactional
     public Comments saveComment(String content, int imageId, int customDetailsId) {
         Image image = Image.builder()
                 .id(imageId)
@@ -34,5 +36,10 @@ public class CommentsService {
                 .member(memberEntity)
                 .build();
         return commentsRepository.save(comments);
+    }
+
+    @Transactional
+    public void deleteComment(int id) {
+        commentsRepository.deleteById(id);
     }
 }

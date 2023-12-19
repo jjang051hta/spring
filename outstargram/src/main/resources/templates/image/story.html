@@ -53,7 +53,7 @@
                         let commentsList="";
                         $.each(item.commentsList,function(idx02, item02){
                             commentsList+=`
-                            <li class="d-flex mb-1">
+                            <li class="d-flex mb-1" data-idx="${item02.id}">
                                 <span class="profile-image"><img src="/upload/${item02.member.profileImageUrl}"></span>
                                 <span class="writer mx-1">${item02.member.name}</span>
                                 <span class="content mx-2">${item02.content}</span>
@@ -109,6 +109,21 @@
 
             });
         }
+        $("body").on("click",".comment-list li .btn-close",function(){
+            //console.log("삭제");
+            const _parent = $(this).parent();
+            const idx = _parent.data("idx");
+            $.ajax({
+                url:`/api/comment/${idx}`,
+                method:"DELETE",
+                success:function(response){
+                    if(response.delete=="ok") {
+                        _parent.remove();
+                    }
+                }
+            })
+
+        });
         $("body").on("click",".comment-box .btn-comment",function(){
             //console.log("코멘트 눌렀음...");
             const imageId = $(this).closest("li").data("image");
@@ -128,7 +143,7 @@
                     console.log(response);
                     if(response.insert=="ok") {
                         const insertItem = `
-                            <li class="d-flex mb-1">
+                            <li class="d-flex mb-1" data-idx="${response.comments.id}">
                                 <span class="profile-image"><img src="/upload/${response.comments.member.profileImageUrl}"></span>
                                 <span class="writer mx-1">${response.comments.member.name}</span>
                                 <span class="content mx-2">${response.comments.content}</span>
@@ -189,9 +204,9 @@
             loadStory();
         });
         $(window).on("scroll",function(){
-            console.log("$(window).height()===",$(window).height());
-            console.log("$(document).height()===",$(document).height());
-            console.log("$(window).scrollTop()===",$(window).scrollTop());
+            // console.log("$(window).height()===",$(window).height());
+            // console.log("$(document).height()===",$(document).height());
+            // console.log("$(window).scrollTop()===",$(window).scrollTop());
             const wh = $(window).height();
             const dh = $(document).height();
             const st = $(window).scrollTop();
