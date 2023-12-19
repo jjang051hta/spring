@@ -115,3 +115,10 @@ li {
   align-items: center;
 }
 
+.comment-list .btn-close {
+  margin-left: auto;
+}
+
+.comment-list li {
+
+}

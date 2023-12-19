@@ -72,10 +72,31 @@
                                     <span class="num">${item.likeTotal}</span>
                                 </div>
                                 <!-- 종ㅎ아요...-->
-
+                                <div class="comment-list-box p-3">
+                                    <ul class="comment-list">
+                                        <li class="d-flex mb-1">
+                                            <span class="profile-image"><img src="/images/alien.png"></span>
+                                            <span class="writer mx-1">장성호</span>
+                                            <span class="content mx-2">jdksajd sajdsa</span>
+                                            <button class="btn btn-close btn-sm"></button>
+                                        </li>
+                                        <li class="d-flex mb-1">
+                                            <span class="profile-image"><img src="/images/alien.png"></span>
+                                            <span class="writer mx-1">장성호</span>
+                                            <span class="content mx-2">jdksajd sajdsa</span>
+                                            <button class="btn btn-close btn-sm"></button>
+                                        </li>
+                                        <li class="d-flex mb-1">
+                                            <span class="profile-image"><img src="/images/alien.png"></span>
+                                            <span class="writer mx-1">장성호</span>
+                                            <span class="content mx-2">jdksajd sajdsa</span>
+                                            <button class="btn btn-close btn-sm"></button>
+                                        </li>
+                                    </ul>
+                                </div>
                                 <div class="mb-3 comment-box p-3">
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                    <button class="btn btn-outline-primary mt-2">comment</button>
+                                    <button class="btn btn-outline-primary btn-comment mt-2">comment</button>
                                 </div>
                                 <!-- 댓글 -->
                             </div>
@@ -87,7 +108,17 @@
 
             });
         }
-
+        $("body").on("click",".comment-box .btn-comment",function(){
+            //console.log("코멘트 눌렀음...");
+            const comment =  $(this).prev().val();
+            const insertComment = `<li class="d-flex mb-1">
+                <span class="profile-image"><img src="/images/alien.png"></span>
+                <span class="writer mx-1">장성호</span>
+                <span class="content mx-2">${comment}</span>
+                <button class="btn btn-close btn-sm"></button>
+            </li>`;
+            $(".comment-list").prepend(insertComment);
+        });
         $("body").on("click",".icon",function(){
             console.log("icon click");
             const selectedImage =  $(this).closest("li").data("image");
