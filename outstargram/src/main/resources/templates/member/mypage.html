@@ -9,7 +9,7 @@
             <div class="mypage-header mt-5">
                 <div class="profile">
                     <th:block th:if="${memberInfo.member.profileImageUrl==null}">
-                        <i class="bi bi-person-circle" style="font-size: 100px"></i>
+                        <img src="/images/user.png" id="memberProfileImage">
                     </th:block>
                     <th:block th:unless="${memberInfo.member.profileImageUrl==null}">
                         <img src="" th:src="@{|/upload/${memberInfo.member.profileImageUrl}|}" id="memberProfileImage">

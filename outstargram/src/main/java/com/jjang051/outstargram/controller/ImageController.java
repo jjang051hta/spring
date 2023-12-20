@@ -26,6 +26,7 @@ public class ImageController {
 
     @GetMapping("/popular")
     public String popular() {
+
         return "/image/popular";
     }
 

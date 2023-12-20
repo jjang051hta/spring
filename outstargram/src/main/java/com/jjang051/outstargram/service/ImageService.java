@@ -56,4 +56,8 @@ public class ImageService {
         });
         return images;
     }
+
+    public Page<Image> popular(Pageable pageable) {
+        return imageRepository.popular(pageable);
+    }
 }

@@ -79,8 +79,7 @@
                                 <!-- 제목 -->
                                 <div class="like-box p-3">
                                     <span class="icon" data-state=${likeState?"like":"hate"}>
-                                        <i class="bi ${likeState?" bi-balloon-heart-fill text-danger":" bi-balloon-heart"} fs-3"></i>
-                                        <!--<i class="bi bi-balloon-heart fs-3"></i>-->
+                                         ${likeState?`<i class="bi bi-balloon-heart-fill text-danger fs-3"></i>`:`<i class="bi bi-balloon-heart fs-3"></i>`}
                                     </span>
                                     <span class="num">${item.likeTotal}</span>
                                 </div>
@@ -222,6 +221,7 @@
                 loadStory();
                 if(loadPage>=totalPages) {
                     $(window).off("scroll");
+                    $(".btn-more").hide();
                 }
             }
         });
