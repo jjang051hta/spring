@@ -23,7 +23,7 @@
                     <span class="num" th:text="${imageInfo.likeTotal}">3</span>
                 </div>
                 <!-- 종ㅎ아요...-->
-                <div class="comment-list-box p-3" th:data-image="${imageInfo.id}">
+                <div class="comment-list-box p-3" th:data-image="${imageInfo.id}" id="image">
                     <ul class="comment-list">
                         <th:block th:each="item : ${imageInfo.commentsList}">
                             <li class="d-flex mb-1" th:data-idx="${item.id}">
@@ -69,7 +69,9 @@
             //console.log("코멘트 눌렀음...");
             const commetList = $(this).parent().prev().find(".comment-list");
 
-            const imageId = $(this).closest("li").data("image");
+            //const imageId = $(this).parent().prev().data("image");
+            const imageId = $("#image").data("image");
+
             const comment =  $(this).prev().val();
             const commentBox = $(this).prev();
 
@@ -98,8 +100,6 @@
                     }
                 }
             });
-
-
         });
     </script>
 </div>
