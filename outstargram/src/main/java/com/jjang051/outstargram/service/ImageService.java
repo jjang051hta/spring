@@ -60,4 +60,12 @@ public class ImageService {
     public Page<Image> popular(Pageable pageable) {
         return imageRepository.popular(pageable);
     }
+
+    public Image loadDetail(int id) {
+        Image imageInfo = imageRepository.findById(id).orElseThrow(
+                ()-> new RuntimeException("없는 페이지 이빈다.")
+        );
+        imageInfo.setLikeTotal(imageInfo.getLikes().size());
+        return imageInfo;
+    }
 }

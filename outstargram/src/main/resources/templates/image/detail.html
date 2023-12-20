@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container justify-content-center d-flex">
+        <div class="col-12">
+            <h2>DETAIL PAGE</h2>
+            <div class="story-box mt-5">
+                <div class="mypage-header">
+                    <img src="/images/alien.png" th:src="@{|/upload/${imageInfo.member.profileImageUrl}|}" alt="">
+                    <span th:text="${imageInfo.member.name}">jjang051</span>
+                </div>
+                <div class="main-image">
+                    <img src="/images/500.png" th:src="@{|/upload/${imageInfo.imgUrl}|}">
+                </div>
+                <div class="caption fs-4  p-3 fw-bold" th:text="${imageInfo.caption}">제목입니다.</div>
+                <!-- 제목 -->
+                <div class="like-box p-3">
+                    <span class="icon" data-state="like">
+                         <i class="bi bi-balloon-heart-fill text-danger fs-3"></i>
+                    </span>
+                    <span class="num" th:text="${imageInfo.likeTotal}">3</span>
+                </div>
+                <!-- 종ㅎ아요...-->
+                <div class="comment-list-box p-3">
+                    <ul class="comment-list">
+                        <th:block th:each="item : ${imageInfo.commentsList}">
+                            <li class="d-flex mb-1">
+                                <span class="profile-image">
+                                    <img src="/images/alien.png" th:src="@{|/upload/${item.member.profileImageUrl}|}">
+                                </span>
+                                <span class="writer mx-1" th:text="${item.member.name}">장성호</span>
+                                <span class="content mx-2" th:text="${item.content}">jdksajd sajdsa</span>
+                                <button class="btn btn-close btn-sm"></button>
+                            </li>
+                        </th:block>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script th:inline="javascript">
+
+    </script>
+</div>
+</html>
