@@ -23,26 +23,84 @@
                     <span class="num" th:text="${imageInfo.likeTotal}">3</span>
                 </div>
                 <!-- 종ㅎ아요...-->
-                <div class="comment-list-box p-3">
+                <div class="comment-list-box p-3" th:data-image="${imageInfo.id}">
                     <ul class="comment-list">
                         <th:block th:each="item : ${imageInfo.commentsList}">
-                            <li class="d-flex mb-1">
+                            <li class="d-flex mb-1" th:data-idx="${item.id}">
                                 <span class="profile-image">
                                     <img src="/images/alien.png" th:src="@{|/upload/${item.member.profileImageUrl}|}">
                                 </span>
                                 <span class="writer mx-1" th:text="${item.member.name}">장성호</span>
                                 <span class="content mx-2" th:text="${item.content}">jdksajd sajdsa</span>
-                                <button class="btn btn-close btn-sm"></button>
+
+                                <button class="btn btn-close btn-sm"
+                                        th:if="${item.member.id==#authentication.principal.loggedMember.id}"></button>
                             </li>
                         </th:block>
                     </ul>
+                </div>
+                <div class="mb-3 comment-box p-3"
+                     th:if="${imageInfo.member.id != #authentication.principal.loggedMember.id}">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <button class="btn btn-outline-primary btn-comment mt-2">comment</button>
                 </div>
             </div>
 
         </div>
     </div>
     <script th:inline="javascript">
+        $("body").on("click",".comment-list li .btn-close",function(){
+            //console.log("삭제");
+            const _parent = $(this).parent();
+            const idx = _parent.data("idx");
+            $.ajax({
+                url:`/api/comment/${idx}`,
+                method:"DELETE",
+                success:function(response){
+                    if(response.delete=="ok") {
+                        _parent.remove();
+                    }
+                }
+            })
 
+        });
+
+        $("body").on("click",".comment-box .btn-comment",function(){
+            //console.log("코멘트 눌렀음...");
+            const commetList = $(this).parent().prev().find(".comment-list");
+
+            const imageId = $(this).closest("li").data("image");
+            const comment =  $(this).prev().val();
+            const commentBox = $(this).prev();
+
+            const sendData = {
+                content:comment,
+                imageId:imageId
+            }
+            // imageId,memberId, content
+
+            $.ajax({
+                url:"/api/comment",
+                method:"POST",
+                data:sendData,
+                success:function(response){
+                    console.log(response);
+                    if(response.insert=="ok") {
+                        const insertItem = `
+                            <li class="d-flex mb-1" data-idx="${response.comments.id}">
+                                <span class="profile-image"><img src="/upload/${response.comments.member.profileImageUrl}"></span>
+                                <span class="writer mx-1">${response.comments.member.name}</span>
+                                <span class="content mx-2">${response.comments.content}</span>
+                                <button class="btn btn-close btn-sm"></button>
+                            </li>`;
+                        commetList.prepend(insertItem);
+                        commentBox.val("");
+                    }
+                }
+            });
+
+
+        });
     </script>
 </div>
 </html>
