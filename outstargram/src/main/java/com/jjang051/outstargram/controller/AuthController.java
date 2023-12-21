@@ -21,13 +21,13 @@ public class AuthController {
 
     @GetMapping("/login")
     public String login() {
-        return "/auth/login";
+        return "auth/login";
     }
 
     @GetMapping("/join")
     public String join(Model model) {
         model.addAttribute("joinDto", new JoinDto());
-        return "/auth/join";
+        return "auth/join";
     }
 
     @PostMapping("/join")

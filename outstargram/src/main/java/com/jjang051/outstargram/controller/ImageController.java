@@ -23,7 +23,7 @@ public class ImageController {
     private final ImageService imageService;
     @GetMapping("/story")
     public String story() {
-        return "/image/story";
+        return "image/story";
     }
 
 
@@ -31,13 +31,13 @@ public class ImageController {
     public String popular(Model model, @PageableDefault(size = 10)Pageable pageable) {
         Page<Image> imageList = imageService.popular(pageable);
         model.addAttribute("imageList",imageList);
-        return "/image/popular";
+        return "image/popular";
     }
 
 
     @GetMapping("/upload")
     public String upload() {
-        return "/image/upload";
+        return "image/upload";
     }
 
     @PostMapping("/upload")
@@ -54,6 +54,6 @@ public class ImageController {
         Image imageInfo = imageService.loadDetail(id);
         model.addAttribute("imageInfo",imageInfo);
         log.info("imageInfo===={}",imageInfo.toString());
-        return "/image/detail";
+        return "image/detail";
     }
 }

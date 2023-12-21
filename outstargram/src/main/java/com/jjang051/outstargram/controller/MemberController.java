@@ -29,7 +29,7 @@ public class MemberController {
     public String mypage(@PathVariable int id, Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         MemberProfileDto memberInfo = memberService.getProfile(id,customUserDetails.getLoggedMember().getId());
         model.addAttribute("memberInfo",memberInfo);
-        return  "/member/mypage";
+        return  "member/mypage";
     }
 
     @GetMapping("/modify/{id}")
@@ -38,7 +38,7 @@ public class MemberController {
         log.info(customUserDetails.getLoggedMember().getUserId());
         log.info(customUserDetails.getLoggedMember().getName());
         model.addAttribute("memberInfo",customUserDetails.getLoggedMember());
-        return  "/member/modify";
+        return  "member/modify";
     }
 
     @PostMapping("/modify/{id}")
