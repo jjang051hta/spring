@@ -8,29 +8,39 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 @Getter
 @Setter
 @ToString
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, OAuth2User {
     private Member loggedMember;
+    private Map<String, Object> attributes;
 
     public CustomUserDetails(Member loggedMember) {
         this.loggedMember = loggedMember;
+    }
+    public CustomUserDetails(Member loggedMember, Map<String,Object> attributes) {
+        this.loggedMember = loggedMember;
+        this.attributes = attributes;
+    }
+
+
+    //private final Member loggedMember;
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new ArrayList<>();
-        collection.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return loggedMember.getRole().toString();
-            }
-        });
+        collection.add((GrantedAuthority) () -> String.valueOf(loggedMember.getRole()));
         return collection;
     }
 
@@ -62,5 +72,10 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return (String)attributes.get("name");
     }
 }
