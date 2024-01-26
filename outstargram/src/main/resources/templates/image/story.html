@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container justify-content-center d-flex">
+        <div class="col-12">
+            <h2>MY STORY</h2>
+
+            <!-- 내가 구독하고 있는 사람들이 올려논 story 를 여기다가 뿌릴 예정 -->
+            <!-- 구독자 정보를 알아야 하고 그 사람이 올린 story subscribe -->
+            <div class="story-list-box">
+                <ul class="feed-list">
+                    <!--
+                    <li>
+                        <div class="story-box mt-5">
+                            <div class="mypage-header">
+                                <img src="/images/alien.png" alt="">
+                                <span>jjang051</span>
+                            </div>
+                            <div class="main-image">
+                                <img src="/images/500.png">
+                            </div>
+
+                            <div class="mb-3 comment-box">
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <button class="btn btn-outline-primary mt-2">comment</button>
+                            </div>
+                        </div>
+                    </li>
+                    -->
+                </ul>
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-outline-primary mt-5 btn-more">더보기</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script th:inline="javascript">
+        let loadPage = 0;
+        loadStory();
+        let totalPages = 0;
+
+        const loggedId = [[${#authentication.principal.loggedMember.id}]];
+
+        function loadStory() {
+            $.ajax({
+                url: `/api/image?page=${loadPage}`,
+                success: function (response) {
+                    console.log(response);
+                    let tempHtml = "";
+                    totalPages= response.imageList.totalPages - 1;
+                    $.each(response.imageList.content, function (idx, item) {
+                        const likeState = item.likeState;
+                        let commentsList="";
+                        $.each(item.commentsList,function(idx02, item02){
+                            commentsList+=`
+                            <li class="d-flex mb-1" data-idx="${item02.id}">
+                                <span class="profile-image"><img src="/upload/${item02.member.profileImageUrl}"></span>
+                                <span class="writer mx-1">${item02.member.name}</span>
+                                <span class="content mx-2">${item02.content}</span>
+                                ${item02.member.id==loggedId?`<button class="btn btn-close btn-sm"></button>`:``}
+                            </li>`
+                        })
+                        tempHtml += `
+                        <li data-image="${item.id}">
+                            <div class="story-box mt-5">
+                                <div class="mypage-header">
+                                    <img src="/upload/${item.member.profileImageUrl}" alt="">
+                                    <span>${item.member.name}</span>
+                                </div>
+                                <!-- 상단 글쓴 사람 정보-->
+                                <div class="main-image">
+                                    <img src="/upload/${item.imgUrl}">
+                                </div>
+                                <!-- 이미지 불러오는 곳 -->
+                                <div class="caption fs-4  p-3 fw-bold">${item.caption}</div>
+                                <!-- 제목 -->
+                                <div class="like-box p-3">
+                                    <span class="icon" data-state=${likeState?"like":"hate"}>
+                                         ${likeState?`<i class="bi bi-balloon-heart-fill text-danger fs-3"></i>`:`<i class="bi bi-balloon-heart fs-3"></i>`}
+                                    </span>
+                                    <span class="num">${item.likeTotal}</span>
+                                </div>
+                                <!-- 종ㅎ아요...-->
+                                <div class="comment-list-box p-3">
+                                    <ul class="comment-list">
+                                        ${commentsList}
+                                    <!--
+                                        <li class="d-flex mb-1">
+                                            <span class="profile-image"><img src="/images/alien.png"></span>
+                                            <span class="writer mx-1">장성호</span>
+                                            <span class="content mx-2">jdksajd sajdsa</span>
+                                            <button class="btn btn-close btn-sm"></button>
+                                        </li>
+                                    -->
+                                    </ul>
+                                </div>
+                                <div class="mb-3 comment-box p-3">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <button class="btn btn-outline-primary btn-comment mt-2">comment</button>
+                                </div>
+                                <!-- 댓글 -->
+                            </div>
+                        </li>
+                    `
+                    });
+                    $(".feed-list").append(tempHtml);
+                }
+
+            });
+        }
+        $("body").on("click",".comment-list li .btn-close",function(){
+            //console.log("삭제");
+            const _parent = $(this).parent();
+            const idx = _parent.data("idx");
+            $.ajax({
+                url:`/api/comment/${idx}`,
+                method:"DELETE",
+                success:function(response){
+                    if(response.delete=="ok") {
+                        _parent.remove();
+                    }
+                }
+            })
+
+        });
+        $("body").on("click",".comment-box .btn-comment",function(){
+            //console.log("코멘트 눌렀음...");
+            const commetList = $(this).parent().prev().find(".comment-list");
+
+            const imageId = $(this).closest("li").data("image");
+            const comment =  $(this).prev().val();
+            const commentBox = $(this).prev();
+
+            const sendData = {
+                content:comment,
+                imageId:imageId
+            }
+            // imageId,memberId, content
+
+            $.ajax({
+                url:"/api/comment",
+                method:"POST",
+                data:sendData,
+                success:function(response){
+                    console.log(response);
+                    if(response.insert=="ok") {
+                        const insertItem = `
+                            <li class="d-flex mb-1" data-idx="${response.comments.id}">
+                                <span class="profile-image"><img src="/upload/${response.comments.member.profileImageUrl}"></span>
+                                <span class="writer mx-1">${response.comments.member.name}</span>
+                                <span class="content mx-2">${response.comments.content}</span>
+                                <button class="btn btn-close btn-sm"></button>
+                            </li>`;
+                        commetList.prepend(insertItem);
+                        commentBox.val("");
+                    }
+                }
+            });
+
+
+        });
+        $("body").on("click",".icon",function(){
+            console.log("icon click");
+            const selectedImage =  $(this).closest("li").data("image");
+            const heart = $(this).find("i");
+            const _this = $(this);
+            const _num = $(this).next();
+            let num =  parseInt(_num.text());
+            if($(this).data("state")=="like") {
+                $.ajax({
+                    method:"DELETE",
+                    url:`/api/image/${selectedImage}/likes`,
+                    success:function(response){
+                        console.log(response);
+                        _this.data("state","hate");
+                        heart.removeClass("bi-balloon-heart-fill");
+                        heart.removeClass("text-danger");
+                        heart.addClass("bi-balloon-heart");
+                        num--;
+                        _num.text(num);
+                    }
+                });
+            } else {
+                $.ajax({
+                    method:"POST",
+                    url:`/api/image/${selectedImage}/likes`,
+                    success:function(response){
+                        console.log(response);
+                        _this.data("state","like");
+
+                        heart.addClass("bi-balloon-heart-fill");
+                        heart.addClass("text-danger");
+                        heart.removeClass("bi-balloon-heart");
+                        num++;
+                        _num.text(num);
+                    }
+                });
+            }
+
+        })
+
+        $(".btn-more").on("click", function () {
+            loadPage++;
+            if(loadPage>=totalPages) {
+                $(this).hide();
+            }
+            loadStory();
+        });
+        $(window).on("scroll",function(){
+            // console.log("$(window).height()===",$(window).height());
+            // console.log("$(document).height()===",$(document).height());
+            // console.log("$(window).scrollTop()===",$(window).scrollTop());
+            const wh = $(window).height();
+            const dh = $(document).height();
+            const st = $(window).scrollTop();
+            if(wh+st >= dh - 100) {
+                loadPage++;
+                loadStory();
+                if(loadPage>=totalPages) {
+                    $(window).off("scroll");
+                    $(".btn-more").hide();
+                }
+            }
+        });
+
+    </script>
+
+</div>
+</html>

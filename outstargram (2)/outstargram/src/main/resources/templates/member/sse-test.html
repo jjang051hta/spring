@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>SSE Test</h1>
+
+<script>
+    const events = [];
+    function setupEventSource() {
+        const eventSource = new EventSource("/api/send/1");
+        eventSource.onmessage=function(event) {
+            const eventData = JSON.parse(event.data);
+            events.push(eventData);
+            console.log(eventData);
+        }
+    }
+    setupEventSource();
+</script>
+</body>
+</html>

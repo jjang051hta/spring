@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<div layout:fragment="content" class="main">
+    <div class="container">
+        <h1>index</h1>
+        <form th:action="@{/test}"  th:method="post">
+            <textarea name="contents"></textarea>
+            <button>전송</button>
+        </form>
+    </div>
+</div>
+</html>
