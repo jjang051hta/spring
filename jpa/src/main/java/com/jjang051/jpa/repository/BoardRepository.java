@@ -39,6 +39,16 @@ public interface BoardRepository  extends JpaRepository<Board02,Integer> {
 
 
 
+    @Query(value = "select b from Board02 b where " +
+            "b.writer.nickName like %:keyword% or " +
+            "b.subject like %:keyword%  or " +
+            "b.content like %:keyword%")
+    Page<Board02> fingByAllCategory(@Param("keyword") String keyword,Pageable pageable);
+
+
+
+
+
     // select를 제외한 나머지는 반드시(dml) @Modifying을 붙여야 한다.
     /*@Modifying
     @Query(value = "insert into  Board02", nativeQuery = true)

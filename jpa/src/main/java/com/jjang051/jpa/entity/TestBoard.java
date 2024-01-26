@@ -1,21 +1,15 @@
 package com.jjang051.jpa.entity;
 
-
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.extern.apachecommons.CommonsLog;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
 @Entity
-@Builder
-@RequiredArgsConstructor
-@AllArgsConstructor
-@Table(name="board02")
-public class Board02 {
-
+@Getter
+public class TestBoard {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     //@Column(name="boardId")
@@ -24,10 +18,6 @@ public class Board02 {
     //@Column(name = "mySubject")
     private String subject;
 
-    //@Column(columnDefinition = "varchar2(1500)")
-    @Lob
-    private String content;
-
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "board02", cascade = CascadeType.REMOVE)
@@ -35,7 +25,12 @@ public class Board02 {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member02 writer;
+
+    @Builder
+    public TestBoard(String subject, LocalDateTime createDate, List<Comment02> commentList, Member02 writer) {
+        this.subject = subject;
+        this.createDate = createDate;
+        this.commentList = commentList;
+        this.writer = writer;
+    }
 }
-
-
-

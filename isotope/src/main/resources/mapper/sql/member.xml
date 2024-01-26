@@ -11,6 +11,7 @@
         #{password},
         #{email},
         'ROLE_MEMBER',
+        1,
         sysdate
         )
     </insert>

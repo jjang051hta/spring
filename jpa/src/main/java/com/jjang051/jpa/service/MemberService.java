@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -28,7 +30,7 @@ public class MemberService {
                 .role("ROLE_USER")
                 .email(memberDto.getEmail())
                 .nickName(memberDto.getNickName())
-                .age(memberDto.getAge())
+                //.age(memberDto.getAge())
                 .build();
         Member02 responseMember = memberRepository.save(dbJoinMember);
         //MemberDto responseMemberDto = MemberDto.fromEntity(responseMember);
@@ -51,37 +53,31 @@ public class MemberService {
         //return  memberList;
     }
 
-    public MemberDto getMemberInfo(String id) {
-        Optional<Member02> member = memberRepository.findById(id);
-        if(member.isPresent()) {
-            MemberDto memberInfo = MemberDto.fromEntity(member.get());
-            log.info("memberInfo===={}",memberInfo.toString());
-            return memberInfo;
+    public Member02 getMemberInfo(String id) {
+        Optional<Member02> memberInfo = memberRepository.findByUserId(id);
+        if(memberInfo.isPresent()) {
+            return memberInfo.get();
         }
-        return null;
-        //throw new NotFoundMember("찾는 사람이 없습니다.");
+        throw new RuntimeException("찾는 사람이 옶습니다.");
     }
-    public MemberDto modifyMember(MemberDto memberDto) {
-        Optional<Member02> member = memberRepository.findById(memberDto.getUserId());
+
+    @Transactional
+    public Member02 modifyMember(MemberDto memberDto) {
+        log.info(memberDto.toString());
+        Optional<Member02> member = memberRepository.findByUserId(memberDto.getUserId());
         // jpa 에 id로 잡힌 컬럼의 이름이 같으면 update를 한다. 아니면 insert
         if(member.isPresent()) {
-            Member02 updateMember = Member02.builder()
-                    .userId(member.get().getUserId())
-                    .age(memberDto.getAge())
-                    .email(memberDto.getEmail())
-                    .nickName(memberDto.getNickName())
-                    .build();
-            memberRepository.save(updateMember);
+            return member.get().updateMemberInfo(memberDto.getNickName(), memberDto.getEmail());
         }
-        return null;
+        throw  new RuntimeException("없음");
     }
 
     public boolean deleteMember(String id) {
-        Optional<Member02> member = memberRepository.findById(id);
-        if(member.isPresent()) {
-            memberRepository.delete(member.get());
-            return true;
-        }
+//        Optional<Member02> member = memberRepository.findById(id);
+//        if(member.isPresent()) {
+//            memberRepository.delete(member.get());
+//            return true;
+//        }
         return false;
     }
 }

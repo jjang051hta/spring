@@ -1,8 +1,11 @@
-package com.jjang051.jpa.dto;
+package com.jjang051.outstargram.dto;
 
-import com.jjang051.jpa.entity.Member02;
+
+import com.jjang051.outstargram.entity.Member;
+import com.jjang051.outstargram.repository.MemberRepository;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -12,21 +15,22 @@ import java.util.Collection;
 import java.util.Map;
 
 @Getter
+@Setter
+@ToString
 public class CustomUserDetails implements UserDetails, OAuth2User {
-
-    private Member02 loggedMember;
+    private Member loggedMember;
     private Map<String, Object> attributes;
 
-    public CustomUserDetails(Member02 loggedMember) {
+    public CustomUserDetails(Member loggedMember) {
         this.loggedMember = loggedMember;
     }
-    public CustomUserDetails(Member02 loggedMember, Map<String,Object> attributes) {
+    public CustomUserDetails(Member loggedMember, Map<String,Object> attributes) {
         this.loggedMember = loggedMember;
         this.attributes = attributes;
     }
 
 
-    //private final Member02 loggedMember;
+    //private final Member loggedMember;
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -36,12 +40,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new ArrayList<>();
-        collection.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return loggedMember.getRole();
-            }
-        });
+        collection.add((GrantedAuthority) () -> String.valueOf(loggedMember.getRole()));
         return collection;
     }
 

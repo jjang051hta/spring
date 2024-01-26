@@ -26,6 +26,7 @@ public class HttpBodyController {
     @PostMapping("/body02")
     public String textplain(@RequestBody String data) {
         log.info("클라이언트에서 넘어온 data==={}",data);
+
         return "textplain";
     }
 
@@ -46,4 +47,11 @@ public class HttpBodyController {
         map.put("member",member);
         return map;
     }
+    @PostMapping("/body05")
+    public void applicationjsonToObject(@RequestBody Map<String,?> map) {
+        log.info("클라이언트에서 넘어온 data==={}",map);
+        log.info("===={}",map.get("name"));
+
+    }
+
 }

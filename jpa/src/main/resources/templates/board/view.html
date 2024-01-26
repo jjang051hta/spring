@@ -5,12 +5,12 @@
 <div layout:fragment="content" class="main">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <h2>view</h2>
                 <h4 th:text="${board.subject}"></h4>
                 <hr>
                 <div  class="mt-5 mb-5 d-flex justify-content-between">
-                    <div th:text="${board.content}">
+                    <div class="text-box" th:utext="${@commonMarkDownRender.markdownRender(board.content)}">
 
                     </div>
                     <div class="writerInfo">
@@ -103,7 +103,6 @@
             })
             return false;
         })
-
     </script>
 </div>
 </html>
